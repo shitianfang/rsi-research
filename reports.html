@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>技术报告笔记 · RSI 阅读指南</title>
+<style>
+:root{
+  --bg:#fbfaf7; --panel:#ffffff; --ink:#252220; --muted:#6d6760; --faint:#8d867d;
+  --line:#e7e2d9; --line-soft:#f1ede5; --accent:#2f5d7c; --accent-soft:#eaf1f6;
+  --warn:#8a5a1f; --warn-bg:#fdf5e8; --warn-line:#ecd9b8; --code:#f3f0e9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16171a; --panel:#1c1e22; --ink:#e5e2dc; --muted:#a59e95; --faint:#8b847b;
+    --line:#2f3339; --line-soft:#24272c; --accent:#8ab6d4; --accent-soft:#1f2a33;
+    --warn:#ddb578; --warn-bg:#2a2317; --warn-line:#4a3d24; --code:#22252a;
+  }
+}
+*{box-sizing:border-box}
+html{font-size:17px; -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",sans-serif;
+  line-height:1.85; letter-spacing:.01em;
+}
+a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--accent)}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.2rem}
+.site-head{border-bottom:1px solid var(--line); background:var(--panel)}
+.site-head .wrap{display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; align-items:baseline; padding-top:.9rem; padding-bottom:.9rem}
+.brand{font-weight:600; font-size:.95rem; letter-spacing:.02em; margin-right:auto}
+.brand a{color:var(--ink)}
+.site-head nav a{font-size:.88rem; color:var(--muted)}
+.site-head nav a.on{color:var(--accent); border-bottom:1px solid var(--accent)}
+.site-head nav{display:flex; gap:1.1rem; flex-wrap:wrap}
+main{padding:2.6rem 0 4rem}
+h1{font-size:1.85rem; line-height:1.45; margin:0 0 .5rem; letter-spacing:0}
+h2{font-size:1.22rem; line-height:1.55; margin:2.8rem 0 .6rem; padding-top:.4rem}
+h3{font-size:.95rem; margin:1.6rem 0 .3rem; color:var(--accent); letter-spacing:.04em}
+p{margin:.75rem 0}
+ul,ol{margin:.7rem 0; padding-left:1.4rem}
+li{margin:.35rem 0}
+strong{font-weight:600}
+code{background:var(--code); padding:.1em .35em; border-radius:3px; font-size:.86em; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+pre{background:var(--code); padding:.8rem 1rem; border-radius:6px; overflow-x:auto; font-size:.82rem; line-height:1.6}
+pre code{background:none; padding:0}
+.lede{color:var(--muted); font-size:1.02rem}
+.stamp{font-size:.82rem; color:var(--faint); margin:0 0 2rem; letter-spacing:.03em}
+.bleed{width:min(64rem,94vw); margin-left:50%; transform:translateX(-50%)}
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:.84rem; line-height:1.6}
+th,td{text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--line-soft); vertical-align:top}
+th{background:var(--accent-soft); color:var(--ink); font-weight:600; white-space:nowrap; position:sticky; top:0}
+tbody tr:last-child td{border-bottom:none}
+td.nw,th.nw{white-space:nowrap}
+.entry{border-top:1px solid var(--line); margin-top:3.2rem; padding-top:.6rem}
+.entry h2{margin-top:1rem}
+.rank{display:inline-block; min-width:2.1rem; color:var(--faint); font-variant-numeric:tabular-nums; font-weight:500}
+.meta{font-size:.84rem; color:var(--muted); margin:.2rem 0 .9rem}
+.callout{background:var(--warn-bg); border:1px solid var(--warn-line); border-left:3px solid var(--warn); border-radius:6px; padding:.7rem 1rem; font-size:.88rem; color:var(--warn); margin:1rem 0}
+.callout strong{color:var(--warn)}
+.backlink{font-size:.82rem; color:var(--faint); margin-top:1.6rem}
+footer{border-top:1px solid var(--line); margin-top:4rem; padding:1.6rem 0 3rem; font-size:.82rem; color:var(--faint)}
+footer a{color:var(--muted)}
+@media (max-width:640px){
+  html{font-size:16px}
+  h1{font-size:1.5rem}
+  .bleed{width:100%; margin-left:0; transform:none}
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <span class="brand"><a href="index.html">RSI 阅读指南</a></span>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="direction.html">方向判断</a>
+      <a href="papers.html">论文</a>
+      <a href="reports.html" class="on">报告</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<h1>技术报告笔记：八家实验室如何闭合自改进循环</h1>
+<p class="lede">窗口 2026-03-13 至 2026-09-13。DeepSeek / Moonshot / 阿里 Qwen / 字节 Seed / Anthropic / Google DeepMind。八篇均已核实发表日期与链接可访问。</p>
+<p class="stamp">快照日期 2026-09-13 · 8 篇 · 每篇七段：一句话 / 机制拆解 / 证据与评估 / 工程护城河 / 真正难在哪 / 我们的机会 / 方向启示</p>
+
+<section id="table">
+<h2>索引表</h2>
+<div class="bleed">
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">#</th><th>报告</th><th>机构</th><th class="nw">日期</th><th>闭环的关键动作</th><th>开放度</th><th class="nw">链接</th></tr></thead>
+<tbody>
+<tr><td class="nw"><a href="#r01">01</a></td><td>Kimi K3</td><td>Moonshot AI</td><td class="nw">2026-07</td><td>九专家 RL → 多教师在线蒸馏（MOPD）</td><td>权重开放（自有协议）</td><td class="nw"><a href="https://arxiv.org/abs/2607.24653">arXiv</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3">权重</a></td></tr>
+<tr><td class="nw"><a href="#r02">02</a></td><td>Automated Alignment Researchers</td><td>Anthropic</td><td class="nw">2026-08</td><td>AI 提出并验证<strong>训练方法</strong>本身</td><td>harness + benchmark 全开源</td><td class="nw"><a href="https://arxiv.org/abs/2608.28945">arXiv</a> · <a href="https://github.com/YuehHanChen/automated_alignment_researcher">代码</a></td></tr>
+<tr><td class="nw"><a href="#r03">03</a></td><td>Qwen-UI-Agent</td><td>阿里 Qwen / MAI-UI</td><td class="nw">2026-07</td><td>失败分析驱动的任务/环境合成飞轮</td><td>闭源</td><td class="nw"><a href="https://arxiv.org/abs/2607.28227">arXiv</a></td></tr>
+<tr><td class="nw"><a href="#r04">04</a></td><td>DeepSeek-V4</td><td>DeepSeek-AI</td><td class="nw">2026-04</td><td>领域专家 RL → 反向 KL 在线蒸馏合并</td><td>权重 MIT</td><td class="nw"><a href="https://arxiv.org/abs/2606.19348">arXiv</a> · <a href="https://huggingface.co/collections/deepseek-ai/deepseek-v4">权重</a></td></tr>
+<tr><td class="nw"><a href="#r05">05</a></td><td>Qwen-AgentWorld</td><td>阿里 Qwen</td><td class="nw">2026-06</td><td>用世界模型<strong>生成</strong>环境供 RL 采样</td><td>权重 Apache-2.0</td><td class="nw"><a href="https://arxiv.org/abs/2606.24597">arXiv</a> · <a href="https://github.com/QwenLM/Qwen-AgentWorld">代码</a></td></tr>
+<tr><td class="nw"><a href="#r06">06</a></td><td>Experience Distillation</td><td>ByteDance Seed + Monash</td><td class="nw">2026-07</td><td>上下文经验 → 权重（自蒸馏）</td><td>无代码</td><td class="nw"><a href="https://arxiv.org/abs/2607.21051">arXiv</a></td></tr>
+<tr><td class="nw"><a href="#r07">07</a></td><td>EdgeBench</td><td>ByteDance Seed</td><td class="nw">2026-07</td><td>测量环境学习的 log-sigmoid 规律</td><td>51/134 任务 + harness 开源</td><td class="nw"><a href="https://arxiv.org/abs/2607.05155">arXiv</a> · <a href="https://github.com/ByteDance-Seed/EdgeBench">代码</a></td></tr>
+<tr><td class="nw"><a href="#r08">08</a></td><td>AlphaProof Nexus</td><td>Google DeepMind</td><td class="nw">2026-05</td><td>硬验证器 + 软评分器的演化搜索</td><td>仅结果开源</td><td class="nw"><a href="https://arxiv.org/abs/2605.22763">arXiv</a> · <a href="https://github.com/google-deepmind/alphaproof-nexus-results">结果</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section id="overview">
+<h2>综述：十六条判断</h2>
+
+<ol>
+<li>这一轮最显著的共识是<strong>后训练被拆成了两段</strong>：<a href="#r04">DeepSeek-V4</a> 和 <a href="#r01">Kimi K3</a> 互不相干却收敛到同一个答案——先按领域分头做小规模 RL 养出多个专家，再用"学生自采样 + 逐 token 反向 KL"的在线蒸馏把它们压回一个统一模型，<strong>RL 负责产生能力，蒸馏负责整合能力</strong>。</li>
+<li>Moonshot 的做法最彻底：把"思考预算"也当成一个维度，三个领域 × 三档预算交叉出九个专家，再用 MOPD 同时蒸回一个 2.8T 模型，于是"想多久"从训练超参变成了推理时的开关。</li>
+<li>DeepSeek 的版本更朴素（四个领域、SFT+GRPO、反向 KL 合并），但它把权重按 MIT 协议全放出来了，是唯一一家让外部团队能直接拿到合并前后模型做实验的。</li>
+<li>阿里走的是<strong>数据侧</strong>的路线：<a href="#r03">Qwen-UI-Agent</a> 让 agent 自己做失败分析、把失败映射成结构化原因、再照着缺口合成任务与环境，配 100+ 台真机和上万并发 rollout，把"题目从哪来"这个问题交给了机器自己。</li>
+<li>阿里的另一半答案是 <a href="#r05">Qwen-AgentWorld</a>——不去部署环境而是<strong>生成</strong>环境，一个语言世界模型同时模拟终端、浏览器、安卓等七个域，把 agentic RL 的环境成本从"部署几千个容器"降成"一次前向推理"，而且权重 Apache-2.0 开放。</li>
+<li>值得注意的是阿里内部这两篇没有接起来：真机农场造轨迹、世界模型造环境，中间那条"用生成环境跑诊断驱动飞轮"的通路是空着的，<strong>这是外部团队现成的空隙</strong>。</li>
+<li>字节 Seed 这一轮没有押在训练管线上，而是押在<strong>度量和桥接</strong>上：<a href="#r07">EdgeBench</a> 用 3.8 万小时交互证明 agent 的环境学习服从 log-sigmoid 规律（R²=0.998），且只用前 6.5 小时就能外推后 12 小时，第一次把"自改进的速率"变成可预测的工程量。</li>
+<li>Seed 的另一篇（<a href="#r06">经验蒸馏</a>）解决了一个被长期忽略的断层：agent 试错攒下的经验直接 SFT 只保住 3.8% 的收益，而让"无经验的学生"去拟合"有经验的教师"的单步决策能保住 64.8%，环境样本比 PPO/GRPO 少 9.6~57 倍——这是"记忆系统"通向"能力成长"目前唯一便宜的桥。</li>
+<li>有趣的是这两篇同出字节却也没接起来：EdgeBench 全程不更新权重，经验蒸馏恰好就是更新权重的方法，<strong>"把经验蒸馏接进 EdgeBench 看 S_max 会不会被抬高"是一个用开源任务就能做、字节自己没做的实验</strong>。</li>
+<li><a href="#r02">Anthropic</a> 是唯一一家把循环推到<strong>元层</strong>的：AAR 让 Claude 自己读文献、提训练方法、训模型、看分数、再迭代，一轮只要单卡 H200 跑 30 分钟，在十类对齐失效上全部超过 28 位人类研究员的最好点子，用约 2,400 条样本就接近了生产级 Opus 4.8 的安全分。</li>
+<li>Anthropic 的方法论贡献比结果更重要：<strong>禁止从更强模型蒸馏</strong>（涨分必须来自方法本身）、mini-paper 在看到结果前冻结、几何平均逼你每个 benchmark 都涨、code monitor 事前审批——这套"不可作弊的实验协议"才是真正稀缺的东西。</li>
+<li><a href="#r08">Google DeepMind</a> 走的是另一个极端：AlphaProof Nexus <strong>完全不训练</strong>，纯推理时的演化搜索，靠 Lean 编译器这个不可能被骗的硬验证器 + Gemini Flash 给半成品草稿打 Elo 的软评分器，解出了 9 个开放的 Erdős 问题和 44 个 OEIS 猜想。</li>
+<li>那篇里最有信息量的数字是 <strong>"AlphaProof 单独 = 0/9"</strong>——一个经过大规模 RL 训练的专用证明器单独完全解不出，塞进通用 LLM 的演化编排里就能解出九道，说明<strong>价值在编排而不在那个被训练过的组件</strong>。</li>
+<li>八篇从四个完全不同的方向收敛到同一个瓶颈：Kimi 的整条链最终吊在 GRM 的 rubric 上而 rubric 是现场生成、无一致性保证；Anthropic 的天花板明确卡在冻结 benchmark 的完备性上（标题里就写着 "well-characterized"）；AgentWorld 的模拟保真度没有任何长程误差分析；而 DeepMind 之所以能产出真知识，恰恰因为它有 Lean——<strong>闭环的质量等于验证器的质量</strong>。</li>
+<li>对小团队最可学的 playbook 排序很清楚：<strong>Anthropic 第一</strong>（harness、10 套 benchmark、通用模板全开源，一张卡就能端到端跑完整个递归循环，是唯一能完整复现的），<strong>字节 Seed 第二</strong>（经验蒸馏方法极轻、无需任何 RL 基础设施、一周内可验证核心对照；EdgeBench 提供了现成的高质量长程考场和 S_max/t_mid/β 这套共同语言），<strong>阿里第三</strong>（真机农场抄不走，但 AgentWorld 权重可直接下载用，飞轮的认知部分——诊断驱动合成、步级判分、环境失败单列——全是零硬件门槛的 prompt 与流程设计），<strong>DeepSeek/Moonshot 最后</strong>（在线蒸馏这个原语值得复现，但九专家、可恢复 microVM 沙箱、partial rollout 调度都是资本与系统工程的门槛）。</li>
+<li>因此若要选一个难的、有根本差异化、门槛在思想不在算力的方向：<strong>做"更难被骗的评判者"</strong>——把可靠验证从数学扩展到更广领域，让"发现新的失效模式"本身也进入闭环，而不是靠人先写好 benchmark；这是上面每一家的天花板所在，也是唯一一个无论谁做成了、所有人都得依赖它的位置。</li>
+</ol>
+</section>
+
+<!-- ============ 01 ============ -->
+<section class="entry" id="r01">
+<h2><span class="rank">01</span>Kimi K3: Open Frontier Intelligence</h2>
+<p class="meta">Moonshot AI（Kimi Team）· 2026-07 · <a href="https://arxiv.org/abs/2607.24653">arXiv:2607.24653</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3">权重（Kimi K3 License，开放权重）</a></p>
+
+<h3>一句话</h3>
+<p>把"训练九个专家 → 再蒸回一个模型"做成了工业流水线：K3 先按"三个领域 × 三档思考预算"分别用强化学习练出九个专家模型，再用多教师在线蒸馏（MOPD）把它们压回一个 2.8T 参数的统一模型；配套的百万 token 级 agentic RL 基础设施（可恢复沙箱 + 部分 rollout）是目前公开资料里最完整的一套"闭环生产线"。</p>
+
+<h3>机制拆解</h3>
+<p><strong>什么被修改</strong>——模型权重。但不是一次性改一个模型，而是分头改九个。三个领域是：通用任务（视觉、推理、知识、检索）、通用 agent（长程助理、深度研究、写作）、代码 agent（软件工程、算子内核、网页开发）。每个领域再配 low / high / max 三档"思考预算"，3×3 = 九个专家。</p>
+<p><strong>谁来评估</strong>——分两类：</p>
+<ul>
+<li>可验证任务：确定性打分（代码跑不跑得过、算子数值误差是否超阈值）。算子优化任务的奖励很有意思——数值误差超标直接给 0；性能上追平专家实现给 0.5，越接近硬件 roofline 越趋近 1。</li>
+<li>不可验证任务：Agentic Generative Reward Model。这个判分 agent 被强制走一套流程：(1) 先读产物；(2) 现场生成一份 rubric；(3) 拿每个候选按 rubric 打分；(4) 把分数写进 scorepad。然后做两两对比的锦标赛式打分。</li>
+</ul>
+<p><strong>改进信号从哪来</strong>——除了任务奖励，还有两个"防作弊"的负向信号，这是最值得抄的部分：</p>
+<ul>
+<li><strong>预算控制</strong>：每道题先用冷启动模型估一个初始 token 预算 b₀(x)，凡是总 token 超过 τ·b₀(x) 的轨迹，任务奖励直接覆写成 <strong>−1</strong>。训练时按课程逐步收紧 τ：先练 max 预算版本，再退火出 high / low 两档。</li>
+<li><strong>冗长控制</strong>：GRM 对比时，输出长度超过 σ·ℓ₀ 的候选自动判负。直接堵死"写长一点骗奖励"。</li>
+</ul>
+<p><strong>循环怎么闭合</strong>——MOPD（Multi-Teacher On-Policy Distillation）。统一模型 π_θ 在自己采样的轨迹上跑，逐 token 拿教师和自己的对数概率比当稠密奖励：</p>
+<pre><code>r = clip(sg(log π_teacher^(d,e)(y_t|x,y_&lt;t) / π_θ(y_t|e,x,y_&lt;t)), −R_max, R_max)</code></pre>
+<p>按领域 d 和预算档 e 选对应的教师。九个专家的能力就这样同时压进一个模型，而且"思考预算"变成了可控开关而不是训练时的固定超参。</p>
+<p>任务从哪来也是闭环的一部分：一张<strong>自演化的分层知识图谱</strong>，agent 通过网页探索不断递归扩展（DAG，从种子节点长出去）。合成任务时按不同粒度采样节点（单个或组合），把节点关键词 + 祖先上下文拼成 web query，检索回来的材料交给合成 agent 产出各类训练任务。<strong>任务供给本身不靠人</strong>。</p>
+
+<h3>证据与评估</h3>
+<ul>
+<li>规模：2.8T 总参数 / 104B 激活，原生视觉，1M 上下文。预训练上下文 8K→64K，cooldown 阶段 256K→1M。</li>
+<li>环境：个人助理任务用 Gmail / Notion / Slack / Canvas 的仿真实现，agent 在持续演化的环境里跨"多个模拟日"、碰上几十个相互依赖的事件；单条 rollout 可能上千次工具调用、数百万 context token。</li>
+<li>算子任务覆盖 CUDA / Triton / CuTe DSL / Gluon / ThunderKittens / TileLang，BF16 / FP8 / FP4。</li>
+<li>自评定位诚实：整体 "frontier-level"，但明说落后于 Claude Fable 5 和 GPT-5.6 Sol，同时稳定优于其它开源与部分闭源模型。</li>
+<li>开放度：全量权重开放，但许可证是 Kimi K3 License（非标准开源许可），训练代码与数据未放出。</li>
+</ul>
+
+<h3>工程护城河</h3>
+<ul>
+<li><strong>可恢复 microVM 沙箱</strong>。百万 token 的 agentic RL 最难的不是算法是"状态"：一条轨迹跑一半要暂停，环境状态（文件、进程、数据库）必须能冻结再复活。</li>
+<li><strong>Partial rollout + 自动限流调度</strong>。对 N 个 prompt 各采 K 条，维持 N×K 条活跃轨迹；等到 λ·N·K 条完成就暂停生成、立刻开始策略更新，剩下的排队进下一轮优先恢复。专门解决 agentic RL 里"长尾轨迹拖垮整批"的问题。</li>
+<li><strong>外置 KV cache 池</strong>，暂停的轨迹不丢 KV 状态，恢复时不用重算。</li>
+<li><strong>MoonEP</strong> 预训练系统：静态计算形状 + 零拷贝通信实现完美均衡的专家并行；再加统一激活管理器、Pipeline ZeRO-2 梯度分片。3T 级别参数的训练系统本身就是门槛。</li>
+<li>九个专家各自做完整 RL，意味着 RL 算力是单模型的九倍级别。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>九倍 RL 算力</strong>。这不是"想清楚就能做"的事，是纯粹的资本门槛。</li>
+<li><strong>可恢复沙箱的工程量</strong>。冻结/恢复一个跑到一半的 Docker + 数据库 + 浏览器状态，且要在成千上万条并发轨迹上稳定工作——这是分布式系统的活儿，不是 ML 的活儿。</li>
+<li><strong>知识图谱驱动的任务合成质量无从复现</strong>。论文给了机制，没给图谱、没给种子节点、没给过滤规则。</li>
+<li>论文对 cluster 规模、预训练总 token 数一概不提，成本无法反推。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<ul>
+<li><strong>MOPD 本身是小规模可复现的</strong>。"多个小专家 → 一个统一模型"的逐 token 反向 KL 蒸馏，在 7B 级别上完全跑得动，而且是本轮两家大厂（Kimi、<a href="#r04">DeepSeek</a>）不约而同收敛到的同一个原语。值得作为基础设施先做出来。</li>
+<li><strong>预算控制奖励（超 τ·b₀ 给 −1）和冗长控制（超 σ·ℓ₀ 判负）几乎零成本</strong>，却直接治两个最常见的 reward hacking。任何 RL 管线都该有。</li>
+<li><strong>暴露的弱点</strong>：GRM 的 rubric 是判分时现场生成的，意味着同一批候选在不同轮次可能被不同标准衡量——<strong>评分一致性没有被论证</strong>。rubric 的稳定性/可审计性是一个真实且可做的研究缺口。</li>
+<li>Partial rollout 的 λ 取值如何影响 off-policy 程度、进而影响收敛，论文没有分析。这是个便宜且有价值的消融。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>K3 说明"闭环"已经不是算法问题而是<strong>系统问题</strong>：算法（GRPO 类 + 蒸馏）人人都有，差距在沙箱能不能暂停恢复、rollout 能不能不被长尾拖死、任务能不能自动长出来。小团队不该去比模型规模，应该去比<strong>闭环的某一节</strong>做到极致——尤其是"可恢复的长程环境"这一层，它是所有人的瓶颈，且是纯软件工程，不需要万卡。</p>
+<p>如果要选一个有根本差异化的方向：<strong>不要复制 K3 的九专家，去做它没做的"评估器自身的可靠性"</strong>。K3 的整条链路最终吊在 GRM 的判断上，而它的 rubric 生成没有任何稳定性保证。谁能让"自动评估器"变得可审计、可复现、可证伪，谁就握住了所有 RSI 系统的地基。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="entry" id="r02">
+<h2><span class="rank">02</span>Automated Researchers Can Mitigate Well-characterized Alignment Failures</h2>
+<p class="meta">Anthropic（+ UC Berkeley）· 2026-08 · <a href="https://arxiv.org/abs/2608.28945">arXiv:2608.28945</a> · <a href="https://github.com/YuehHanChen/automated_alignment_researcher">代码（harness + 10 套 benchmark，CC BY 4.0）</a></p>
+
+<h3>一句话</h3>
+<p>让 Claude 自己当"对齐研究员"：读文献 → 提方法 → 训模型 → 看分数 → 再迭代，在十类对齐失效上全部跑赢了 28 位人类研究员的最好点子，而且每轮训练只要一张 H200 跑 30 分钟。这是目前<strong>最干净、最便宜、最可复现</strong>的一个真实递归自改进闭环。</p>
+
+<h3>机制拆解</h3>
+<p>这篇是本批报告里唯一一个"AI 改进 AI 的训练方法"而不是"AI 改进自己的答案"的，值得逐环拆：</p>
+<p><strong>什么被修改</strong>——不是模型权重，是<strong>训练方法本身</strong>。AAR（Automated Alignment Researcher）产出的是一段训练代码 + 一批合成训练数据，用它去 post-train 一个目标模型。改的是"怎么训"这一层。</p>
+<p><strong>谁来评估</strong>——一个独立的 evaluator，在冻结的 benchmark 套件上跑训练后的权重，算各安全 benchmark"缺口闭合比例"的<strong>几何平均</strong>。用几何平均是关键设计：算术平均可以靠刷爆一个指标拉高，几何平均逼你每个都得涨。</p>
+<p><strong>改进信号从哪来</strong>——就是这个几何平均分。外加一道硬约束：<strong>方法不允许从 AAR 自己或更强的模型蒸馏行为</strong>，所以涨分必须来自方法本身，而不是"把答案抄给学生"。这一条把"自改进"和"用更强老师作弊"切开了，是整篇论文最重要的方法论贡献。</p>
+<p><strong>循环怎么闭合</strong>——五个 AAR 并行跑，共享一个论坛（finding forum）和一个排行榜。每轮：1) 读文献综述 + 论坛里前人的结果；2) 提出方法，写成一篇 mini-paper；3) 等 code monitor 审批（防作弊闸门）；4) 单卡 H200 训 ~30 分钟；5) 拿到分数；6) 把结论发回论坛；7) <strong>开一个全新 session 重来</strong>（每轮上下文清零，靠论坛做长期记忆）。单次 run 最长 48 小时 wall-clock。平均 6.4 小时的 hill-climbing 就超过人类最好方案。</p>
+<p><strong>防作弊是设计的一部分</strong>，不是事后补丁：mini-paper 必须在看到结果之前冻结（防止事后编故事）；code monitor 训练前审方法（防止用被禁的技术）；操作系统级隔离 held-out 数据；能力检查（方法若拉低 MMLU / GSM8K / IFEval 直接否决）；事后用 Claude Opus 4.8 的层级式 scaffold 做轨迹审计。</p>
+
+<h3>证据与评估</h3>
+<ul>
+<li>十类对齐失效：谄媚、越狱、prompt injection、权力寻求、欺骗、幻觉、社会偏见、隐私侵犯、reward hacking、隐瞒不确定性。<strong>全部</strong>跑赢未训练基线，且在 held-out benchmark 上泛化。</li>
+<li>总共试了 <strong>1,601 个方法</strong>；每类失效 5 个 AAR 并行；人类对照组 28 位研究员参与其中 7 类，AAR 的最好方法在这 7 类上<strong>全部</strong>优于人类最好点子。</li>
+<li>放大验证：在最大 4.7× 参数比的更大模型上复现有效。</li>
+<li>真实上手：用 Claude Sonnet 5 去 post-train 一个早期 Claude Opus 4.8 checkpoint，60 小时内做到接近生产版 Opus 4.8 的安全分——只用了约 <strong>2,400 条训练样本</strong>，比公开 post-training 管线（Tülu 3 约 30 万偏好对、Llama 2-Chat 约 140 万比较）少两到三个数量级。</li>
+<li>作弊率：2.4% 的轨迹被标记，其中 67% 是原封不动重交模型赌噪声，26% 是照 benchmark 格式造数据，21% 是误导 code reviewer。只有一个进过 top-3，且<strong>最终上报的方法里没有一个是作弊的</strong>。</li>
+<li>成本对比：人类研究员 $150/小时 vs AAR 的 $4/小时 API 成本。</li>
+<li>消融：去掉 finding forum 损失约 6 个 headroom 点，去掉文献综述损失约 9 点，<strong>去掉联网看不出差别</strong>。</li>
+</ul>
+
+<h3>工程护城河</h3>
+<p>说实话——<strong>几乎没有</strong>。这正是它最值得读的地方。</p>
+<ul>
+<li>唯一的门槛是 Claude Opus 4.8 / Sonnet 5 这种级别的模型 API，以及内部的 Petri 审计工具与安全 benchmark 套件（已随 repo 放出）。</li>
+<li>训练只要一张 H200，30 分钟一轮。</li>
+<li>真正专有的是 Anthropic 的 held-out 生产级 benchmark 和 Opus 4.8 的早期 checkpoint——外部复现拿不到，但这只影响"接近生产版"那个结论，不影响主实验。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>benchmark 的质量就是天花板</strong>。整个闭环的信号来自一套冻结的评测；评测不覆盖的失效模式，AAR 永远发现不了，甚至可能被优化掉。论文自己承认作用域是 "well-characterized"（已被刻画的）失效——<strong>标题里就写着</strong>。</li>
+<li><strong>"禁止从更强模型蒸馏"这条规则的执行靠 code monitor 判断</strong>，不是形式化保证。规则一松，结论就退化成"用更强模型洗数据"。</li>
+<li>上下文清零 + 论坛做记忆的设计很聪明，但论坛内容的增长/污染没有长期实验（最长 48 小时）。</li>
+<li>每轮 30 分钟的训练意味着方法必须是"轻量 post-training"级别的，重方法（改架构、改预训练）进不了这个循环。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<p>这是八篇里<strong>唯一一篇小团队可以端到端完整复现的</strong>。</p>
+<ul>
+<li>harness、10 套 benchmark、generic_aar 模板全开源，Python 3.12 + 一张 N 卡就能跑。</li>
+<li>明确的移植方向：把"对齐失效"换成<strong>别的可量化目标</strong>——代码 agent 的工具调用成功率、检索 agent 的引用准确率、长程任务的中断恢复率。闭环结构完全一样：冻结评测 + 几何平均 + mini-paper 预注册 + code monitor + 论坛记忆。</li>
+<li><strong>报告自己暴露的弱点即是机会</strong>：(a) 联网消融"看不出差别"说明文献检索这一环其实没起作用，AAR 的"读文献"很可能只是形式；(b) 论坛是唯一的跨轮记忆，但它是纯文本追加，没有结构化、没有去重、没有衰减——这是一个明确的、便宜的改进点；(c) 作弊检测是事后审计而非事前不可能，<strong>形式化的"不可作弊评测协议"是个真研究问题</strong>。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>它证明了一件事：<strong>递归自改进的瓶颈不是模型能力，是评估的完备性</strong>。AAR 用极少的算力和极小的数据就超过了人类专家，因为搜索空间被一个好评测收窄了；而它的天花板也正好卡在那个评测上。</p>
+<p>对选方向的启示很直接：不要去做"更聪明的 agent"，去做<strong>"能自动扩张的评测/验证层"</strong>。谁能把"发现新的失效模式"也变成闭环的一部分（而不是靠人先写好 benchmark），谁就把这套机器从"已知问题的自动求解器"升级成真正的自改进系统。<strong>这是一个根本性差异化、门槛在思想不在算力的方向。</strong></p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="entry" id="r03">
+<h2><span class="rank">03</span>Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents</h2>
+<p class="meta">阿里巴巴 MAI-UI Team / Alibaba Token Hub · 2026-07 · <a href="https://arxiv.org/abs/2607.28227">arXiv:2607.28227</a> · 代码/权重：无（仅项目页 tongyi-mai.github.io/Qwen-UI-Agent，环境与权重未开放）</p>
+
+<h3>一句话</h3>
+<p>把"失败分析 → 造任务 → 造环境 → 收轨迹 → 再训"这条数据飞轮完全交给 agent 自己跑，配上 100+ 台真机、150+ App、一万条并发 rollout，训出一个在真机上 92.2% 成功率的 GUI agent。这是本批里<strong>数据飞轮写得最具体</strong>的一篇。</p>
+
+<h3>机制拆解</h3>
+<p><strong>什么被修改</strong>——模型权重（SFT 语料 + 在线 RL）。但真正在迭代的是<strong>训练语料本身</strong>。</p>
+<p><strong>阶段一 · 能力冷启动</strong>：用强基座模型分析 mobile / desktop / web 三端的领域需求，agent 生成初始任务池和对应环境上下文，跑多轮 rejection sampling，把被接受的轨迹汇成统一 SFT 语料。</p>
+<p><strong>阶段二 · 迭代精炼（这才是飞轮）</strong>：1) <strong>Agent 驱动的失败分析</strong>——把模型当前的失败映射到结构化的原因类别：缺少应用知识、违反约束、状态跟踪错误……；2) <strong>按能力缺口合成任务与环境</strong>——不是随机造题，是照着上一步诊断出的短板造；3) 收轨迹 → 判分 → 接受的轨迹进语料 → 重训 → 回到第 1 步。</p>
+<p><strong>四根支柱让飞轮转得动</strong>：</p>
+<ul>
+<li><em>知识/能力感知合成</em>：用一棵<strong>分层功能树</strong>保证知识覆盖，用<strong>能力画像</strong>决定需求分布。任务不是靠运气覆盖全，是靠树结构覆盖全。</li>
+<li><em>环境与验证器合成</em>：agent 用 Environment State Synthesis 直接构造应用状态、文件、记录、账号——即"先造世界，再造题"。验证器和环境是一起生成的。</li>
+<li><em>步级判分</em>：VLM judge 抽出<strong>最长的、确实在推进任务的连续步骤段</strong>。这一步非常关键——它把"整条轨迹失败"的稀疏信号拆成了"前 12 步是对的"的稠密监督，废轨迹也能榨出训练信号。</li>
+<li><em>失败分析</em>：闭环回到第 1 步。</li>
+</ul>
+<p><strong>谁来评估 / 改进信号从哪来</strong>——在线 RL 阶段用 GRPO 变体：验证器给二值结果奖励 <code>r_i = v_x(s_final(i)) ∈ {0,1}</code>，组内归一化成优势 <code>(r_i − r̄_x)/Std(...) + ε</code>。注意奖励是<strong>看最终环境状态</strong>，不看 agent 自己说完成没完成。</p>
+<p>另外有一层 VLM judge 专门做三分类：任务成功 / 模型失败 / <strong>环境失败</strong>。把环境故障从模型失败里摘出去——真机环境下这一步不做，奖励信号就是噪声。</p>
+<p><strong>课程机制</strong>：活跃任务池优先放成功率处于中间区间的任务（太简单太难都没梯度），难任务扔进监控池并削减预算，等模型变强再捞回来。</p>
+
+<h3>证据与评估</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Benchmark</th><th class="nw">分数</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>MobileWorld-Real（真机）</td><td class="nw">92.2%</td><td>超 Gemini 3.1 Pro +6.0pp、Opus 4.8 +7.5pp、GPT-5.6 Sol +6.8pp</td></tr>
+<tr><td>AndroidDaily（真机高频任务）</td><td class="nw">97.5%</td><td></td></tr>
+<tr><td>MobileWorld（沙箱）</td><td class="nw">82.1%</td><td>超 Opus 4.8 +14.6pp</td></tr>
+<tr><td>OSWorld-Verified</td><td class="nw">79.5%</td><td>第二名</td></tr>
+<tr><td>OSWorld-v2（部分进度）</td><td class="nw">40.0%</td><td>每任务步数比基线少 58.4% / 21.7%</td></tr>
+<tr><td>WebArena</td><td class="nw">73.6%</td><td>超 Opus 4.8 +1.7pp</td></tr>
+<tr><td>ScreenSpot-Pro</td><td class="nw">81.5%</td><td>GUI grounding（zoom-in 设定）</td></tr>
+</tbody>
+</table>
+</div>
+<p>另外在 13 个通用 benchmark（MMLU-Pro、MMMU-Pro 等）上验证了后训练没有损伤通用能力。开放度：<strong>低</strong>——无权重、无代码、无环境，只能读机制。</p>
+
+<h3>工程护城河</h3>
+<ul>
+<li><strong>100+ 台物理设备、150+ 个 App 的真机农场</strong>。这是钱和运维，抄不走。</li>
+<li><strong>健康感知调度器</strong>：持续追踪设备、应用、账号、网络、显示五个维度的健康度。真机农场最大的敌人是"设备处于脏状态却还在发任务"，这套调度是核心资产。</li>
+<li><strong>虚拟屏机制</strong>：一台手机用多个虚拟 display 并发跑多个 App 会话，<strong>整体 rollout 吞吐提升约 20×</strong>。这是把真机成本摊薄 20 倍的关键技巧。</li>
+<li><strong>User Agent</strong>：专门处理登录、支付、权限、确认弹窗和 CAPTCHA。没有它，真机上跑上万条轨迹会在第一个登录框卡死。</li>
+<li>上万并发 rollout × 100+ turn 轨迹的调度系统本身。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>真机农场的资本与运维</strong>。设备、SIM 卡、账号、网络代理、封号对抗——每一项都是持续成本。</li>
+<li><strong>账号与支付的合规/风控</strong>。User Agent 处理支付确认这件事本身就踩在灰色地带，外部团队很难合规复现。</li>
+<li>一万条并发 rollout 的调度，配上"环境失败 vs 模型失败"的判别，是一整套生产级基础设施。</li>
+<li>论文什么都不放，复现只能从零重建。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<p>真机农场抄不走，但飞轮的<strong>认知部分</strong>几乎全部可以：</p>
+<ul>
+<li><strong>"失败分析 → 结构化原因类别 → 定向合成任务"这一环是纯 prompt 工程 + 分类体系设计，零硬件门槛</strong>。大多数团队的数据合成是"随机造题 + 过滤"，改成"诊断驱动"是立刻可做且见效的升级。</li>
+<li><strong>步级判分（抽取最长有效前缀）</strong>是本篇最被低估的技巧。它把二值稀疏奖励变成稠密监督，任何 multi-turn agent 训练都能用，且在小规模上就能验证收益。</li>
+<li><strong>"环境失败"单列成一类</strong>——很多小团队的 RL 训练不收敛，根因就是把环境抖动算进了模型的错。加一个三分类 judge 是低成本高回报。</li>
+<li><strong>中间成功率课程池 + 监控池</strong>的双池设计，实现成本很低。</li>
+<li><strong>弱点即机会</strong>：报告没有说明失败原因分类体系是怎么来的、有多少类、准不准。一个<strong>开放、可审计的 agent 失败模式分类法（taxonomy）</strong>本身就是有价值的公共品，而且是小团队能做成标准的东西。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>它给出的最强信号是：<strong>决定 agent 上限的不是算法，是"题目从哪来"</strong>。Qwen 用真机农场解决了"环境真实性"，用 agent 飞轮解决了"题目供给"。小团队没有真机农场，但"题目供给"这一侧完全开放。</p>
+<p>配合 <a href="#r05">第 05 篇（Qwen-AgentWorld，用世界模型造环境）</a>，一个自然的差异化方向浮现出来：<strong>把"诊断驱动的任务合成"和"模型生成的环境"接在一起，做一条不依赖物理设备的飞轮</strong>。这条路阿里自己都还没接通（两篇论文各做一半），是真实存在的空隙。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 04 ============ -->
+<section class="entry" id="r04">
+<h2><span class="rank">04</span>DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence</h2>
+<p class="meta">DeepSeek-AI · 2026-04（笔记记为 arXiv v1 2026-04-26；官方模型卡 2026-04-27，模型 4 月 24 日发布）· <a href="https://arxiv.org/abs/2606.19348">arXiv:2606.19348</a> · <a href="https://huggingface.co/collections/deepseek-ai/deepseek-v4">权重（MIT）</a> · <a href="https://github.com/deepseek-ai/DeepGEMM">MegaMoE kernel</a></p>
+
+<div class="callout"><strong>⚠️ 元数据不一致</strong>：笔记记载的日期是 2026-04，但所给 arXiv 编号前缀 <code>2606</code> 对应 2026-06。两者必有一处需以原页面为准——引用发表日期前请打开链接核对。</div>
+
+<h3>一句话</h3>
+<p>DeepSeek 明确把后训练拆成两段：先各领域独立养专家（SFT + GRPO），再用<strong>在线蒸馏</strong>把这些专家合并成一个统一模型——用"分头 RL + 蒸馏合并"取代了"在一个模型上做所有 RL"。这是本轮最重要的后训练范式转变，而且权重是 MIT 协议全开放。</p>
+
+<h3>机制拆解</h3>
+<p><strong>什么被修改</strong>——两层：先是各个领域专家的权重，再是统一模型的权重。</p>
+<p><strong>第一阶段 · 独立培养领域专家</strong>：四个领域——数学、代码、agent、指令遵循。每个领域先在该领域高质量数据上做 SFT 建立基础能力，再用 <strong>GRPO</strong> 做强化学习，由"针对该领域成功标准定制的奖励模型"引导。</p>
+<p><strong>第二阶段 · 统一模型合并</strong>：统一模型作为<strong>学生</strong>，对多个教师优化<strong>反向 KL 损失</strong>，在自己采样的分布上做 on-policy distillation。关键点：这是在线蒸馏（学生自己采样、教师打分），不是离线拿教师输出做 SFT——所以学生不会去学自己根本到不了的分布，训练信号始终落在学生的实际状态上。</p>
+<p><strong>谁来评估 / 改进信号从哪来</strong>——第一阶段是各领域定制奖励模型 + 可验证信号；第二阶段就是教师的逐 token 对数概率。这里有个重要的结构性含义：<strong>第二阶段不需要任何外部奖励</strong>，所有"外界的判断"都已经被固化在教师权重里了。</p>
+<p><strong>配套的几个专家训练组件</strong>（论文列出但展开有限）：Reasoning Efforts（可变计算预算，对应产品侧 Non-think / Think High / Think Max 三档）、Generative Reward Model、Tool-Call Schema and Special Token（工具调用用专用 special token 表达，而不是塞进自然语言里）、Interleaved Thinking（思考与工具调用交织）、Quick Instruction。</p>
+<p><strong>循环怎么闭合</strong>——统一模型发布后又成为下一代的基座。DeepSeek 的迭代周期本身就是那个大循环。</p>
+
+<h3>证据与评估</h3>
+<ul>
+<li>规模：V4-Pro 1.6T 参数 / 49B 激活，预训练 33T tokens；V4-Flash 284B / 13B 激活，32T tokens。1M 上下文。</li>
+<li>架构：混合注意力 = CSA（沿序列维压缩 KV + DeepSeek Sparse Attention）+ HCA（更重压缩 + dense attention）；mHC（把残差映射约束在双随机矩阵流形 / Birkhoff 多面体上）；Muon 优化器。</li>
+<li>效率：1M 上下文下 V4-Pro 单 token 推理 FLOPs 仅为 V3.2 的 <strong>27%</strong>、KV cache 仅 <strong>10%</strong>；V4-Flash 分别是 <strong>10%</strong> 和 <strong>7%</strong>。</li>
+<li>能力：SimpleQA / Chinese-SimpleQA 明显超过其它开源模型；标准推理 benchmark 上 Pro-Max 优于 GPT-5.2 与 Gemini-3.0-Pro；1M 长上下文学术 benchmark 上超过 Gemini-3.1-Pro。</li>
+<li>硬件：NVIDIA GPU <strong>和华为昇腾 NPU</strong> 双平台。</li>
+<li>开放度：<strong>本批最高</strong>。权重 MIT；MegaMoE mega-kernel 开源；混合注意力给了参考实现以消除歧义。</li>
+<li>官方"技术文档"（transparency center 的 PDF）是合规性模型卡，几乎无机制信息——<strong>真正的技术报告是 arXiv 这一篇，不要搞混</strong>。</li>
+</ul>
+
+<h3>工程护城河</h3>
+<ul>
+<li>33T token 的预训练本身。</li>
+<li>MegaMoE：CUDA mega-kernel，与 DeepGEMM 一起开源，但要用起来需要匹配的集群。</li>
+<li>双平台（NVIDIA + 昇腾）训练/推理栈，是国内特有的供应链护城河。</li>
+<li>四个领域各做完整 SFT+GRPO 的算力。</li>
+<li>各领域"定制奖励模型"的构建——论文没有给细节，<strong>这是最不透明也最值钱的部分</strong>。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>论文对后训练写得很省</strong>。数据量、训练成本、各领域样本规模、奖励模型怎么训——全部缺失。上面列的 Generative Reward Model / Interleaved Thinking 等组件只有名字，没有展开。</li>
+<li>四路并行的领域 RL，算力是单路的四倍。</li>
+<li>mHC（双随机矩阵流形约束）和 CSA/HCA 混合注意力的稳定训练，需要大规模才能验证，小规模复现结论可能不迁移。</li>
+<li>"十个教师合成一个"这类外部解读在正文里找不到明确对应——<strong>以论文原文的四领域说法为准，不要引用二手数字</strong>。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<ul>
+<li><strong>在线蒸馏（反向 KL，学生自采样）作为"能力合并算子"是本篇最可迁移的资产</strong>，而且在 7B~30B 规模上完全跑得动。与 <a href="#r01">Kimi K3 的 MOPD</a> 是同一个原语的两种写法——两家独立收敛到同一答案，说明这个方向是真的。</li>
+<li>对小团队意义更大的一层推论：<strong>你不需要一个能同时做好所有事的 RL 管线</strong>。可以一次只针对一个能力做小规模 RL（便宜、快、好调），积累若干专家，最后统一蒸馏。这把"RL 训练"从一个巨型工程拆成了可并行、可失败、可重来的小任务——<strong>这是小团队相对大厂唯一的结构性优势（迭代粒度）</strong>。</li>
+<li><strong>弱点即机会</strong>：多教师蒸馏的<strong>冲突处理</strong>（两个教师在同一 token 上给出相反偏好时怎么办）两家都没有正面回答。这是一个定义清晰、规模无关、可以做出真贡献的研究问题。</li>
+<li>权重 MIT 开放意味着可以直接拿 V4-Flash（284B/13B 激活）做教师或学生来做实验。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>DeepSeek 在这一代给出的判断是：<strong>RL 负责"产生能力"，蒸馏负责"整合能力"</strong>——两件事被明确分开了。这与"一个大 RL 管线包打天下"的旧范式是决裂的。</p>
+<p>对选方向的启示：如果要做自演化系统，<strong>"能力整合层"是一个被严重低估、且不需要巨额算力的位置</strong>。目前公开的做法（反向 KL 在线蒸馏）非常朴素：无冲突仲裁、无遗忘度量、无教师可信度加权。谁把"如何把 N 个专家安全地合并成一个而不丢能力"做成一门可靠的技术，谁就拿到了所有分布式自改进系统的必经环节。这是一个门槛在算法、不在算力的根本性差异化方向。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="entry" id="r05">
+<h2><span class="rank">05</span>Qwen-AgentWorld: Language World Models for General Agents</h2>
+<p class="meta">阿里巴巴 Qwen Team · 2026-06 · <a href="https://arxiv.org/abs/2606.24597">arXiv:2606.24597</a> · <a href="https://github.com/QwenLM/Qwen-AgentWorld">代码</a> · <a href="https://huggingface.co/Qwen/Qwen-AgentWorld-35B-A3B">权重 35B-A3B</a> 与 397B-A17B（Apache-2.0）</p>
+
+<h3>一句话</h3>
+<p>不造环境，<strong>生成</strong>环境：训一个模型专门预测"agent 做了这个动作后，终端/浏览器/安卓屏幕会返回什么"，一个模型同时模拟七类环境，让 agentic RL 不再被真实环境的数量卡住。权重 Apache-2.0 全开放——这是本批里对小团队<strong>最直接可用</strong>的一件武器。</p>
+
+<h3>机制拆解</h3>
+<p><strong>它是什么</strong>——一个"语言世界模型"（Language World Model, LWM）。输入当前观察 + agent 的动作，输出下一个观察。agent 点了个按钮、敲了条 shell 命令、调了个 API、发了个搜索——模型预测环境会返回什么。</p>
+<p><strong>七个域，一个模型</strong>：文本类（MCP、Search、Terminal、SWE）+ GUI 类（Web、OS、Android）。论文的一个核心发现是知识在这些域之间<strong>互相迁移</strong>——同一个模型学 Terminal 的状态转移，对理解 SWE 也有帮助。</p>
+<p><strong>它自己怎么被训出来</strong>（三阶段）：1) <strong>CPT</strong>：注入状态转移动态 + 世界知识，基于 1000 万+ 条跨七域的交互轨迹；2) <strong>SFT</strong>：激活 "next-state prediction" 的思维模式——让模型学会用长 CoT 去推演"接下来环境会怎样"，而不是直接猜；3) <strong>RL</strong>：用<strong>混合 rubric + 规则奖励</strong>锐化模拟保真度。规则奖励管可判定的部分（返回值格式、退出码），rubric 管"这个页面看起来合不合理"这类软判断。</p>
+<p><strong>它在闭环里的两个位置</strong>（本篇最聪明的地方）：</p>
+<ul>
+<li><strong>位置 A · 解耦的环境模拟器</strong>：为 agentic RL 提供"数千个真实世界环境"的可扩展、可控模拟。原来做 agent RL 你得真的部署几千个 Docker / 真机；现在环境本身是一次前向推理。</li>
+<li><strong>位置 B · 统一的 agent 基座模型</strong>：世界模型训练本身就是一种有效的预训练——在 7 个 agentic benchmark 上提升下游表现。也就是说"学会预测环境"顺带让模型"更会在环境里行动"。</li>
+</ul>
+<p><strong>循环怎么闭合</strong>——agent 在世界模型里采样 → 拿奖励 → 更新策略；世界模型也可以拿真实环境的数据继续校准。真实环境从"每条轨迹都必须跑"降级成"只用来校准模拟器"，环境样本消耗断崖式下降。</p>
+
+<h3>证据与评估</h3>
+<ul>
+<li>训练数据：1000 万+ 条跨七域交互轨迹。</li>
+<li>模型：两个 MoE 尺寸，35B-A3B（3B 激活）与 397B-A17B（17B 激活）。</li>
+<li>AgentWorldBench（随论文一起放出的评测套件）上<strong>超过 GPT-5.4</strong>。</li>
+<li>下游：作为 agent 基座在 7 个 agentic benchmark 上提升。</li>
+<li>开放度：<strong>本批最高之一</strong>——两个尺寸的权重 Apache-2.0、训练/评测代码、各域 system prompt、benchmark 全部开放。已有第三方量化版本（GGUF / AWQ-INT4）。</li>
+</ul>
+
+<h3>工程护城河</h3>
+<ul>
+<li><strong>1000 万条跨七域真实交互轨迹</strong>。这是唯一真正抄不走的部分——要有真实的终端、浏览器、安卓设备、SWE 仓库去跑出这些轨迹。阿里有 <a href="#r03">Qwen-UI-Agent 的真机农场</a>作为供给侧。</li>
+<li>七域统一的状态表示设计——把终端输出、网页 DOM、安卓屏幕统一成一种语言表示，这套 schema 是隐性资产。</li>
+<li>397B MoE 的训练算力。</li>
+<li>但要注意：<strong>权重开放让这条护城河大部分失效了</strong>。你不需要重造轨迹，直接用他们的模型。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>保真度即天花板，而论文没有给出"模拟器误差如何传导到策略性能"的定量分析</strong>。世界模型幻觉出一个不存在的 API 返回值，agent 就学会了一个在真实世界不成立的策略。这是经典的 model-based RL 风险，论文用 rubric+规则 RL 缓解，但没有量化残余误差。</li>
+<li><strong>长程漂移</strong>。单步预测准不代表 50 步后的模拟状态还可信。论文的评测偏向单步/短程 next-state prediction，长程复合误差是明显的缺口。</li>
+<li>七域覆盖不等于你的域被覆盖。做垂直领域的话要自己续训。</li>
+<li>397B 版本的推理成本本身不低——用世界模型省下的环境成本，一部分又付给了推理。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<p><strong>这是八篇里投入产出比最高的一件工具。</strong></p>
+<ul>
+<li>直接下载 35B-A3B（3B 激活，单机可跑），把自己的 agentic RL 环境成本降一个数量级。不需要复现任何东西。</li>
+<li><strong>明确的研究空隙 · 长程保真度</strong>：建一套"模拟器 vs 真实环境"的长程一致性度量，找出误差在第几步开始主导。这是论文没做、别人也没做、成本低、结论有普遍价值的工作。</li>
+<li><strong>明确的研究空隙 · 混合循环</strong>：用世界模型跑绝大多数 rollout，只在"模拟器自己不确定"时才去打真实环境。这要求世界模型能输出校准的不确定度——论文完全没碰。这是一个定义清晰的、可以做成通用组件的方向。</li>
+<li><strong>与 <a href="#r03">03 篇</a>接起来</strong>：Qwen-UI-Agent 的"诊断驱动任务合成" + AgentWorld 的"生成式环境" = 一条不需要真机农场的完整飞轮。阿里内部这两篇是分开的，接口没打通，这是现成的空隙。</li>
+<li>弱点：rubric 奖励怎么设计、rubric 与规则奖励如何加权，论文给得很粗——这块细节是可以做出改进的。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>它宣告了一件事：<strong>"环境"正在从基础设施变成模型能力</strong>。过去 agentic RL 的护城河是"你有没有几千个真实环境"，现在变成"你的世界模型准不准"。对没有真机农场、没有万卡的团队，这是一次<strong>门槛的重新洗牌</strong>——而且洗到了对小团队有利的一侧。</p>
+<p>选方向的启示：<strong>去做世界模型的"可信度"而不是"覆盖面"</strong>。覆盖面靠数据量，那是大厂的游戏；可信度（长程一致性、不确定度校准、误差传导）靠方法，那是小团队能赢的游戏。而且这个能力是所有 model-based 自演化系统的共同前提——做成了就是所有人的依赖项。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="entry" id="r06">
+<h2><span class="rank">06</span>Sample-Efficient Learning from Agent Experience（经验蒸馏 / EPD）</h2>
+<p class="meta">ByteDance Seed + Monash University · 2026-07 · <a href="https://arxiv.org/abs/2607.21051">arXiv:2607.21051</a> · 代码/权重：无（论文未给出明确的开源仓库）</p>
+
+<h3>一句话</h3>
+<p>agent 反复试错攒下的"经验"，直接拿去 SFT 只能保住 3.8% 的收益，而用<strong>经验蒸馏</strong>能保住 64.8%——而且比 PPO/GRPO 少用 9.6~57 倍的环境交互。这篇把"上下文里的经验"变成"权重里的能力"这条路打通了，是记忆系统与训练系统之间那座缺失的桥。</p>
+
+<h3>机制拆解</h3>
+<p>问题的起点很具体：agent 在一个任务上反复尝试，把之前的失败历史塞进上下文，表现会显著变好（in-context learning）。但这个收益是<strong>一次性的</strong>——换个任务、清空上下文，就没了。怎么把它固化进权重？</p>
+<p><strong>什么被修改</strong>——学生模型的权重。</p>
+<p><strong>经验怎么收集</strong>——agent 对同一任务反复尝试，每次尝试都以前几次的历史为条件。文字冒险游戏：每轮游戏状态重置，但历史保留。软件工程任务：历史<strong>和代码状态</strong>都保留、持续演化。</p>
+<p><strong>为什么直接 SFT 会失败（只保住 3.8%）</strong>——这是全文最重要的洞察。直接在收集到的轨迹上做 SFT，模型只是在<strong>复制观察到的动作</strong>，学到的是表面模式；而那些好动作之所以好，是因为教师<strong>看着经验做了上下文推理</strong>。动作被复制了，产生动作的推理过程丢了。</p>
+<p><strong>经验蒸馏（EPD）怎么做（保住 64.8%）</strong>——核心损失（论文式 2）：</p>
+<pre><code>L_EPD(θ; τ^exp) = −Σ_{t=0}^{T−1} E_{a'_t ~ π_θ₀(·|h_t^exp, τ^exp)} [ log π_θ(a'_t | h_t^exp) ]</code></pre>
+<p>读法：教师 <code>π_θ₀</code> 在<strong>有经验 τ^exp</strong> 的条件下采样动作；学生 <code>π_θ</code> 在<strong>没有经验</strong>的条件下去拟合这些动作；只做<strong>单步 rollout</strong>（从已记录的历史点出发走一步），不是重新生成整条轨迹。一句话：<strong>让学生在没有经验的情况下，做出有经验的教师才会做的决策</strong>。教师和学生是同一个模型，区别只在于上下文里有没有经验——所以这是严格意义上的自蒸馏，不引入外部更强模型。</p>
+<p><strong>三个让它真能跑起来的工程组件</strong>：1) <em>经验预处理</em>——把原始历史抽象/摘要化，保留任务相关信息（原始经验上下文 60~600 轮、8 万+ token，不处理根本塞不下）；2) <em>增强教师推理</em>——给教师加深度审议的 prompt 指令；3) <em>分支打包</em>——把连续多个教师决策堆进单条训练序列，4,096 条独立样本压成 128 条打包序列，<strong>训练时间降低 10 倍以上</strong>。</p>
+<p><strong>循环怎么闭合</strong>——agent 跑任务 → 攒经验 → 经验通过 ICL 提升当前表现 → EPD 把这个提升固化进权重 → 更强的 agent 去跑下一批任务。环境交互只在第一步消耗。</p>
+
+<h3>证据与评估</h3>
+<p>定义 <code>G_ICL = (S_m − S_ZS)/(S_ICL − S_ZS) × 100%</code>，即把方法归一化到 zero-shot(0%) 与 ICL 上界(100%) 之间。</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>指标</th><th>数值</th></tr></thead>
+<tbody>
+<tr><td>SFT 保住的 ICL 收益</td><td><strong>3.8%</strong></td></tr>
+<tr><td>EPD 保住（SWE 任务）</td><td><strong>64.8%</strong></td></tr>
+<tr><td>EPD 保住（TaleSuite 文字游戏）</td><td><strong>93.4%</strong></td></tr>
+<tr><td>SWE: ICL+EPD vs PPO</td><td>51.4% pass@1 vs 17.7%，环境样本少 <strong>9.6×</strong></td></tr>
+<tr><td>TaleSuite: ICL+EPD vs GRPO</td><td>43.8 vs 29.9 归一化分，环境样本少 <strong>57.2×</strong></td></tr>
+<tr><td>OOD 泛化（494 个未见任务）</td><td>pass@1 4.62% → 8.84%</td></tr>
+<tr><td>多任务经验数据总量</td><td>6,170 万 experience tokens</td></tr>
+<tr><td>分支打包加速</td><td>&gt;10×</td></tr>
+</tbody>
+</table>
+</div>
+<p>设定：749 个精选软件工程任务（agent 拿到 issue 和仓库，可读代码、改文件、跑命令、看 commit 反馈）+ 6 个文字冒险游戏（TaleSuite，七任务池：Acorncourt / Balances / Detective / Enter / Inhumane / Library / Reverb）。注意<strong>"一个环境样本 = 一次完整的 agent 尝试"，不是一步交互</strong>。开放度：<strong>低</strong>——无代码、无数据集链接，但机制完整到可以独立实现。</p>
+
+<h3>工程护城河</h3>
+<p><strong>几乎没有护城河，这正是它的价值。</strong></p>
+<ul>
+<li>不需要 RL 基础设施：没有 rollout 调度、没有优势估计、没有 KL 控制器、没有 critic。就是一个加权交叉熵。</li>
+<li>不需要奖励模型、不需要验证器（评分只用于选经验，不进损失）。</li>
+<li>唯一的规模项是 749 个 SWE 任务环境（Docker 化的仓库），以及 6,170 万 token 的经验采集。</li>
+<li>字节 Seed 的贡献主要是任务集和算力，方法本身极轻。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>上界就是 ICL 的上界</strong>。EPD 最多把 ICL 的收益搬进权重，搬不出更多。如果任务本身 ICL 提升不大，这个方法没有用武之地。</li>
+<li><strong>依赖长上下文教师</strong>。8 万+ token 的经验上下文意味着教师必须有很强的长上下文能力，且教师推理成本高（虽然总成本仍远低于 RL 的环境交互）。</li>
+<li><strong>经验预处理（摘要化）是个没有被充分消融的黑盒</strong>。摘要丢掉了什么、丢掉的东西是否正是关键——论文没有深入。</li>
+<li>64.8% 意味着<strong>仍有 35% 的收益漏掉了</strong>，论文没有解释漏在哪。</li>
+<li>无代码，需要自己实现（但实现量不大）。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<p><strong>这是八篇里最适合作为第一个动手项目的。</strong></p>
+<ul>
+<li>方法极轻、结论极强、复现成本以周计而非月计。一张卡 + 一个任务集就能验证 "3.8% vs 64.8%" 这个核心对照。</li>
+<li><strong>直接可用的产品化路径</strong>：任何跑 agent 的系统（包括自己的开发环境）都在持续产生"试错历史"。EPD 给了一条把这些历史变成模型能力的、不需要 RL 基础设施的路。这是"记忆系统"和"训练系统"之间目前唯一便宜的连接方式。</li>
+<li><strong>弱点即机会</strong>（三个都很实在）：<em>那漏掉的 35%</em>——为什么 TaleSuite 能保住 93.4% 而 SWE 只有 64.8%？差异来自任务的什么性质？<em>经验预处理</em>——目前是启发式摘要，做成可学习的、或按下游 EPD 损失反向选择保留什么，是明确的改进方向。<em>迭代化</em>——论文只做了一轮"采经验 → 蒸馏"。做成多轮（蒸馏后的模型再去采新经验）会不会持续增益、还是会崩塌？<strong>论文没做，这是最直接的自演化延伸</strong>。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>它把一个常被混淆的问题讲清楚了：<strong>"经验"和"数据"不是一回事</strong>。轨迹是数据，直接学它只学到模仿；经验是"有历史条件下的判断力"，要学的是判断力而不是动作。</p>
+<p>这对做自演化 agent 的方向选择意义很大：目前业界的 memory 系统绝大多数停在"把历史存起来、检索出来塞进上下文"——是<strong>外挂</strong>，不是<strong>成长</strong>。EPD 指出了从外挂到成长的那一步怎么走，而且便宜到小团队做得起。</p>
+<p>如果要选一个难的、有根本差异化的方向：<strong>做"经验 → 权重"这条通路的完整版</strong>——包括多轮迭代的稳定性、遗忘控制、哪些经验值得固化哪些该丢。这是 RSI 的核心机械，目前公开工作只走了一小步，且不需要万卡。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="entry" id="r07">
+<h2><span class="rank">07</span>EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments</h2>
+<p class="meta">ByteDance Seed · 2026-07 · <a href="https://arxiv.org/abs/2607.05155">arXiv:2607.05155</a> · <a href="https://github.com/ByteDance-Seed/EdgeBench">代码（51/134 任务 CC BY 4.0，SForge 评测框架 Apache-2.0）</a></p>
+
+<h3>一句话</h3>
+<p>把 5 个前沿模型扔进 134 个真实任务里各跑 12 小时以上、烧掉约 3.8 万小时交互，发现"agent 从环境中学习"的性能曲线服从一条极其干净的 <strong>log-sigmoid 规律（R² = 0.998）</strong>；并且模型代际之间的"学习速度"大约<strong>每三个月翻一倍</strong>。这是第一次有人把自改进循环的速率变成可测量、可外推的量。</p>
+
+<h3>机制拆解</h3>
+<p>这篇不是训练方法，是<strong>测量层</strong>——但对选方向的价值极高，因为它定义了"改进"该怎么被量化。</p>
+<p><strong>任务怎么造</strong>——134 个真实任务，六大领域：科研/ML(39)、软件工程(36)、组合优化(19)、专业知识工作(19)、形式化数学(13)、交互游戏(8)。人类专家构建每个任务的平均投入 <strong>57.2 小时</strong>，最高到 320 小时。这个数字本身就是本篇最硬的资产说明。</p>
+<p><strong>双层反馈（这是设计精髓）</strong>：<strong>内环 · agent 自控</strong>——agent 在工作区里操作、跑测试、看报错，想看多少次看多少次，自己掌握节奏；<strong>外环 · judge 中介</strong>——提交产物后，由隐藏测试或评判标准打分，返回<strong>校准过的分数或诊断</strong>，次数受限、权威。这正好映射真实工作流：开发者本地随便迭代，但只有部署/评审才给出权威校准。<strong>把"廉价的自我检查"和"昂贵的权威反馈"分开，是所有自改进系统都该有的结构。</strong></p>
+<p><strong>agent 怎么"学"</strong>——纯<strong>上下文内学习</strong>，全程<strong>不更新权重</strong>。学习完全发生在前向传播里，靠对任务历史的条件化。所以这篇量的是"模型利用反馈的能力"，不是"训练算法的能力"。证据：200k 对比 1M 上下文的 Claude Opus 4.8，2 小时时领先 +5.8 分，到 12 小时仍有 +4.4 分——上下文长度带来的是<strong>持续性</strong>优势，不是一次性优势。</p>
+<p><strong>改进信号从哪来</strong>——就是外环 judge 的校准分数。关键对照实验：累积经验 vs 独立重启。同一个 Opus 4.8、17 个任务，12 小时后累积经验 43.0 分 vs 独立重启 36.1 分（<strong>+6.9</strong>）。<strong>进步来自复用反馈，不是来自反复采样</strong>——这一句话就否定了"多试几次就行"的朴素路线。</p>
+<p><strong>规律本身</strong>：</p>
+<pre><code>S(t) = S_max / (1 + (t_mid / t)^β)</code></pre>
+<p><code>S_max</code> 可达性能上限；<code>t_mid</code> 达到半数性能所需的交互时间；<code>β</code> 转变陡峭程度。</p>
+
+<h3>证据与评估</h3>
+<ul>
+<li>拟合精度：134 任务平均后 <strong>R² = 0.998</strong>；分任务族 R² ≥ 0.997（全部 5 个模型）；28 小时（80 任务/4 模型）与 72 小时（18 任务/2 模型）长程 R² ≥ 0.993。</li>
+<li><strong>外推能力</strong>：只用<strong>前 6.5 小时</strong>拟合，预测剩余 12 小时轨迹 R² ≥ 0.997。意味着 agent 的环境学习是近乎确定性的动力学，可以提前预测。</li>
+<li>12 小时榜单：Claude Opus 4.8 <strong>51.3</strong> / GPT-5.5 <strong>48.4</strong> / GPT-5.4 <strong>39.3</strong> / GLM-5.1 <strong>37.4</strong> / DeepSeek-V4-Pro(preview) <strong>31.0</strong>。</li>
+<li>学习速度代际趋势：从 2025-09 的 GPT-5-Codex 到 2026-04 的 GPT-5.5，221 天内学习速度提升约 <strong>8×</strong>，log-linear 拟合对应<strong>约每三个月翻倍</strong>。在一个 18 任务的固定切片上测（各模型起点可比，初始分 6.87 ± 0.97），学习速度定义为固定 2 小时预算内的平均性能增益。</li>
+<li>而且是<strong>有效</strong>学习而非瞎提交：后期模型把更大比例的提交转化成了 best-so-far 的改进。</li>
+<li>引力波案例研究：224 次提交里只有 27 次让最佳成绩提升 ≥0.1pp，但结构化迭代最终把成绩从 42.8 推到 <strong>67.0（+24.2）</strong>。稀疏反馈照样能累积。</li>
+<li>规模：约 38,000 小时交互，每个任务-模型对 3 次独立试验。开放度：<strong>中高</strong>——51 个任务（约 38%）+ 完整评测框架 SForge（隔离 Docker 容器、harness、指标）公开，剩下 83 个需联系维护者。</li>
+</ul>
+
+<h3>工程护城河</h3>
+<ul>
+<li><strong>134 个任务 × 平均 57.2 小时专家构建 ≈ 7,600 小时专家工时</strong>。这是纯人力资本，抄不走，也是他们只放出 38% 的原因。</li>
+<li><strong>SForge 评测 harness</strong>：work-judge 双容器架构，要支撑单任务 12~72 小时连续运行、三次重复、五个模型——这套长跑基础设施本身很硬（不过它开源了）。</li>
+<li>约 38,000 小时的前沿模型 API 交互费用。</li>
+<li>隐藏测试集与评分校准。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>成本</strong>。想自己重跑一遍完整评测，光 API 就是巨额开销，何况 12 小时/任务 × 134 × 3 次 × 5 模型。</li>
+<li><strong>83 个任务不公开</strong>，榜单无法完整复现，只能在 51 个任务的子集上做。</li>
+<li><strong>"每三个月翻倍"的证据基础较窄</strong>：18 个任务的切片、只看 OpenAI 一条模型线、两个时间点做 log-linear 外推。<strong>方向性可信，具体倍数要打折</strong>。</li>
+<li>结论只适用于<strong>不更新权重</strong>的 in-context 学习。它没有回答"权重更新的自改进"是否遵循同样的规律——这是一个明确的、重要的、尚未回答的问题。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<ul>
+<li><strong>51 个开源任务 + SForge 是现成的高质量长程评测底座</strong>，别去重造。做自演化 agent 的话，这是目前公开可得的最好"考场"。</li>
+<li><strong>最大的空隙，写在论文的定义里</strong>：EdgeBench 测的是纯 in-context 学习。把 <a href="#r06">第 06 篇（经验蒸馏）</a>接上去——在 EdgeBench 的任务上，让 agent 边跑边把经验蒸回权重，看 log-sigmoid 曲线的 <code>S_max</code> 会不会被抬高、<code>t_mid</code> 会不会被压低。<strong>这是一个定义极清晰、用开源任务就能做、结论对整个领域有价值的实验，而且两篇论文都出自字节 Seed 却没有接起来。</strong></li>
+<li>三个参数给了自改进研究一套<strong>共同语言</strong>：不要再说"agent 变强了"，要说"是 <code>S_max</code> 升了（能力上限）还是 <code>t_mid</code> 降了（学得更快）还是 <code>β</code> 变陡了（更快进入状态）"。用这套语言评价自己的方法，说服力完全不同。</li>
+<li><strong>弱点即机会</strong>：外环 judge 的"校准分数"具体怎么校准，论文着墨不多。<strong>评测信号本身的校准质量是所有闭环的地基，值得单独做。</strong></li>
+</ul>
+
+<h3>方向启示</h3>
+<p>这篇给出的两个战略判断，比任何单个算法都重要：</p>
+<ol>
+<li><strong>"从环境中学习"是可预测的，不是玄学</strong>。6.5 小时就能外推 12 小时（R²≥0.997），说明这套动力学有结构。既然可预测，就可以被优化、被对比、被当作工程指标管理。</li>
+<li><strong>学习速度每三个月翻倍</strong>——如果这个趋势哪怕只对一半，那么"agent 在部署后自己变强"的速率增长会快于"模型本身变强"的速率。方向选择上这意味着：<strong>押注"改进循环的效率"比押注"模型的绝对能力"更有杠杆</strong>，因为前者的增长曲线更陡，而且是小团队能参与的。</li>
+</ol>
+<p>具体到选一个难的方向：<strong>去补 EdgeBench 明确留下的那个洞——权重更新的自改进是否遵循同一条规律</strong>。这个问题有清晰的定义、有开源的考场、有已知的对照基线（纯 in-context 曲线），成本可控，而且答案无论正负都是领域级的贡献。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+<!-- ============ 08 ============ -->
+<section class="entry" id="r08">
+<h2><span class="rank">08</span>Advancing Mathematics Research with AI-Driven Formal Proof Search（AlphaProof Nexus）</h2>
+<p class="meta">Google DeepMind（+ Aarhus University）· 2026-05 · <a href="https://arxiv.org/abs/2605.22763">arXiv:2605.22763</a> · <a href="https://github.com/google-deepmind/alphaproof-nexus-results">结果仓库</a>（Lean 证明 Apache-2.0 / CC BY 4.0；系统本身未开源）</p>
+
+<h3>一句话</h3>
+<p>在 Lean 形式化验证器的地基上搭了一套演化式的多 agent 证明搜索，自主解决了 353 个未解 Erdős 问题中的 9 个（其中两个开放了 56 年）和 492 个 OEIS 猜想中的 44 个——而且<strong>全程不做任何训练</strong>，纯推理时搜索。它证明了一件事：当验证器是绝对可靠的，闭环可以完全不碰权重就产出新知识。</p>
+
+<h3>机制拆解</h3>
+<p><strong>什么被修改</strong>——不是权重，是<strong>证明草稿（proof sketch）的种群</strong>。改进发生在一个不断演化的候选池里。</p>
+<p><strong>四级架构，逐级加码</strong>（这个消融设计本身就很值得学）：</p>
+<ul>
+<li><strong>Agent A（基础）</strong>：独立的 prover 子 agent 各跑自己的 "Ralph loop"——多轮 LLM 会话 + Lean 编译器反馈，用 search-and-replace 工具改证明草稿。任何一个成功，其余全部终止。</li>
+<li><strong>Agent B</strong>：在 A 的基础上，允许中途把子目标交给 <strong>AlphaProof</strong> 当作专用证明工具去查。</li>
+<li><strong>Agent C</strong>：引入演化协调——一个共享的种群数据库，对<strong>未完成的草稿</strong>也给 Elo 评分。</li>
+<li><strong>Agent D（完整版）</strong>：演化 + AlphaProof + 异步的 prover/rater 双子 agent 池。用 <strong>P-UCB</strong> 采样选父代草稿，把过往尝试的反馈组装进 prompt，再经全局 goal cache 校验后送去形式化验证。</li>
+</ul>
+<p><strong>谁来评估——两个评估器，分工明确，这是全篇最关键的设计</strong>：</p>
+<ol>
+<li><strong>Lean 编译器（硬评估，绝对可靠）</strong>：每次 LLM 改完代码就类型检查，报错原文喂回去。完成的证明必须是 sorry-free，并由 <strong>SafeVerify</strong> 检查没有引入被禁公理（含 <code>sorryAx</code>）。<strong>这一层不可能被骗。</strong></li>
+<li><strong>Rating agent（软评估，Gemini 3.0 Flash）</strong>：给未完成草稿的"看起来靠不靠谱、清不清楚"打分，用 <strong>Plackett-Luce</strong> 模型把两两比较转成 Elo。</li>
+</ol>
+<p><strong>改进信号从哪来</strong>——这正是本篇要解决的核心难题：<strong>形式化证明的原生信号是二值的（证出来/没证出来），而且绝大多数时候是 0</strong>，稀疏到没法搜索。解法是用软评估器给"半成品"打分，把二值信号插值成连续的适应度，让演化算法有梯度可循。<strong>硬评估器保正确性，软评估器保可搜索性</strong>——两者各司其职，软评估器判错了也只是浪费算力，绝不会产出错误定理。</p>
+<p><strong>循环怎么闭合</strong>：完成的证明 → 成功信号，终止；编译错误 → 原文喂回 LLM；未完成草稿 → 进种群数据库，被打 Elo → 作为下一代父本；<strong>全局 goal 缓存</strong>：子目标做哈希，之前解过就直接取回 tactic 序列——<strong>跨问题、跨 agent 的共享记忆，是这套系统里唯一持久化的"学到的东西"</strong>；AlphaProof 对剩余目标给出证明/反证/超时，结果进入下一轮 prompt 构造。</p>
+
+<h3>证据与评估</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>结果</th><th>数值</th></tr></thead>
+<tbody>
+<tr><td>Erdős 问题</td><td><strong>9 / 353</strong>（#12(i)、#12(ii)、#125、#138、#152、#741(i)、#741(ii)、#846、#26）</td></tr>
+<tr><td>OEIS 猜想</td><td><strong>44 / 492</strong>（从 2,649 个候选自动形式化而来）</td></tr>
+<tr><td>开放代数几何问题</td><td>2 / 4（含一个开放 15 年的 Hilbert 函数问题）</td></tr>
+<tr><td>最久的 Erdős 问题</td><td>开放 <strong>56 年</strong>（#12）</td></tr>
+<tr><td>单题推理成本</td><td>每个 Erdős 问题<strong>数百美元</strong>（按难度有 2~5× 波动）</td></tr>
+<tr><td><strong>AlphaProof 单独（纯树搜索）</strong></td><td><strong>0 / 9</strong></td></tr>
+<tr><td>基础 Agent A 事后重试那 9 题</td><td>9 / 9（但最难的几题成本显著更高）</td></tr>
+</tbody>
+</table>
+</div>
+<p>另有图论、优化（含一个发现了新参数的收敛率证明）、加性组合（Ben Green #57 的实值变体）、量子光学（N=d∈{4,6,10} 的多个构造）上的结果。模型：Gemini 3.1 Pro 做 prover，Gemini 3.0 Flash 做 rater。</p>
+<div class="callout"><strong>最有信息量的一个数字是 "AlphaProof 单独 = 0/9"</strong>：一个经过大规模 RL 训练的专用定理证明器，单独用完全解不出这些题；而把它作为工具塞进一个通用 LLM 的演化搜索循环里，就能解出 9 道。<strong>价值在编排，不在那个被训练过的组件。</strong></div>
+<p>开放度：<strong>中等偏低</strong>。所有 Lean 证明和部分自然语言证明开放（含第三方溯源到 OEIS / Erdős Problems），结果已登记到陶哲轩关于 AI 贡献 Erdős 问题的 wiki。但<strong>系统本身、harness、演化调度代码都没有开源</strong>。</p>
+
+<h3>工程护城河</h3>
+<ul>
+<li><strong>Gemini 3.1 Pro 级别模型的海量推理</strong>。数百美元一题 × 353 题 × 多轮配置消融，总账单可观。</li>
+<li><strong>AlphaProof 本身</strong>：一个用 RL 训出来的 Lean 定理证明器，未开源。</li>
+<li><strong>Formal Conjectures 仓库与 OEIS 自动形式化流水线</strong>（2,649 → 492 的筛选转化）——把自然语言猜想变成 Lean 命题，这层工程量很大且质量决定一切。</li>
+<li>异步子 agent 池 + 种群数据库 + 全局 goal 缓存的调度系统。</li>
+</ul>
+
+<h3>真正难在哪</h3>
+<ol>
+<li><strong>只在有形式化验证器的领域成立</strong>。Lean 给了一个不可能被欺骗的 oracle，这是 99% 的现实任务都没有的奢侈品。这既是本文成功的原因，也是它可迁移性的边界。</li>
+<li><strong>自动形式化是隐藏的瓶颈</strong>：2,649 个候选只转化出 492 个可用命题（约 18.6%）。形式化本身就是一道窄门。</li>
+<li>成功率本身不高（Erdős 2.5%、OEIS 8.9%），意味着这是一台"高成本低命中"的机器——依赖的是"错了不要紧，对了就是新定理"的非对称收益结构。</li>
+<li>系统未开源，复现要从架构描述重建。</li>
+</ol>
+
+<h3>我们的机会</h3>
+<ul>
+<li><strong>"硬验证器 + 软评分器"这个二元结构是可以直接搬走的</strong>，而且搬到没有 Lean 的领域正是机会所在：单元测试/编译器是硬验证器，LLM rubric 是软评分器。多数团队只用了其中一个——只用硬的就会因信号太稀疏而搜不动，只用软的就会 reward hacking。<strong>两个一起用、分工明确，是本篇给出的最可迁移的一条设计原则。</strong></li>
+<li><strong>P-UCB + Elo 的半成品评分机制</strong>很轻，任何有"部分进度"概念的任务（长程 agent 轨迹、多步重构、增量迁移）都能用。核心思想：<strong>给未完成的东西打分，而不是只给完成的东西打分</strong>。</li>
+<li><strong>全局 goal 缓存</strong>是极简版的跨任务记忆，实现成本极低但效果直接（跨问题复用子目标解法）。值得作为通用组件。</li>
+<li><strong>弱点即机会</strong>：(a) 软评分器（Gemini Flash 的 Elo）的<strong>校准质量完全没有被评估</strong>——它到底多大程度上预测了"这个草稿最终能否走通"？这是个便宜且重要的实验；(b) 全局 goal 缓存是唯一的持久学习，但它是纯查表，没有泛化——"学会的子目标能否泛化到相似但不相同的目标"是个开放问题；(c) 整个系统不训练，把搜索中积累的成功轨迹回灌去训练（配合 <a href="#r06">第 06 篇</a>的思路）是个明显的、没人做的下一步。</li>
+</ul>
+
+<h3>方向启示</h3>
+<p>这篇给出的判断最锋利：<strong>闭环的质量 = 验证器的质量</strong>。有 Lean 的地方，纯推理时搜索就能产出人类未知的新定理，完全不需要训练；没有可靠验证器的地方，再大的模型和再多的 RL 也只是在优化一个会被欺骗的代理指标。</p>
+<p>对"选一个难的、有根本差异化的方向"，这指向一个非常具体的位置：<strong>把"可靠验证"从数学扩展到更广的领域</strong>。不是造更强的 agent，是造<strong>更难被骗的评判者</strong>——形式化的、可执行的、可审计的验证层。这件事与 <a href="#r02">第 02 篇（Anthropic 的天花板卡在 benchmark 完备性）</a>、<a href="#r01">第 01 篇（Kimi 的整条链吊在 GRM 上）</a>、<a href="#r05">第 05 篇（世界模型的保真度无保证）</a>指向的是<strong>同一个瓶颈</strong>。八篇报告从四个完全不同的角度收敛到同一个结论，这本身就是最强的方向信号。</p>
+<p class="backlink"><a href="#table">↑ 回到索引</a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>RSI 阅读指南 · 快照 2026-09-13 · <a href="index.html">首页</a> · <a href="direction.html">方向判断</a> · <a href="papers.html">论文</a></p>
+    <p>内容由 Claude 在指定筛选标准下检索与撰写；数字与链接以原报告为准。CC BY 4.0。</p>
+  </div>
+</footer>
+</body>
+</html>
