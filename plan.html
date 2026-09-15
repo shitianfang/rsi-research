@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究计划 · 先写下答案，再做东西 · RSI 阅读指南</title>
+<style>
+:root{
+  --bg:#fbfaf7; --panel:#ffffff; --ink:#252220; --muted:#6d6760; --faint:#8d867d;
+  --line:#e7e2d9; --line-soft:#f1ede5; --accent:#2f5d7c; --accent-soft:#eaf1f6;
+  --warn:#8a5a1f; --warn-bg:#fdf5e8; --warn-line:#ecd9b8; --code:#f3f0e9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16171a; --panel:#1c1e22; --ink:#e5e2dc; --muted:#a59e95; --faint:#8b847b;
+    --line:#2f3339; --line-soft:#24272c; --accent:#8ab6d4; --accent-soft:#1f2a33;
+    --warn:#ddb578; --warn-bg:#2a2317; --warn-line:#4a3d24; --code:#22252a;
+  }
+}
+*{box-sizing:border-box}
+html{font-size:17px; -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",sans-serif;
+  line-height:1.85; letter-spacing:.01em;
+}
+a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--accent)}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.2rem}
+.site-head{border-bottom:1px solid var(--line); background:var(--panel)}
+.site-head .wrap{display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; align-items:baseline; padding-top:.9rem; padding-bottom:.9rem}
+.brand{font-weight:600; font-size:.95rem; letter-spacing:.02em; margin-right:auto}
+.brand a{color:var(--ink)}
+.site-head nav a{font-size:.88rem; color:var(--muted)}
+.site-head nav a.on{color:var(--accent); border-bottom:1px solid var(--accent)}
+.site-head nav{display:flex; gap:1.1rem; flex-wrap:wrap}
+main{padding:2.6rem 0 4rem}
+h1{font-size:1.85rem; line-height:1.45; margin:0 0 .5rem; letter-spacing:0}
+h2{font-size:1.3rem; line-height:1.55; margin:3rem 0 .6rem; padding-top:.6rem; border-top:1px solid var(--line)}
+h3{font-size:1.02rem; margin:1.9rem 0 .4rem; letter-spacing:0}
+h4{font-size:.9rem; margin:1.2rem 0 .2rem; color:var(--accent); letter-spacing:.04em}
+p{margin:.75rem 0}
+ul,ol{margin:.7rem 0; padding-left:1.4rem}
+li{margin:.4rem 0}
+strong{font-weight:600}
+code{background:var(--code); padding:.1em .35em; border-radius:3px; font-size:.86em; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.lede{color:var(--muted); font-size:1.02rem}
+.stamp{font-size:.82rem; color:var(--faint); margin:0 0 2rem; letter-spacing:.03em}
+.bleed{width:min(64rem,94vw); margin-left:50%; transform:translateX(-50%)}
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--panel); margin:1.2rem 0}
+table{border-collapse:collapse; width:100%; font-size:.84rem; line-height:1.6}
+th,td{text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--line-soft); vertical-align:top}
+th{background:var(--accent-soft); color:var(--ink); font-weight:600; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.nw,th.nw{white-space:nowrap}
+.callout{background:var(--warn-bg); border:1px solid var(--warn-line); border-left:3px solid var(--warn); border-radius:6px; padding:.7rem 1rem; font-size:.9rem; color:var(--warn); margin:1.2rem 0}
+.callout strong{color:var(--warn)}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:1.1rem 1.3rem 1.3rem; margin:1.4rem 0}
+.card h3{margin-top:.2rem}
+.dirhead{display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap}
+.dirtag{font-size:.74rem; letter-spacing:.08em; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:.1rem .5rem; white-space:nowrap}
+.quiet{color:var(--muted); font-size:.9rem}
+.kicker{font-size:.8rem; color:var(--faint); letter-spacing:.08em; text-transform:uppercase; margin:2.4rem 0 -.4rem}
+blockquote{margin:1rem 0; padding:.2rem 0 .2rem 1rem; border-left:2px solid var(--line); color:var(--muted); font-size:.94rem}
+footer{border-top:1px solid var(--line); margin-top:4rem; padding:1.6rem 0 3rem; font-size:.82rem; color:var(--faint)}
+footer a{color:var(--muted)}
+@media (max-width:640px){
+  html{font-size:16px}
+  h1{font-size:1.5rem}
+  .bleed{width:100%; margin-left:0; transform:none}
+}
+</style>
+<style>
+.sketch{background:var(--code); border:1px solid var(--line); border-radius:8px;
+  padding:1rem 1.1rem; margin:1.1rem 0; overflow-x:auto;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace;
+  font-size:.8rem; line-height:1.55; color:var(--ink); white-space:pre;}
+.sketch b{color:var(--accent); font-weight:600}
+.sketch i{color:var(--warn); font-style:normal; font-weight:600}
+.sketchcap{font-size:.82rem; color:var(--faint); margin:-.5rem 0 1.4rem}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.1rem 0}
+.two .sketch{margin:0}
+@media (max-width:720px){ .two{grid-template-columns:1fr} }
+.step{display:flex; gap:.85rem; align-items:flex-start; margin:.9rem 0}
+.stepn{flex:0 0 1.7rem; height:1.7rem; border-radius:50%; background:var(--accent-soft);
+  color:var(--accent); font-size:.82rem; font-weight:600; display:flex;
+  align-items:center; justify-content:center; margin-top:.15rem}
+.verdict{display:inline-block; font-size:.74rem; letter-spacing:.06em; border-radius:4px;
+  padding:.08rem .45rem; white-space:nowrap; border:1px solid}
+.v-open{color:var(--accent); background:var(--accent-soft); border-color:var(--accent)}
+.v-dead{color:var(--warn); background:var(--warn-bg); border-color:var(--warn-line)}
+.v-done{color:var(--muted); background:var(--line-soft); border-color:var(--line)}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <span class="brand"><a href="index.html">RSI 阅读指南</a></span>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="direction.html">方向判断</a>
+      <a href="plan.html" class="on">研究计划</a>
+      <a href="papers.html">论文</a>
+      <a href="reports.html">报告</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<h1>先写下答案，再做东西</h1>
+<p class="lede">一个不需要人、难度自己会长的改进循环。这页说清楚它的原理、为什么别的地方也能用，以及我们接下来具体做什么。</p>
+<p class="stamp">2026-09-15 · 承接 <a href="direction.html">方向判断</a> 与 notes/directions/01</p>
+
+<h2>一、普通做法为什么是死路</h2>
+
+<p>做完一个东西再问"好不好"，这个问题没有机器能回答的答案——只能找人。找人就慢，慢就没有迭代，没有迭代就没有进化。</p>
+
+<div class="sketch">普通做法
+    做出一个东西  ──→  问 <i>"好不好?"</i>  ──→  没有答案，只能找人
+
+
+这个做法 —— 把顺序<b>反过来</b>
+
+    <b>① 先写意图</b>          <b>② 做出来</b>        <b>③ 受限条件下读回来</b>
+    ┌──────────────┐        ┌────────┐         ┌──────────────┐
+    │ 先读大标题   │        │        │         │  只能看 3 眼 │
+    │ 再读价格     │ ─────→ │  版面  │ ──────→ │  1/4 分辨率  │ ──→ <b>④ 对比</b>
+    │ 最后看按钮   │        │        │         │  有干扰      │      │
+    └──────────────┘        └────────┘         └──────────────┘      │
+           │                                                          │
+           └────────── 答案在这里，是<b>你自己写的</b> ───────────────┘</div>
+<p class="sketchcap">④ 是纯机械对比：读回来的顺序 == 你写的顺序吗？机器自己就能判。</p>
+
+<div class="card">
+<h3>关键在于：真值不是采集来的，是先写下的</h3>
+<p>你本来就是<strong>带着目的</strong>去做东西的，那个目的就是答案。把它先写下来，检验就变成可机器判定的对比。这一步不需要任何人、任何标注、任何偏好数据。</p>
+</div>
+
+<h2>二、"受限"是关键，没有它整件事就是废的</h2>
+
+<div class="two">
+<div class="sketch">读者<i>没有</i>限制
+
+ 意图 → 实现A → [看多久都行] → 对 ✓
+ 意图 → 实现B → [看多久都行] → 对 ✓
+ 意图 → 实现C → [看多久都行] → 对 ✓
+                                 ↑
+                    <i>全都满分 = 学不到任何东西</i></div>
+<div class="sketch">读者<b>被限制</b>（3 眼 / 低分辨率 / 有干扰）
+
+ 意图 → 实现A → [3 眼] → 对了   ✓
+ 意图 → 实现B → [3 眼] → 错了   ✗  <b>← 信息在这里</b>
+ 意图 → 实现C → [3 眼] → 对一半 ~
+                          ↑
+                  <b>差别显出来了</b></div>
+</div>
+
+<blockquote>限制 = 区分度的来源。不设限，所有东西都一样好；设了限，差别才显出来。</blockquote>
+
+<p>而且"A 能过 3 眼、B 过不了"这件事，<strong>做之前谁也不知道</strong>——必须真的做出来、真的跑一遍受限阅读才知道。这和代码一样：不跑你不知道它会不会崩。<strong>这就是它能提供新信息、而不是复述已知的原因。</strong></p>
+
+<h2>三、难度为什么自己会长</h2>
+
+<div class="sketch">第 1 轮   读者能看 3 眼
+          └→ 设计者学会：重要的东西放显眼处
+          └→ 结果：<b>大家都过关了</b>
+                      │
+          "都过关了" = 太简单了  ──────┐
+                                        ↓
+第 2 轮   读者被压到 2 眼
+          └→ 设计者被迫学更强的：层级更陡、对比更狠
+          └→ 结果：<b>又都过关了</b>
+                      │
+                      ──────────────────┐
+                                        ↓
+第 3 轮   2 眼 + 干扰 + 更低分辨率
+          └→ ...</div>
+
+<p><strong>没有人排课表。门槛上升的唯一依据是"上一代都过关了"。</strong></p>
+
+<div class="sketch">   能力 / 难度
+      │                              ╱  设计者
+      │                          ╱
+      │                      ╱         两条线互相追，谁也停不下来
+      │                  ╱
+      │              ╱   读者（难度）
+      │          ╱
+      │──────╱
+      └──────────────────────────────────→  时间
+
+
+   对比 —— autoresearch 那类系统
+
+      │
+      │      ╭────────────────────  设计者撞顶后就平了
+      │    ╱
+      │──╱
+      │─────────────────────────────  <i>难度线永远是平的（5 分钟预算 + 固定验证集）</i>
+      └──────────────────────────────────→  时间</div>
+
+<h2>四、为什么别的地方也能用</h2>
+
+<p>把上面抽象出来，只剩一个共同点：<strong>你能不能先写下答案</strong>。</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">域</th><th>① 先写下"它该做什么"</th><th class="nw">② 做出来</th><th>③ 在什么限制下</th><th>④ 对比什么</th></tr></thead>
+<tbody>
+<tr><td class="nw">海报</td><td>阅读顺序</td><td class="nw">版面</td><td>3 眼 / 低分辨率 / 干扰</td><td>顺序对不对</td></tr>
+<tr><td class="nw">代码</td><td>函数该干嘛</td><td class="nw">程序</td><td>有限测试次数 / 算力</td><td>行为对不对</td></tr>
+<tr><td class="nw">agent</td><td>该完成什么</td><td class="nw">调控拓扑</td><td>有限步数 / 上下文</td><td>完成没有</td></tr>
+<tr><td class="nw">策略</td><td>该达到什么</td><td class="nw">policy</td><td>有限交互次数</td><td>达到没有</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>于是同一件事有了一个通用的说法：</p>
+
+<blockquote><strong>d(A, B) = 在预算 B 之内，能把 A 和 B 区分开的概率。</strong></blockquote>
+
+<p>叫做<strong>资源受限下的可观察等价性</strong>。它不是设计专有的，对任何有"行为"的产物都成立。而它同时补上了四格里最难的两格：</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">要求</th><th>为什么满足</th></tr></thead>
+<tbody>
+<tr><td class="nw">无人</td><td>测试由机器生成，预算只是一个数字</td></tr>
+<tr><td class="nw">信息超出先验</td><td>"这个测试能不能分开它们"是执行的经验事实，不跑不知道</td></tr>
+<tr><td class="nw">难度内生</td><td>系统变好 → 提高预算 → 对手用更多预算去找能区分的测试</td></tr>
+<tr><td class="nw">形状是度量</td><td>可区分性在构造上就是一个距离，不是分数</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>复利从哪来</h3>
+<p><strong>度量的分辨率是算力的函数，而算力是系统可以多花的东西。</strong></p>
+<p>预算越高 → 区分越细 → 空间越锐利 → 选择越精准 → 值得再加预算。"改进者改进自己"在这里有了具体所指：不是让验证器更聪明，而是让它<strong>看得更细</strong>，而看得更细只需要花更多算力。</p>
+</div>
+
+<h2>五、尺子的单位从哪来（校准）</h2>
+
+<p>不问"几分"，只问"这两个能不能分开"。然后在一个点周围朝各个方向推一点点，看推多远才<strong>刚好</strong>能被区分：</p>
+
+<div class="sketch">                     ↑  这个方向要推 <b>0.3</b> 才看得出差别（迟钝）
+                     │
+                     │
+       ←─────────────●─────────────→
+        推 <b>0.1</b> 就       A       推 <b>0.1</b> 就
+        看得出                        看得出（敏感）
+                     │
+                     │
+                     ↓  <b>0.3</b>
+
+
+              连起来 =     ╭───────────╮
+                          │     A     │   ← 一个椭圆
+                          ╰───────────╯
+
+              <b>椭圆的形状，就是这一点上的"尺子"。</b></div>
+
+<p>这正是颜色科学一百年前做的事：用"人眼刚好能看出差别"当颜色空间的刻度单位（MacAdam 椭圆 → CIELAB 的 ΔE）。区别只在于——<strong>这里的观察者是一个会因为资源不够而混淆的算法，不是人。</strong></p>
+
+<h2>六、我们要做的研究</h2>
+
+<p>研究问题一句话：</p>
+
+<blockquote><strong>把验证器从"打分函数"换成"资源受限下的可区分性度量"，并让预算自己上升，能不能得到一个不会撞顶的改进循环？</strong></blockquote>
+
+<div class="step"><div class="stepn">1</div><div>
+<h4>先读三篇，决定要不要继续</h4>
+<p>其中一篇可能直接否掉主线：<strong>Survive or Collapse</strong>（arXiv 2605.22217）的受控实验结论是"约束自改进稳定性的是<strong>任务准入</strong>，不是奖励的标定"。如果它对，换度量解决不了问题，我们在调一个不绑定的变量。必须先读，不能绕。</p>
+<p class="quiet">另两篇：Who grades the grader（2607.12790，锚一去掉度量就坍缩成"永远放行"）、Does Capability Transfer to Subjective Behavior（2605.27914，已经做过无真值验证验证器）。</p>
+</div></div>
+
+<div class="step"><div class="stepn">2</div><div>
+<h4>把度量按 MacAdam 的方式重建</h4>
+<p>现有实现的匹配判断已被证伪（两个随机产物几乎从不"读成一样"，匹配率 0.01–0.05）。正确构造是：<strong>在一个产物周围做微扰，找受限读者刚好能分辨的阈值</strong>，得到局部 JND 椭球，那就是局部度量张量。</p>
+</div></div>
+
+<div class="step"><div class="stepn">3</div><div>
+<h4>测那个唯一重要的问题：前沿会不会一直涨</h4>
+<p>四个臂对照：<code>度量+预算上升</code> / <code>标量+预算上升</code> / <code>度量+预算固定</code> / <code>标量+预算固定</code>。</p>
+<p><strong>成功判据</strong>：只有"度量+预算上升"那一臂的前沿持续上移而不平台化，<em>并且</em>它产出的东西在<strong>训练中从未出现过</strong>的预算档位上依然成立（否则只是过拟合前沿，不是发现）。</p>
+<p><strong>失败判据（必须事先写死）</strong>：如果四臂都平台化，或者预算固定的臂同样能涨，则"难度内生"不是关键变量，整条线作废。</p>
+</div></div>
+
+<div class="step"><div class="stepn">4</div><div>
+<h4>先在有真值的域做，再谈没真值的域</h4>
+<p>代码/算法是第一个落点——那里有独立的真值可以核对我们的度量有没有骗自己。<strong>设计/海报是目标域，但不是第一个实验域</strong>：在没有独立核对手段的地方先做，等于自证。</p>
+</div></div>
+
+<h2>七、诚实的账：已经被别人做掉的，和真正的风险</h2>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">主张</th><th class="nw">状态</th><th>依据</th></tr></thead>
+<tbody>
+<tr><td>标量有方向可被刷</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>Transitivity Meets Cyclicity（2605.17342, ICML 2026）已把偏好拆成 transitive 标量 + cyclic 向量</td></tr>
+<tr><td>无真值验证验证器</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>2605.27914 的三张证书，且指出人类评分者自身相关只有 ρ≈0.45，人本身不构成锚</td></tr>
+<tr><td>几何自洽能替代锚</td><td class="nw"><span class="verdict v-dead">已被推翻</span></td><td>我们自己的合成实验（检验相关仅 0.13–0.38，六项里两项恒等空转）＋ Double Ratchet 的锚消融（度量坍缩成"永远放行"，而下游分数照样好看，所以发现不了）</td></tr>
+<tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse：绑定约束是任务准入而非奖励标定</td></tr>
+<tr><td>标量无法表示异质人群</td><td class="nw"><span class="verdict v-open">仍成立</span></td><td>但不新</td></tr>
+<tr><td><strong>受限恢复当改进信号</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>549 篇里没有；recovery 只出现在审计字段，从未当作改进信号</td></tr>
+<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout"><strong>最大的单点风险</strong>：如果 Survive or Collapse 是对的，那么这一整页的主线是在调一个不绑定的变量。<strong>第 1 步不是形式，是真的可能让我们收工的一步。</strong></div>
+
+<h2>八、现在的状态</h2>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">东西</th><th class="nw">状态</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td class="nw"><code>notes/directions/01</code></td><td class="nw">已写，已修正</td><td>原文保留，第九节记录了哪几句被自己的实验推翻</td></tr>
+<tr><td class="nw"><code>experiments/01</code></td><td class="nw">跑通</td><td>纯 numpy，三个世界（含两个假设失效的）；C1 成立，C2 推翻，C3 未建立</td></tr>
+<tr><td class="nw"><code>experiments/02</code></td><td class="nw">半成品</td><td>意图→实现→受限恢复→保真度 这半边跑通且只要 3 毫秒；度量那半边的匹配构造已证伪，待按 MacAdam 重写</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>RSI 阅读指南 · 研究计划 2026-09-15 · <a href="index.html">首页</a> · <a href="direction.html">方向判断</a></p>
+    <p>本页的判断可被自己的实验推翻，被推翻的部分会留在原处并标注。CC BY 4.0。</p>
+  </div>
+</footer>
+
+</body>
+</html>
