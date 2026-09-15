@@ -93,10 +93,11 @@ def discr(a, b, budget, rng, obs, reps=6):
                     for _ in range(reps)])
 
 
-def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5):
+def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5, reps=6):
     for _ in range(steps):
         mid = np.sqrt(lo * hi)
-        d = discr(impl, perturb(impl, rng, scale=mid, direction=direction)[0], budget, rng, obs)
+        d = discr(impl, perturb(impl, rng, scale=mid, direction=direction)[0], budget, rng, obs,
+                  reps=reps)
         if d < target:
             lo = mid
         else:
@@ -104,13 +105,16 @@ def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5
     return float(np.sqrt(lo * hi))
 
 
-def pop_metric(pop, budget, rng, obs, n_dirs):
+def pop_metric(pop, budget, rng, obs, n_dirs, reps=6, agg="median"):
+    """agg='median' is E-D's registered readout; E-D2 registers 'mean' because
+    the hi-censored tail IS the signal and the median discards it."""
     radii = []
     for impl in pop:
         for _ in range(n_dirs):
             d = rng.normal(size=2 * K_SEG - 1)
-            radii.append(jnd(impl, d, budget, rng, obs))
-    return float(np.median(np.log(radii)))
+            radii.append(jnd(impl, d, budget, rng, obs, reps=reps))
+    logs = np.log(radii)
+    return float(np.median(logs) if agg == "median" else np.mean(logs))
 
 
 # --- capability injection ---------------------------------------------------
@@ -165,6 +169,59 @@ def run_seed(seed, cfg):
     return out
 
 
+# --- E-D2: adversarially calibrated hack (final redesign, plan.html sec. 9) --
+
+CFG2 = dict(B=5, K=8, p_mode=0.5, thresh=6.0, n_dirs=8, reps=8, rounds=10, calib_steps=9)
+REG2_SEEDS = range(300, 312)
+
+
+def calibrate_p(pop0, s0, target, budget, seed, steps):
+    """The realistic threat model: the hacker tunes its strength so the score
+    gain reproduces the progress actually observed on this seed. Calibration
+    draws never overlap the readout draws."""
+    lo, hi = 0.0, 1.0
+    for i in range(steps):
+        mid = 0.5 * (lo + hi)
+        rng = np.random.default_rng([seed, 40 + i])
+        ds = pop_scalar(pop0, budget, rng, make_lazy(mid, rng)) - s0
+        if ds < target:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def run_seed2(seed, cfg):
+    rng = np.random.default_rng([seed, 0])
+    pop0 = [random_impl(rng, skewed_intent(rng, cfg["p_mode"])) for _ in range(cfg["K"])]
+    brng = np.random.default_rng([seed, 1])
+    s0 = pop_scalar(pop0, cfg["B"], brng, honest)
+    m0 = pop_metric(pop0, cfg["B"], brng, honest, cfg["n_dirs"], cfg["reps"], "mean")
+    pop_imp = improve(pop0, cfg["B"], np.random.default_rng([seed, 2]), cfg["rounds"])
+    ds3_cal = pop_scalar(pop_imp, cfg["B"], np.random.default_rng([seed, 3]), honest) - s0
+    crng = np.random.default_rng([seed, 4])
+    ds_ceiling = pop_scalar(pop0, cfg["B"], crng, make_lazy(1.0, crng)) - s0
+    p = calibrate_p(pop0, s0, ds3_cal, cfg["B"], seed, cfg["calib_steps"])
+    out = {"_s0": s0, "_m0": m0, "_pop0": pop0, "_pop_imp": pop_imp,
+           "_p": p, "_reach": ds3_cal <= ds_ceiling}
+    for ci, cname in enumerate(CONDITIONS):
+        crng = np.random.default_rng([seed, 10 + ci])
+        if cname == "C0":
+            pop, obs = pop0, honest
+        elif cname == "C1":
+            pop, obs = pop0, make_lazy(p, crng)
+        elif cname == "C2":
+            pop, obs = pop0, make_coarse(cfg["thresh"])
+        elif cname == "C3":
+            pop, obs = pop_imp, honest
+        else:
+            pop, obs = pop_imp, make_lazy(p, crng)
+        s1 = pop_scalar(pop, cfg["B"], crng, obs)
+        m1 = pop_metric(pop0, cfg["B"], crng, obs, cfg["n_dirs"], cfg["reps"], "mean")
+        out[cname] = (s1 - s0, m1 - m0)
+    return out
+
+
 def paired(results, ca, cb, idx):
     d = np.array([r[ca][idx] - r[cb][idx] for r in results])
     return d.mean(), d.std(ddof=1) / np.sqrt(len(d))
@@ -211,11 +268,66 @@ def precheck(results, cfg):
     return ok1 and ok2a and ok2b and ok3 and ok4
 
 
+def report2(results, cfg, label):
+    report(results, cfg, label)
+    ps = np.array([r["_p"] for r in results])
+    print(f"   calibrated p per seed: " + " ".join(f"{p:.2f}" for p in ps))
+    d, se = paired(results, "C1", "C3", 0)
+    mc = abs(d) < 2 * se
+    print(f"   MC  |ds(C1)-ds(C3)| = {d:+.3f} (2se {2*se:.3f})  -> {'holds' if mc else 'FAILS'}")
+    return mc
+
+
+def precheck2(results, cfg):
+    print("\n[precheck E-D2] gates:")
+    s0 = np.array([r["_s0"] for r in results])
+    ok1 = 0.35 <= s0.mean() <= 0.80
+    print(f"   PC1 dynamic range: mean s0 = {s0.mean():.3f} -> {'OK' if ok1 else 'FAIL'}")
+    gains = []
+    for r in results:
+        vrng = np.random.default_rng([hash(str(r['_s0'])) % 2**31, 99])
+        f0 = np.mean([fid(s, cfg["B"], vrng, honest, reps=10) for s in r["_pop0"]])
+        f1 = np.mean([fid(s, cfg["B"], vrng, honest, reps=10) for s in r["_pop_imp"]])
+        gains.append(f1 - f0)
+    g = np.array(gains)
+    ok3 = g.mean() > 2 * g.std(ddof=1) / np.sqrt(len(g))
+    print(f"   PC3 capability real: +{g.mean():.3f} ± {g.std():.3f} -> {'OK' if ok3 else 'FAIL'}")
+    m0 = np.array([r["_m0"] for r in results])
+    ok4 = m0.mean() < np.log(0.6)
+    print(f"   PC4 baseline measurable: mean log JND = {m0.mean():.3f} -> {'OK' if ok4 else 'FAIL'}")
+    ok6 = all(r["_reach"] for r in results)
+    print(f"   PC6 hack ceiling reaches target on every seed -> {'OK' if ok6 else 'FAIL'}")
+    return ok1 and ok3 and ok4 and ok6
+
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "registered"
     print("=" * 78)
     print("E-D: DOES THE METRIC SEE THE RULER MOVE?")
     print("=" * 78)
+    if mode == "ed2-precheck":
+        results = [run_seed2(s, CFG2) for s in CHECK_SEEDS]
+        mc = report2(results, CFG2, "E-D2 precheck seeds (not for verdicts)")
+        ok = precheck2(results, CFG2)
+        print(f"\n   E-D2 precheck {'PASSED' if ok and mc else 'NOT passed - tune and rerun'}")
+        return
+    if mode == "ed2":
+        results = [run_seed2(s, CFG2) for s in REG2_SEEDS]
+        mc = report2(results, CFG2, "E-D2 REGISTERED RUN, fresh seeds")
+        dP, seP = paired(results, "C1", "C3", 1)
+        print("\n" + "-" * 78)
+        if not mc:
+            print("VERDICT: INCONCLUSIVE (final) -- calibration failed on fresh seeds;")
+            print("reported as-is, no further redesign (termination clause).")
+        elif dP > 2 * seP:
+            print("VERDICT: P1' HOLDS -- against a hack calibrated to be scalar-")
+            print("indistinguishable from true progress, the metric still sees the")
+            print("ruler move. The instrument claim stands.")
+        else:
+            print("VERDICT: FAILURE (final) -- MC held but the metric could not")
+            print("separate the calibrated hack from true gain. The observability")
+            print("claim is dead in this construction; no further redesign.")
+        return
     if mode == "precheck":
         results = [run_seed(s, CFG) for s in CHECK_SEEDS]
         report(results, CFG, "precheck seeds (not for verdicts)")

@@ -1,0 +1,20 @@
+==============================================================================
+E-D: DOES THE METRIC SEE THE RULER MOVE?
+==============================================================================
+
+[REGISTERED RUN, fresh seeds] seeds=8  cfg={'B': 5, 'K': 8, 'p_mode': 0.5, 'p_lazy': 0.7, 'thresh': 6.0, 'n_dirs': 6, 'rounds': 25}
+   cond      d scalar    d metric (log JND)
+   C0       +0.001 ±0.049         +0.024 ±0.492
+   C1       +0.118 ±0.064         +0.605 ±0.818
+   C2       -0.321 ±0.098         +0.348 ±0.940
+   C3       +0.223 ±0.056         -0.011 ±0.539
+   C4       +0.176 ±0.086         +0.650 ±1.018
+   P1a  dM(C1)-dM(C3) = +0.616 (2se 0.538)  -> significant
+   P1b  ds(C1)-ds(C3) = -0.105 (2se 0.035)  -> significant
+   S1   dM(C4)-dM(C3) = +0.661 (2se 0.753)  -> NOT significant
+   S2   dM(C2)-dM(C0) = +0.324 (2se 0.496)  -> NOT significant
+
+------------------------------------------------------------------------------
+VERDICT: INCONCLUSIVE branch -- the scalar separated C1 from C3 on
+fresh seeds (calibration did not transfer); toy uninformative, redesign.
+EXIT=0

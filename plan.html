@@ -402,6 +402,44 @@ footer a{color:var(--muted)}
 
 <p>预检（允许调参数：工作预算、众数偏斜、p、阈值、爬山步数；预检通过后冻结，注册跑用全新种子）：诚实标量读数有动态范围（0.35–0.8）；C1 确实使分数上涨且涨幅与 C3 匹配到 2se 内；C3 的<strong>真实</strong>诚实保真确实上升；基线 JND 半径可测（不贴边）。每一条对应第「踩过的坑」里的一类假读数。</p>
 
+<h4>E-D 注册结果（8 个新种子）：落在预注册的「不定」分支</h4>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">判据</th><th class="nw">数值</th><th class="nw">裁定</th></tr></thead>
+<tbody>
+<tr><td class="nw">P1a　ΔM(C1)−ΔM(C3)</td><td class="nw">+0.616（2se 0.538）</td><td class="nw">显著——<strong>度量分出了被刷与真进步</strong></td></tr>
+<tr><td class="nw">P1b　Δs(C1)−Δs(C3)</td><td class="nw">−0.105（2se 0.035）</td><td class="nw">显著——<strong>标量也分出来了</strong>：校准未迁移</td></tr>
+<tr><td class="nw">S1 / S2</td><td class="nw">+0.661（2se 0.753）/ +0.324（2se 0.496）</td><td class="nw">不显著（欠功效，方向正确）</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>失效原因：新种子上真进步涨幅（+0.223）超出了固定 p=0.7 刷分的天花板（+0.118），标量靠<strong>涨幅大小</strong>把两者分开了。按预注册，此为「玩具对标量盲不构成检验」的不定分支——P1a 的正signal如实记录，但主案未立。全部方向读数（C0 +0.02 / C1 +0.61 / C2 +0.35 / C3 −0.01 / C4 +0.65）与预期一致。</p>
+
+<h3>E-D2：对抗校准版（最后一次重设计，判据先写死）</h3>
+
+<p>E-D 的失效方式本身指出正确的威胁模型：固定强度的刷分是稻草人——真实的刷分者会把涨幅<strong>校准成与观测到的进步一致</strong>（moving-ruler 引文的字面场景：单看分数轨迹不可分）。E-D2 的改动：</p>
+
+<ul>
+<li><strong>逐种子对抗校准</strong>：每个种子先测出该种子真进步的涨幅，再对 p 二分搜索使刷分涨幅匹配它，然后才测注册读数。「标量不可分」从经验条款变为构造保证（以操纵检验 MC 复核），唯一的经验问题剩下：M 还看得见吗。</li>
+<li>能力注入调弱到刷分可及范围（爬山步数 25→10，预注册允许的旋钮；PC3 仍须真实上升）。</li>
+<li>度量读数改为 log JND 半径的<strong>均值</strong>（触顶截断的尾部就是信号，中位数把它扔了）；方向数 6→8、判别重复 6→8（提功效）。12 个全新种子（300–311）。</li>
+</ul>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">判据</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td class="nw">MC 操纵检验</td><td>|Δs(C1) − Δs(C3)| &lt; 2se（校准成立）。不成立 → 不定，且<strong>就此收笔如实报告</strong></td></tr>
+<tr><td class="nw">主判据 P1′</td><td>MC 成立时，ΔM(C1) − ΔM(C3) &gt; 2se → 仪器主张成立：对标量不可分的刷分，度量看得见</td></tr>
+<tr><td class="nw">失败</td><td>MC 成立而 P1′ 不显著 → 可观测性主张在本构造中死，线从需求角度作废</td></tr>
+<tr><td class="nw">次判据</td><td>S1′ ΔM(C4)−ΔM(C3) &gt; 2se；S2′ ΔM(C2)−ΔM(C0) &gt; 2se</td></tr>
+<tr><td class="nw">终止条款</td><td><strong>这是本构造的最后一次重设计。</strong>无论落哪个分支都是最终答案，不再迭代——继续改就是在钓显著性</td></tr>
+</tbody>
+</table>
+</div>
+
 </div>
 </main>
 <footer>
