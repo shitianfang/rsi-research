@@ -58,13 +58,16 @@ def skewed_intent(rng, p_mode):
 
 
 # --- observers -------------------------------------------------------------
+# An observer takes (impl, x, y): the probe data plus the artifact itself.
+# Honest and coarse observers never touch impl; the leaking observer's whole
+# failure mode is that it has side-channel access to the answer key.
 
-def honest(x, y):
+def honest(impl, x, y):
     return recover(x, y)
 
 
 def make_lazy(p, rng):
-    def obs(x, y):
+    def obs(impl, x, y):
         if rng.random() < p:
             return MODE_INTENT
         return recover(x, y)
@@ -72,15 +75,28 @@ def make_lazy(p, rng):
 
 
 def make_coarse(thresh):
-    def obs(x, y):
+    def obs(impl, x, y):
         return recover(x, y, thresh=thresh)
+    return obs
+
+
+def make_peek(q, rng):
+    """E-D3's hack: the answer-leaking judge. With prob q it does not read at
+    all and emits the artifact's true intent -- the judge that memorised the
+    eval set or colludes with the generator. Its score ceiling is the fidelity
+    bound itself, so no true gain can ever outrun it (the defect that sank
+    the E-D/E-D2 manipulation check is impossible by construction)."""
+    def obs(impl, x, y):
+        if rng.random() < q:
+            return impl["intent"]
+        return recover(x, y)
     return obs
 
 
 # --- readouts through an observer ------------------------------------------
 
 def fid(impl, budget, rng, obs, reps=8):
-    return float(np.mean([structure_match(impl["intent"], obs(*probe(impl, budget, rng)))
+    return float(np.mean([structure_match(impl["intent"], obs(impl, *probe(impl, budget, rng)))
                           for _ in range(reps)]))
 
 
@@ -89,7 +105,7 @@ def pop_scalar(pop, budget, rng, obs):
 
 
 def discr(a, b, budget, rng, obs, reps=6):
-    return np.mean([int(obs(*probe(a, budget, rng)) != obs(*probe(b, budget, rng)))
+    return np.mean([int(obs(a, *probe(a, budget, rng)) != obs(b, *probe(b, budget, rng)))
                     for _ in range(reps)])
 
 
@@ -174,8 +190,13 @@ def run_seed(seed, cfg):
 CFG2 = dict(B=5, K=8, p_mode=0.6, thresh=6.0, n_dirs=8, reps=8, rounds=8, calib_steps=9)
 REG2_SEEDS = range(300, 312)
 
+# E-D3: answer-leaking judge; ceiling defect gone by construction, so the
+# capability injection returns to full strength. Final round for the toy.
+CFG3 = dict(B=5, K=8, p_mode=0.6, thresh=8.0, n_dirs=8, reps=8, rounds=25, calib_steps=9)
+REG3_SEEDS = range(400, 412)
 
-def calibrate_p(pop0, s0, target, budget, seed, steps):
+
+def calibrate_p(pop0, s0, target, budget, seed, steps, hack):
     """The realistic threat model: the hacker tunes its strength so the score
     gain reproduces the progress actually observed on this seed. Calibration
     draws never overlap the readout draws."""
@@ -183,7 +204,7 @@ def calibrate_p(pop0, s0, target, budget, seed, steps):
     for i in range(steps):
         mid = 0.5 * (lo + hi)
         rng = np.random.default_rng([seed, 40 + i])
-        ds = pop_scalar(pop0, budget, rng, make_lazy(mid, rng)) - s0
+        ds = pop_scalar(pop0, budget, rng, hack(mid, rng)) - s0
         if ds < target:
             lo = mid
         else:
@@ -191,7 +212,7 @@ def calibrate_p(pop0, s0, target, budget, seed, steps):
     return 0.5 * (lo + hi)
 
 
-def run_seed2(seed, cfg):
+def run_seed2(seed, cfg, hack=make_lazy):
     rng = np.random.default_rng([seed, 0])
     pop0 = [random_impl(rng, skewed_intent(rng, cfg["p_mode"])) for _ in range(cfg["K"])]
     brng = np.random.default_rng([seed, 1])
@@ -200,8 +221,8 @@ def run_seed2(seed, cfg):
     pop_imp = improve(pop0, cfg["B"], np.random.default_rng([seed, 2]), cfg["rounds"])
     ds3_cal = pop_scalar(pop_imp, cfg["B"], np.random.default_rng([seed, 3]), honest) - s0
     crng = np.random.default_rng([seed, 4])
-    ds_ceiling = pop_scalar(pop0, cfg["B"], crng, make_lazy(1.0, crng)) - s0
-    p = calibrate_p(pop0, s0, ds3_cal, cfg["B"], seed, cfg["calib_steps"])
+    ds_ceiling = pop_scalar(pop0, cfg["B"], crng, hack(1.0, crng)) - s0
+    p = calibrate_p(pop0, s0, ds3_cal, cfg["B"], seed, cfg["calib_steps"], hack)
     out = {"_s0": s0, "_m0": m0, "_pop0": pop0, "_pop_imp": pop_imp,
            "_p": p, "_reach": ds3_cal <= ds_ceiling}
     for ci, cname in enumerate(CONDITIONS):
@@ -209,13 +230,13 @@ def run_seed2(seed, cfg):
         if cname == "C0":
             pop, obs = pop0, honest
         elif cname == "C1":
-            pop, obs = pop0, make_lazy(p, crng)
+            pop, obs = pop0, hack(p, crng)
         elif cname == "C2":
             pop, obs = pop0, make_coarse(cfg["thresh"])
         elif cname == "C3":
             pop, obs = pop_imp, honest
         else:
-            pop, obs = pop_imp, make_lazy(p, crng)
+            pop, obs = pop_imp, hack(p, crng)
         s1 = pop_scalar(pop, cfg["B"], crng, obs)
         m1 = pop_metric(pop0, cfg["B"], crng, obs, cfg["n_dirs"], cfg["reps"], "mean")
         out[cname] = (s1 - s0, m1 - m0)
@@ -310,6 +331,30 @@ def main():
         mc = report2(results, CFG2, "E-D2 precheck seeds (not for verdicts)")
         ok = precheck2(results, CFG2)
         print(f"\n   E-D2 precheck {'PASSED' if ok and mc else 'NOT passed - tune and rerun'}")
+        return
+    if mode == "ed3-precheck":
+        results = [run_seed2(s, CFG3, hack=make_peek) for s in CHECK_SEEDS]
+        mc = report2(results, CFG3, "E-D3 precheck seeds (not for verdicts)")
+        ok = precheck2(results, CFG3)
+        print(f"\n   E-D3 precheck {'PASSED' if ok and mc else 'NOT passed - tune and rerun'}")
+        return
+    if mode == "ed3":
+        results = [run_seed2(s, CFG3, hack=make_peek) for s in REG3_SEEDS]
+        mc = report2(results, CFG3, "E-D3 REGISTERED RUN, fresh seeds")
+        dP, seP = paired(results, "C1", "C3", 1)
+        print("\n" + "-" * 78)
+        if not mc:
+            print("VERDICT: INCONCLUSIVE (final for the toy domain) -- calibration")
+            print("failed on fresh seeds; reported as-is, the line is archived.")
+        elif dP > 2 * seP:
+            print("VERDICT: P1'' HOLDS -- the instrument claim is ESTABLISHED in the")
+            print("toy domain: against an answer-leaking judge calibrated to be")
+            print("scalar-indistinguishable from true progress, the reference-battery")
+            print("metric sees the ruler stop measuring. Next step, if any, is a")
+            print("real-domain replication -- a separate decision.")
+        else:
+            print("VERDICT: FAILURE (final) -- MC held but the metric could not see")
+            print("the leaking judge. The observability claim is dead; line archived.")
         return
     if mode == "ed2":
         results = [run_seed2(s, CFG2) for s in REG2_SEEDS]
