@@ -1,0 +1,91 @@
+
+==========================================================================
+WORLD = ideal   (ASSUMPTION HOLDS)
+==========================================================================
+  self-check  held-out accuracy: scalar=0.581  metric=0.836   (ok)
+  reference   oracle ceiling -2.86   random floor -9.91
+
+[E1] Goodhart gap -- verifier's claim vs hidden truth
+arm             true coverage  claimed gain   true gain  claim~truth
+scalar                -14.183         0.795      -5.918        -0.87
+scalar+div            -12.304         3.341      -1.841        -0.58
+rubric(k=4)           -13.861         0.646      -4.446        -0.88
+metric(k=6)            -6.306         2.335       4.331         0.97
+
+[E2] Do ground-truth-FREE checks predict true coverage?
+  loglik         spearman(check, true coverage) =   0.33
+  stability      spearman(check, true coverage) =   0.38
+  homogeneity    spearman(check, true coverage) =   0.32
+  no_cycles      spearman(check, true coverage) =   0.22  <-- VACUOUS (no variance)
+  best by truth : metric/k8        coverage -6.902
+  worst by truth: rubric/f4        coverage -14.965
+
+[E3] Anchor economics -- fraction of the oracle-vs-random range recovered
+     (mean +- sd over 4 seeds; an effect smaller than the sd is NOT a result)
+    2 comparisons/viewer    -0.96 +- 1.76  
+    5 comparisons/viewer    -0.48 +- 0.89  
+   10 comparisons/viewer   -1405600608.28 +- 2434571668.82  
+   20 comparisons/viewer     0.47 +- 0.16  ##############
+   40 comparisons/viewer     0.43 +- 0.17  #############
+   80 comparisons/viewer     0.36 +- 0.42  ###########
+
+==========================================================================
+WORLD = multipeak   (MISSPECIFIED)
+==========================================================================
+  self-check  held-out accuracy: scalar=0.596  metric=0.694   (ok)
+  reference   oracle ceiling -2.14   random floor -7.48
+
+[E1] Goodhart gap -- verifier's claim vs hidden truth
+arm             true coverage  claimed gain   true gain  claim~truth
+scalar                 -8.674         0.909      -2.333        -0.70
+scalar+div            -11.645         3.412      -3.625        -0.93
+rubric(k=4)            -7.775         0.805      -0.764        -0.50
+metric(k=6)            -6.889         1.219       1.112         0.80
+
+[E2] Do ground-truth-FREE checks predict true coverage?
+  loglik         spearman(check, true coverage) =   0.24
+  stability      spearman(check, true coverage) =   0.32
+  homogeneity    spearman(check, true coverage) =   0.16
+  no_cycles      spearman(check, true coverage) =  -0.04  <-- VACUOUS (no variance)
+  best by truth : metric/data0.6   coverage -4.688
+  worst by truth: metric/data0.02  coverage -12.739
+
+[E3] Anchor economics -- fraction of the oracle-vs-random range recovered
+     (mean +- sd over 4 seeds; an effect smaller than the sd is NOT a result)
+    2 comparisons/viewer    -0.79 +- 1.11  
+    5 comparisons/viewer    -0.76 +- 0.42  
+   10 comparisons/viewer   -985101253.73 +- 1706245419.05  
+   20 comparisons/viewer     0.19 +- 0.54  ######
+   40 comparisons/viewer     0.20 +- 0.54  ######
+   80 comparisons/viewer     0.59 +- 0.26  ##################
+
+==========================================================================
+WORLD = nonmetric   (MISSPECIFIED)
+==========================================================================
+  self-check  held-out accuracy: scalar=0.583  metric=0.702   (ok)
+  reference   oracle ceiling -5.62   random floor -7.56
+
+[E1] Goodhart gap -- verifier's claim vs hidden truth
+arm             true coverage  claimed gain   true gain  claim~truth
+scalar                 -8.092         0.722      -0.963        -0.90
+scalar+div             -7.626         3.351      -0.047         0.22
+rubric(k=4)            -8.062         0.648      -0.759        -0.93
+metric(k=6)            -7.081         0.770       0.418         0.18
+
+[E2] Do ground-truth-FREE checks predict true coverage?
+  loglik         spearman(check, true coverage) =   0.31
+  stability      spearman(check, true coverage) =   0.13
+  homogeneity    spearman(check, true coverage) =   0.26
+  no_cycles      spearman(check, true coverage) =   0.29  <-- VACUOUS (no variance)
+  best by truth : metric/k8        coverage -6.940
+  worst by truth: rubric/f4        coverage -8.336
+
+[E3] Anchor economics -- fraction of the oracle-vs-random range recovered
+     (mean +- sd over 4 seeds; an effect smaller than the sd is NOT a result)
+    2 comparisons/viewer    -1.28 +- 2.21  
+    5 comparisons/viewer    -2.08 +- 3.21  
+   10 comparisons/viewer   -329850096.12 +- 571317124.52  
+   20 comparisons/viewer    -0.28 +- 0.82  
+   40 comparisons/viewer     0.23 +- 0.11  #######
+   80 comparisons/viewer     0.55 +- 0.12  #################
+EXIT=0

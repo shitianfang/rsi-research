@@ -117,7 +117,50 @@ kapso 已经摸到这个思路：它的 gauntlet 用 duplicate / stability 两�
 - **中心法则的单向性是安全设计**：蛋白不能反写 DNA。对应——**输出结果不应直接改写模型权重**，中间必须隔一道会过期的门。直接把轨迹喂回训练等于允许蛋白反写 DNA，是模型崩溃与自我强化偏见的机制来源。
 - **三层分工（DNA/RNA/蛋白 ↔ 模型/harness/输出）**：保真度由**持久性**决定——RNA 聚合酶错误率比 DNA 聚合酶高约 10⁵ 倍，因为它的错误不持久。今天行业普遍装反：模型层频繁微调，harness 层反而要求严格确定。另：**人和老鼠的蛋白几乎一样，差别主要在调控**——所以该演化的是**调控拓扑**（谁调用谁、什么门控什么、什么在哪衰减），不是 prompt 措辞。措辞属于序列空间，绝大多数改动是中性的，这机制性地解释了 harness 演化收益为何普遍卡在个位数百分点。
 
-## 九、未解决与风险
+## 九、实测与文献复核（2026-09-15，同日补记）
+
+本节推翻了上文的一部分。保留原文不改，是为了让被推翻的具体是哪一句可查。
+
+### 实测结果（`experiments/01-verifier-as-metric/`）
+
+合成世界的参数恢复实验，三个世界各跑一遍：`ideal`（本文假设成立）、`multipeak`、`nonmetric`（假设失效）。
+
+**C1 成立，且在假设失效的世界里也成立。** 每一个标量/rubric 臂、在每一个世界里，都是"自称在进步、真值在退步"，自称与真实的秩相关为负（−0.50 至 −0.93）；度量臂三个世界真实进步均为正（+4.33 / +1.11 / +0.42）。但**幅度在假设失效时坍缩**：`nonmetric` 世界里优势只有 −7.08 vs −8.09，而该世界 oracle 天花板 −5.62、随机地板 −7.56，动态范围仅 1.94，自称~真实相关掉到 0.18。
+
+**C2 不成立。** 第六节那张检验表有两项是**空转**的：三角不等式对任何欧氏嵌入恒成立；循环率对标量验证器恒为 0（标量在构造上就传递），它会给一个坏标量打满分。剩余三项在变体家族只含 metric 变体时看似很强（loglik 0.89），但一旦家族加入**形状错误**的验证器（scalar / rubric），全部坍塌到 0.13–0.38——而真值分得出来（三个世界里最差的两次都是 `rubric/f4`）。**检验恰好在它被设计来做的那件事上失败。**
+
+**C3 未建立。** 单次 evolve 的运行间方差大于效应本身；改成 4 种子后效应仍未从噪声中分离。
+
+### 文献复核：命题的两半，一半不新，一半有硬反证
+
+- **"标量有方向可被 game"不是新观点。** Transitivity Meets Cyclicity（arXiv 2605.17342, ICML 2026, L1）已从 RLHF 角度论证 "relies on transitive scalar rewards, failing to capture the cyclic nature of human preferences"，并给出 transitive（标量）+ cyclic（**向量**）的正交分解。Who grades the grader（2607.12790）已实现组合式非标量 metric 并实测到真实 Goodhart 事件。
+- **"无真值验证 verifier"已有人做过。** Does Capability Transfer to Subjective Behavior（arXiv 2605.27914）提出 trust-by-construction，用三张**无需人类金标准**的证书（重复读数一致性、跨厂商仪器复现、历史足迹校准）建立可信度，并指出人类评分者自身 ρ≈0.45 根本不构成锚。读它再决定是补空白还是重做。
+- **最强反证之一**：Who grades the grader 的消融——"removing the anchor guards collapses the metric into a vacuous always-pass detector"，且 "downstream task score cannot validate a self-evolved evaluator, since the collapsed metric trains skills just as well."。这与本仓库实测到的 C2 失败是**两条独立证据指向同一结论**。
+- **最强反证之二**：Survive or Collapse（arXiv 2605.22217, L1）的受控实验结论是 "data-level gating, not reward calibration, is the binding constraint on self-play stability"，且发现 Grounded Proposer Paradox——proposer 拿到真值反而加速坍缩。**如果它对，那么瓶颈根本不在验证器的形状，换度量解决不了 Goodhart；该管的是任务准入。**
+- **综述自己的立场不是几何自洽。** 它不用 "non-verifiable" 一词，而把问题重述为 **the moving-ruler problem**："When both the evaluated system and its criterion change, a rising sequence of internal scores combines two effects…" 其方案是"保留公共比较域 + 外部锚"，并明说 "An external anchor constrains only the properties it measures and cannot establish the complete validity of a revised criterion."
+
+### 修正后的立场
+
+把原命题拆成两条，只有一条还站得住：
+
+| | 状态 |
+|---|---|
+| A. 换成度量形状能解决 Goodhart / 漂移 | **很可能错**。锚消融与任务准入两条证据都指向别处 |
+| B. 标量无法表示异质偏好人群，"好"必须是位置而非分数 | **仍成立，但不新**（HRC 已论证）|
+
+### 549 条里确实零命中的（真实空白）
+
+- 把 verifier 本身表示为**带距离的度量空间**：metric space / triangle inequality / embedding space / behavior descriptor 全部 0 命中；QD 仅 TacEvo 一条且 descriptor 轴手工固定
+- **共演化坐标系本身**：L4 的 30 条全在演化 rubric、任务分布或 reward 权重，没有一条在演化几何
+- **结构层**的一致性验收门（cycle-rate、分裂重拟合后的几何对齐、顺序不变性）——现有一致性检查全停在 answer level
+- 把**异质偏好人群**当作被表示对象放进改进回路：heterogeneous preference / ideal point 均 0 命中
+- **资源受限下的恢复能力当改进信号**：0 命中（recovery 仅出现在审计字段）
+
+### 下一步的判断
+
+在投入之前必须先读 2605.22217。**如果自改进的约束真的是任务准入而不是奖励形状，那么本文的主线是在调一个不绑定的变量。** 剩下真正没被占的位置是"资源受限可观察等价性"——见 `experiments/02-endogenous-metric-rsi/`，但该实验的匹配判断构造已被证伪（见其文件头），需按 JND/MacAdam 局部度量张量重写。
+
+## 十、未解决与风险
 
 - **基的可迁移性未验证**：SAE 分解出的方向在不同模型、不同数据分布下是否对齐，没有现成证据。Procrustes 对齐残差本身就是这个问题的检验手段，应当先做这一步再投入。
 - **单峰假设可能不成立**：Coombs 理想点模型假设偏好单峰，但强风格偏好可能是多峰的。对策见下。
