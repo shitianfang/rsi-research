@@ -1,0 +1,15 @@
+{
+ "model": "claude-haiku-4-5-20251001",
+ "blocks": [
+  {
+   "battery": [
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "distractor": "the about dialog lists all contributors",
+     "order": [
+      

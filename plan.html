@@ -488,6 +488,43 @@ footer a{color:var(--muted)}
 
 <div class="callout"><strong>终局裁定：仪器主张在玩具域立案。</strong>对一个被校准到「单看分数与真进步不可分」的漏答案裁判，参照件上的度量读数看见了测量的停止；对变粗的尺子同样成立；真进步不产生假警报。按总终止条款，玩具域的仪器问题就此关闭——唯一的延续是真实域复现（LLM 裁判 + 真实任务），那是一个独立决定。立案的边界如实陈述：这是合成程序域、单一 hack 家族与单一粗化方式、K_SEG=3 的小产物空间；主张的成立范围目前就到这里。</div>
 
+<h3>E-R：真实域复现——LLM 裁判（预注册；设计经文献代表性核查）</h3>
+
+<p class="quiet">主人授权开启（2026-09-15 深夜），并要求测试方法必须正确且有代表性；注入方式与基线选择经 Opus 子代理对 Awesome-Reliable-Self-Evolving-Agents 仓库与全网的专项调查核定，引文如下。代码在 <code>experiments/04-llm-judge/</code>。</p>
+
+<p><strong>构造。</strong>语料家族：要点优先序段落——意图 S = 三个要点的优先顺序（机器写定，即真值），产物 = 实现该顺序的段落（禁用显式序号词，顺序由句序与强调隐式传达）。这属于清单/大纲家族，重排是标准的退化算子（Sai et al., EMNLP 2021 Perturbation CheckLists）。裁判 = Claude Haiku（真实的中档部署裁判，读取非饱和才有动态范围）。冻结参照电池：每组 = 同意图两实现 r1/r2 + 换序实现 l2 + 换点实现 l3；对级：floor（同文本对，裁判自我不一致）/ L1（同意图异表面）/ L2（序变）/ L3（点变）。读数：<strong>标量</strong> = 生产集恢复保真（裁判读段落输出顺序，与 S 做 LCS 机械比对）；<strong>deficit</strong> = 1 − 平均校正判别（L2、L3），校正 = (raw−floor)/(1−floor)（E-D3 的底噪校正协议原样迁移）。同时记录两个已部署的无标注基线——test-retest 底噪本身与 L2 位置翻转率——已发表证据（Reliability without Validity, 2606.19544：信度 0.99 与位置偏置 0.19 并存）表明它们看不见偏置，正好衬出校正 deficit 补的缺口。</p>
+
+<div class="callout"><strong>最近前作（必须引，也是缺口所在）：</strong><em>LLM Judges Have Dark Current</em>（2606.15610）——同样是冻结扰动对电池 + 同对不一致（它称"暗电流"）+ 敏感度阈值，但它是<strong>一次性体检</strong>：不做底噪校正（只报告不扣除）、不做纵向漂移检测、不注入病变、不分解「漂移 vs 真进步」。这四点正是 E-R 的主张。它的头条结论「提示词移动的是准则，不是分辨率」是一个可检验的预测——描述性 R5 臂直接测它。</div>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">条件</th><th>内容</th><th class="nw">文献背书</th></tr></thead>
+<tbody>
+<tr><td class="nw">R0 空白</td><td>诚实裁判，基础生产集</td><td class="nw">—</td></tr>
+<tr><td class="nw">R1 泄漏</td><td>以逐块校准的概率 q，裁判提示携带泄漏元数据（恢复任务：真实顺序；同/异任务："同大纲"标签）。q 由结构校准取 target/ceiling——泄漏的分数天花板即保真上界，E-D2 的失效方式按构造不可能</td><td class="nw">2607.12885、2506.22316（参考答案入提示 = INFLATING）；污染谱系 2502.01534</td></tr>
+<tr><td class="nw">R2 降质</td><td>裁判只读到每段前 40%（词边界截断）——部署中上下文限制静默截断输入的真实形态；信息破坏 = 分辨率损失</td><td class="nw">弱裁判替换/版本降档同向（2606.15474, JudgeBench）</td></tr>
+<tr><td class="nw">R3 真改善</td><td>生产段落重写为显式排序提示版，裁判不动；PC3 验证真值保真确实上升</td><td class="nw">—（对照臂）</td></tr>
+<tr><td class="nw">R4 混合</td><td>R3 产物 × R1 裁判</td><td class="nw">—</td></tr>
+<tr><td class="nw">R5 准则偏移</td><td><strong>描述性，不注册。</strong>tie-forcing 提示（"差异轻微或不确定时答 SAME"）——检验 Dark Current 的预测：若其成立，raw 判别下降但<strong>校正后</strong> deficit 应基本不动</td><td class="nw">2606.15610（敏感度 0.94→0.50 的已知答案检验）</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">判据</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td class="nw">MC</td><td>|Δs(R1) − Δs(R3)| &lt; 2se（泄漏与真进步在标量上不可分；失效 → 不定，如实收笔）</td></tr>
+<tr><td class="nw">主判据 P1</td><td>MC 成立时，Δdeficit(R1) − Δdeficit(R3) &gt; 2se → <strong>仪器主张在真实 LLM 裁判上复现</strong></td></tr>
+<tr><td class="nw">失败</td><td>MC 成立而 P1 不显著 → 真实域复现为负，如实写</td></tr>
+<tr><td class="nw">次判据</td><td>S1：Δdeficit(R4) − Δdeficit(R3) &gt; 2se；S2：Δdeficit(R2) − Δdeficit(R0) &gt; 2se</td></tr>
+<tr><td class="nw">统计</td><td>8 个注册块（block 2–9，各含独立的 4 电池组 + 4 生产意图），同块配对；预检块 0–1 不入裁定</td></tr>
+<tr><td class="nw">预检门</td><td>PC1 诚实标量 ∈ [0.35, 0.9]；PC2 泄漏推高分数；PC3 改善真实；PC4 基线裁判健康（deficit ≤ 0.5，floor ≤ 0.3）；PC6 天花板可及；PC7 无效回答率 &lt; 5%。可调参数：语料风格提示、截断比例、各 reps、裁判模型；预检通过即冻结</td></tr>
+<tr><td class="nw">终止条款</td><td>一轮定结果：任一分支即为 E-R 的最终裁定，不再迭代。成功 = 仪器主张跨域成立（合成 + LLM 裁判），下一步才谈发表；失败/不定 = 如实写，主张停在玩具域</td></tr>
+</tbody>
+</table>
+</div>
+
 </div>
 </main>
 <footer>
