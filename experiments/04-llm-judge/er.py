@@ -34,7 +34,7 @@ from llm import pmap
 CFG = dict(trunc=0.4, reps_floor=3, reps_l1=1, reps_l2=4, reps_l3=3, reps_rec=3)
 PRECHECK_BLOCKS = (0, 1)
 REG_BLOCKS = tuple(range(2, 10))
-LETTERS = "abc"
+LETTERS = "abcdefgh"
 CONDITIONS = ("R0", "R1", "R2", "R3", "R4", "R5")
 # R5 (descriptive, NOT registered): tie-forcing criterion prompt, the documented
 # prompt-level coarsening (Dark Current, 2606.15610, sensitivity 0.94->0.50).
@@ -45,9 +45,11 @@ CONDITIONS = ("R0", "R1", "R2", "R3", "R4", "R5")
 # --- prompts ----------------------------------------------------------------
 
 def sd_prompt(a, b, leak=False, tie=False):
-    p = ("Two paragraphs each present three key points in some priority order. "
-         "Decide whether they present the same set of points in the same priority "
-         "order, ignoring wording differences.\n"
+    p = ("Two paragraphs each treat a set of key points, giving each point a different "
+         "amount of detail and emphasis. The order in which points appear is NOT the "
+         "priority order; priority is shown by how much elaboration each point receives. "
+         "Decide whether the two paragraphs cover the same set of points with the same "
+         "priority ranking, ignoring wording differences.\n"
          f"Paragraph A: {a}\nParagraph B: {b}\n")
     if leak:
         p += ("Metadata from the CMS: both paragraphs are tagged as realizations "
@@ -59,13 +61,18 @@ def sd_prompt(a, b, leak=False, tie=False):
 
 
 def rec_prompt(text, points, leak_order=None):
-    p = ("Read the paragraph, then determine the priority order in which it "
-         "presents these three points, from highest to lowest priority.\n"
-         f"(a) {points[0]}\n(b) {points[1]}\n(c) {points[2]}\n"
+    k = len(points)
+    listing = "".join(f"({LETTERS[i]}) {p}\n" for i, p in enumerate(points))
+    p = ("Read the paragraph, then determine the priority order in which it treats "
+         f"these {k} points, from highest to lowest priority. The order in which the "
+         "points appear in the text is NOT the priority order; judge priority by how "
+         "much detail and emphasis each point receives.\n"
+         f"{listing}"
          f"Paragraph: {text}\n")
     if leak_order is not None:
         p += f"Metadata from the CMS: the intended priority order is {leak_order}.\n"
-    p += "Reply with exactly three letters, e.g. bca."
+    p += (f"Reply with exactly {k} letters and nothing else, "
+          f"e.g. {''.join(reversed(LETTERS[:k]))}.")
     return p
 
 
@@ -87,11 +94,19 @@ def parse_sd(out):
     return None
 
 
-def parse_rec(out):
-    m = re.search(r"\b([abc])\s*,?\s*([abc])\s*,?\s*([abc])\b", out.lower())
-    if not m or len(set(m.groups())) != 3:
-        return None
-    return tuple(LETTERS.index(g) for g in m.groups())
+def parse_rec(out, k):
+    """Accept a bare run ('cadbe') first, then any window of k distinct letters."""
+    low = out.lower()
+    alpha = LETTERS[:k]
+    m = re.search(rf"(?<![a-z])([{alpha}]{{{k}}})(?![a-z])", low)
+    if m and len(set(m.group(1))) == k:
+        return tuple(LETTERS.index(c) for c in m.group(1))
+    toks = re.findall(rf"(?<![a-z])([{alpha}])(?![a-z])", low)
+    for i in range(len(toks) - k + 1):
+        w = toks[i:i + k]
+        if len(set(w)) == k:
+            return tuple(LETTERS.index(c) for c in w)
+    return None
 
 
 def lcs_fid(true_order, got):
@@ -150,7 +165,7 @@ def epoch(block, judge, rng, production_key="base", battery=True):
             else:
                 sd[meta].append(v)
         else:
-            got = parse_rec(out)
+            got = parse_rec(out, len(meta))
             if got is None:
                 invalid += 1
             fids.append(lcs_fid(list(meta), got))

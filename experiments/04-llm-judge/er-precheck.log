@@ -1,0 +1,29 @@
+==============================================================================
+E-R: DOES THE METRIC SEE A REAL LLM JUDGE STOP MEASURING?
+==============================================================================
+
+[precheck blocks (not for verdicts)] blocks=2  cfg={'trunc': 0.4, 'reps_floor': 3, 'reps_l1': 1, 'reps_l2': 4, 'reps_l3': 3, 'reps_rec': 3}
+   base: s0=1.000  deficit0=0.000  floor0=0.000  invalid=0.000
+   calibrated q per block: 0.05 0.05
+   cond     d scalar   d deficit    floor  invalid  posflip  L1raw
+   R0      +0.000 ±0.000   +0.000 ±0.000    0.000    0.000    0.000  0.000
+   R1      +0.000 ±0.000   +0.000 ±0.000    0.000    0.000    0.000  0.000
+   R2      -0.819 ±0.125   +0.244 ±0.119    0.000    0.179    0.000  0.250
+   R3      +0.000 ±0.000   +0.000 ±0.000    0.000    0.000    0.000  0.000
+   R4      +0.000 ±0.000   +0.000 ±0.000    0.000    0.000    0.000  0.000
+   R5      +0.000 ±0.000   +0.000 ±0.000    0.000    0.000    0.000  0.000  (descriptive)
+   MC   ds(R1)-ds(R3) = +0.000 (2se 0.000)  -> NOT significant
+   P1   dm(R1)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
+   S1   dm(R4)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
+   S2   dm(R2)-dm(R0) = +0.244 (2se 0.239)  -> significant
+
+[precheck E-R] gates:
+   PC1 honest scalar in dynamic range: 1.000 -> FAIL
+   PC2 leak inflates the scalar: ceilings +0.000 +0.000 -> FAIL
+   PC3 clarity rewrite truly gains: targets +0.000 +0.000 -> FAIL
+   PC4 healthy baseline judge: deficit 0.000 (<=0.5), floor 0.000 (<=0.3) -> OK
+   PC6 hack ceiling reaches target on every block -> OK
+   PC7 invalid-answer rate under 5% -> OK
+
+   E-R precheck NOT passed - tune and rerun
+EXIT=0
