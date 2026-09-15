@@ -60,11 +60,14 @@ reports.html      8 篇技术报告笔记 + 综述 + 索引表，锚点 #r01…#
 notes/
   papers/         16 篇论文笔记的 Markdown 原文 + _overview.md
   reports/        8 篇报告笔记的 Markdown 原文 + _overview.md
+  directions/     原创方向判断（非论文笔记），01 = 验证器应该是度量而不是打分函数
 README.md
 LICENSE           CC BY 4.0
 ```
 
-HTML 页面是从 `notes/` 渲染的，内容与之一致。保留 Markdown 原文是为了方便用编辑器检索或做二次加工。
+HTML 页面是从 `notes/papers/` 与 `notes/reports/` 渲染的，内容与之一致。保留 Markdown 原文是为了方便用编辑器检索或做二次加工。
+
+`notes/directions/` 是快照之后新增的原创判断，**尚未渲染进 HTML**——它不是对某篇材料的笔记，而是横向读完之后的结论，会随后续轮次增补。
 
 ## 怎么浏览
 
