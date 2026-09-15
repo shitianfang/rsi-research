@@ -93,7 +93,6 @@ footer a{color:var(--muted)}
 </style>
 </head>
 <body>
-
 <header class="site-head">
   <div class="wrap">
     <span class="brand"><a href="index.html">RSI 阅读指南</a></span>
@@ -106,234 +105,228 @@ footer a{color:var(--muted)}
     </nav>
   </div>
 </header>
-
 <main>
 <div class="wrap">
 
-<h1>先写下答案，再做东西</h1>
-<p class="lede">一个不需要人、难度自己会长的改进循环。这页说清楚它的原理、为什么别的地方也能用，以及我们接下来具体做什么。</p>
-<p class="stamp">2026-09-15 · 承接 <a href="direction.html">方向判断</a> 与 notes/directions/01</p>
+<h1>把尺子变成被测量的对象</h1>
+<p class="lede">自我改进系统最难的一格是验证：改进循环需要一个裁判，而裁判本身无法被验证，递归下去没有底。本文主张这个困难来自裁判的<strong>形状</strong>——标量——并给出一个不需要人、难度自己上升的替代构造。</p>
+<p class="stamp">研究计划 · 2026-09-15 · 承接 <a href="direction.html">方向判断</a>、notes/directions/01、experiments/01–03</p>
 
-<h2>一、普通做法为什么是死路</h2>
+<h2>1. 问题：RSI 里最难的那一格</h2>
 
-<p>做完一个东西再问"好不好"，这个问题没有机器能回答的答案——只能找人。找人就慢，慢就没有迭代，没有迭代就没有进化。</p>
+<p>一个能自我改进的系统需要判断"这次改动是不是更好"。在有确定性裁判的域里（代码跑不跑得过、定理证不证得出），这不是问题。困难出现在裁判本身也会被改进、或者裁判一开始就不存在的时候。</p>
+
+<p>综述把这个困难叫 <strong>moving-ruler problem</strong>（尺子在动）：</p>
+
+<blockquote>"When both the evaluated system and its criterion change, a rising sequence of internal scores combines two effects: behavioral change under the old standard and movement of the standard itself. Evaluation under only the revised criterion cannot distinguish a more valid rule from one that is merely easier for the revised system to satisfy."</blockquote>
+
+<p>分数在涨，但涨的可能是能力，也可能只是尺子变松了。<strong>从分数本身看不出来是哪一种。</strong></p>
+
+<h2>2. 我们的论点：这是形状的问题</h2>
+
+<p>今天所有自改进系统的裁判都是<strong>标量打分函数</strong>：<code>s(A) → 一个数</code>。它有一个结构性缺陷，而这个缺陷正好就是 moving-ruler 问题：</p>
+
+<div class="sketch">标量裁判
+
+   s(A)  =  f( A 的表现 ,  尺子的松紧 )
+            └─────┬─────┘  └─────┬────┘
+              想知道的           干扰项
+
+   观测到 s 变大了 → 是左边变好了？还是右边变松了？
+   <i>一个方程，两个未知数。无解。</i></div>
+
+<p>而且这不是"测不准"，是<strong>结构上不可分辨</strong>：无论怎么改进标量的拟合、加多少正则，一个数就是装不下两个自由度。</p>
+
+<div class="card">
+<h3>度量把两个未知数拆成两个可观测量</h3>
+<p>度量不输出一个数，输出两样东西：</p>
+<div class="sketch"><b>位置</b>  z(A)   ——  A 在空间里的坐标
+<b>局部尺度</b>  M(A)   ——  在 A 附近，改动多大才会被察觉（JND 椭球）
+
+
+   尺子变松  →  M <b>整体膨胀</b>（所有方向的 JND 一起变大）  ← 可直接观测
+   能力变好  →  z <b>位置移动</b>，M 不整体变                  ← 可直接观测
+
+   <b>两个方程，两个未知数。可解。</b></div>
+<p>这就是本文的核心主张：</p>
+<blockquote><strong>标量把尺子藏起来了。度量把尺子变成了被测量的对象之一。</strong></blockquote>
+<p>于是"验证裁判"这个无底递归被替换掉了：<strong>你不需要证明裁判是正确的，你只需要能看见尺子有没有在动。</strong>在标量里这不可见，在度量里它是一个显式的量。</p>
+</div>
+
+<h2>3. 方法：七步，全部机器闭合</h2>
+
+<p>要把上面那个构造落地，需要一个不依赖人的方式来定义"位置"和"局部尺度"。做法是把评价的顺序倒过来。</p>
 
 <div class="sketch">普通做法
     做出一个东西  ──→  问 <i>"好不好?"</i>  ──→  没有答案，只能找人
 
+本文的做法 —— 顺序<b>反过来</b>
+    <b>① 先写意图</b>          <b>② 生成</b>         <b>③ 受限识别</b>
+    ┌──────────────┐        ┌────────┐        ┌──────────────┐
+    │  一个结构 S  │ ─────→ │ 产物 A │ ─────→ │ 预算 B 之内  │ ──→ <b>④ 对比</b>
+    │（机器写的）  │        │        │        │ 把 S 读回来  │      │
+    └──────────────┘        └────────┘        └──────────────┘      │
+           │                                                         │
+           └────────── 真值在这里，是<b>我们自己写的</b> ─────────────┘</div>
 
-这个做法 —— 把顺序<b>反过来</b>
+<div class="step"><div class="stepn">①</div><div><h4>写意图</h4><p>机器生成一个<strong>结构</strong> S——不是一个作品，是一个可对比的骨架：阅读顺序、子目标 DAG、程序的分段与秩序。关键在于 S 是<strong>先</strong>写下的，所以它就是真值，不需要采集、不需要标注。</p></div></div>
 
-    <b>① 先写意图</b>          <b>② 做出来</b>        <b>③ 受限条件下读回来</b>
-    ┌──────────────┐        ┌────────┐         ┌──────────────┐
-    │ 先读大标题   │        │        │         │  只能看 3 眼 │
-    │ 再读价格     │ ─────→ │  版面  │ ──────→ │  1/4 分辨率  │ ──→ <b>④ 对比</b>
-    │ 最后看按钮   │        │        │         │  有干扰      │      │
-    └──────────────┘        └────────┘         └──────────────┘      │
-           │                                                          │
-           └────────── 答案在这里，是<b>你自己写的</b> ───────────────┘</div>
-<p class="sketchcap">④ 是纯机械对比：读回来的顺序 == 你写的顺序吗？机器自己就能判。</p>
+<div class="step"><div class="stepn">②</div><div><h4>生成</h4><p>做出一个实现 A 来体现 S。同一个 S 有无数个实现，它们的区别<strong>不在对错，而在可恢复性</strong>——这正是要研究的量。</p></div></div>
 
-<div class="card">
-<h3>关键在于：真值不是采集来的，是先写下的</h3>
-<p>你本来就是<strong>带着目的</strong>去做东西的，那个目的就是答案。把它先写下来，检验就变成可机器判定的对比。这一步不需要任何人、任何标注、任何偏好数据。</p>
-</div>
+<div class="step"><div class="stepn">③</div><div><h4>受限识别</h4><p>一个<strong>资源受限</strong>的观察者在预算 B 之内观察 A，输出它读到的结构 Ŝ。观察者不知道 S，它只是在限制下读；它的行为本身就是恢复出的意图。</p></div></div>
 
-<h2>二、"受限"是关键，没有它整件事就是废的</h2>
+<div class="step"><div class="stepn">④</div><div><h4>对比</h4><p><code>fidelity = dist(S, Ŝ)</code>。纯机械对比，没有任何意见进入。</p></div></div>
 
-<div class="two">
-<div class="sketch">读者<i>没有</i>限制
+<div class="callout"><strong>限制是承重墙，不是装饰。</strong>不设预算，任何观察者都能完美恢复任何实现，所有产物同分，信号为零。设了预算，差别才显出来。而"A 在 B 之内能被恢复、B′ 不能"这件事<strong>做之前谁也不知道</strong>——必须真的生成、真的跑一遍受限识别。这就是它能提供先验之外信息的原因，和"代码不跑不知道崩不崩"是同一回事。</div>
 
- 意图 → 实现A → [看多久都行] → 对 ✓
- 意图 → 实现B → [看多久都行] → 对 ✓
- 意图 → 实现C → [看多久都行] → 对 ✓
-                                 ↑
-                    <i>全都满分 = 学不到任何东西</i></div>
-<div class="sketch">读者<b>被限制</b>（3 眼 / 低分辨率 / 有干扰）
+<div class="step"><div class="stepn">⑤</div><div><h4>校准</h4><p>两件事要定标，而<strong>它们是同一条规则</strong>：</p>
+<div class="sketch"><b>难度校准</b>：预算调到「完整恢复 / 没恢复」的比例 ≈ 50%
+<b>尺子校准</b>：微扰调到「分得出 / 分不出」的比例 ≈ 50%
 
- 意图 → 实现A → [3 眼] → 对了   ✓
- 意图 → 实现B → [3 眼] → 错了   ✗  <b>← 信息在这里</b>
- 意图 → 实现C → [3 眼] → 对一半 ~
-                          ↑
-                  <b>差别显出来了</b></div>
-</div>
+原因：二元判断在 50% 处熵最大，<b>每次测量拿到的信息最多</b>。
+90% 通过率的那次测试几乎什么都没告诉你——你本来就猜得到它会过。</div>
+<p>尺子校准给出<strong>单位</strong>：从 A 出发沿方向 δ 推 t，找到刚好一半能被分辨的 t*，那就是该方向上的 1 个单位。所有方向的 t* 连起来是一个椭球，<strong>它就是 M(A)</strong>。</p>
+<div class="sketch">                ↑ 0.30           推 0.30 才分得出 →  这个方向<b>迟钝</b>
+                │
+      ←─────────●─────────→       推 0.05 就分得出 →  这个方向<b>敏感</b>
+        0.05    A    0.05
+                │
+                ↓ 0.30            连起来 = ╭─────╮
+                                          │  A  │  ← M(A)
+                                          ╰─────╯</div>
+<p>难度校准只看<strong>当前这批产物的通过率</strong>，不看任何外部标准。所以产物变好时预算自动收紧——<strong>校准规则本身就是难度上升规则，两者是同一件事，不是另外加的机制。</strong></p></div></div>
 
-<blockquote>限制 = 区分度的来源。不设限，所有东西都一样好；设了限，差别才显出来。</blockquote>
+<div class="step"><div class="stepn">⑥</div><div><h4>学习</h4><p>循环累积的<strong>不是分数，是三样东西</strong>：</p>
+<ol>
+<li><strong>敏感度地图</strong>——哪些方向承载意义（动一点就改变被读出的结构），哪些方向是自由的（动很多也读不出差别）。这把产物空间切成"必须锁死的轴"和"随便发挥的轴"。</li>
+<li><strong>结构规律</strong>——形如"当某结构特征满足某条件时，崩溃阈值平均高 N 档"。是可解释的句子，不是分数。</li>
+<li><strong>意图→实现的映射</strong>——给定 S，哪些实现方式能在紧预算下把 S 传达出去。这是能力，前两样是知识。</li>
+</ol></div></div>
 
-<p>而且"A 能过 3 眼、B 过不了"这件事，<strong>做之前谁也不知道</strong>——必须真的做出来、真的跑一遍受限阅读才知道。这和代码一样：不跑你不知道它会不会崩。<strong>这就是它能提供新信息、而不是复述已知的原因。</strong></p>
+<div class="step"><div class="stepn">⑦</div><div><h4>自进化</h4>
+<div class="sketch">预算变紧 → 尺子变细 → 分出以前分不出的差别 → 学到更细的规律
+    ↑                                                    │
+    └──────── 产物变好，通过率回升，于是预算再紧一档 ←────┘</div>
+<p><strong>复利来自一个具体的事实：度量的分辨率是算力的函数，而算力是系统可以多花的东西。</strong>"改进者改进自己"在这里有了所指——不是让裁判更聪明，是让它<strong>看得更细</strong>。</p></div></div>
 
-<h2>三、难度为什么自己会长</h2>
-
-<div class="sketch">第 1 轮   读者能看 3 眼
-          └→ 设计者学会：重要的东西放显眼处
-          └→ 结果：<b>大家都过关了</b>
-                      │
-          "都过关了" = 太简单了  ──────┐
-                                        ↓
-第 2 轮   读者被压到 2 眼
-          └→ 设计者被迫学更强的：层级更陡、对比更狠
-          └→ 结果：<b>又都过关了</b>
-                      │
-                      ──────────────────┐
-                                        ↓
-第 3 轮   2 眼 + 干扰 + 更低分辨率
-          └→ ...</div>
-
-<p><strong>没有人排课表。门槛上升的唯一依据是"上一代都过关了"。</strong></p>
-
-<div class="sketch">   能力 / 难度
-      │                              ╱  设计者
-      │                          ╱
-      │                      ╱         两条线互相追，谁也停不下来
-      │                  ╱
-      │              ╱   读者（难度）
-      │          ╱
-      │──────╱
-      └──────────────────────────────────→  时间
-
-
-   对比 —— autoresearch 那类系统
-
-      │
-      │      ╭────────────────────  设计者撞顶后就平了
-      │    ╱
-      │──╱
-      │─────────────────────────────  <i>难度线永远是平的（5 分钟预算 + 固定验证集）</i>
-      └──────────────────────────────────→  时间</div>
-
-<h2>四、为什么别的地方也能用</h2>
-
-<p>把上面抽象出来，只剩一个共同点：<strong>你能不能先写下答案</strong>。</p>
+<h2>4. 为什么这解决了验证问题</h2>
 
 <div class="tablewrap">
 <table>
-<thead><tr><th class="nw">域</th><th>① 先写下"它该做什么"</th><th class="nw">② 做出来</th><th>③ 在什么限制下</th><th>④ 对比什么</th></tr></thead>
+<thead><tr><th class="nw">验证的老问题</th><th>这个构造里发生了什么</th></tr></thead>
 <tbody>
-<tr><td class="nw">海报</td><td>阅读顺序</td><td class="nw">版面</td><td>3 眼 / 低分辨率 / 干扰</td><td>顺序对不对</td></tr>
-<tr><td class="nw">代码</td><td>函数该干嘛</td><td class="nw">程序</td><td>有限测试次数 / 算力</td><td>行为对不对</td></tr>
-<tr><td class="nw">agent</td><td>该完成什么</td><td class="nw">调控拓扑</td><td>有限步数 / 上下文</td><td>完成没有</td></tr>
-<tr><td class="nw">策略</td><td>该达到什么</td><td class="nw">policy</td><td>有限交互次数</td><td>达到没有</td></tr>
+<tr><td class="nw">裁判从哪来</td><td>不需要裁判判"好"。真值是<strong>先写下的意图</strong>，对比是机械的</td></tr>
+<tr><td class="nw">谁验证裁判</td><td>不验证它正不正确，<strong>观测尺子有没有在动</strong>（M 是否整体膨胀）。这在标量里不可见</td></tr>
+<tr><td class="nw">信息从哪来</td><td>"在预算内能否恢复"是执行的经验事实，不跑不知道——超出生成器的先验</td></tr>
+<tr><td class="nw">难度会不会见顶</td><td>校准规则即escalation规则，产物变好预算自动收紧</td></tr>
+<tr><td class="nw">要多少人</td><td>零。测试机器生成，预算是一个数字，意图是机器写的</td></tr>
 </tbody>
 </table>
 </div>
 
-<p>于是同一件事有了一个通用的说法：</p>
+<h2>5. 通用性</h2>
+
+<p>七步里没有一步依赖具体域。唯一的前提是：<strong>能先写下意图，且产物空间能被微扰</strong>。</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">域</th><th>① 意图 S</th><th class="nw">② 产物</th><th>③ 预算</th><th>④ 恢复 Ŝ</th></tr></thead>
+<tbody>
+<tr><td class="nw">程序</td><td>分段与秩序结构</td><td class="nw">实现</td><td>调用次数</td><td>从输入输出归纳出的分段</td></tr>
+<tr><td class="nw">agent</td><td>子目标 DAG</td><td class="nw">调控拓扑</td><td>步数、上下文</td><td>轨迹里实际的子目标顺序</td></tr>
+<tr><td class="nw">策略</td><td>目标状态序列</td><td class="nw">policy</td><td>交互次数</td><td>rollout 实际到达的序列</td></tr>
+<tr><td class="nw">数据管线</td><td>字段依赖图</td><td class="nw">ETL 代码</td><td>采样行数</td><td>从样本推断出的依赖</td></tr>
+<tr><td class="nw">视觉设计</td><td>阅读顺序</td><td class="nw">版面</td><td>注视次数、分辨率</td><td>注视序列落在哪些元素上</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>于是通用的距离只有一个式子：</p>
 
 <blockquote><strong>d(A, B) = 在预算 B 之内，能把 A 和 B 区分开的概率。</strong></blockquote>
 
-<p>叫做<strong>资源受限下的可观察等价性</strong>。它不是设计专有的，对任何有"行为"的产物都成立。而它同时补上了四格里最难的两格：</p>
+<p>程序里是"8 次调用之内有没有一个探测让两者表现不同"，agent 里是"K 步之内有没有一个任务让两套拓扑走出不同轨迹"。<strong>同一个式子。</strong></p>
+
+<div class="card">
+<h3>限制逼出的是真品质，不是人造考试</h3>
+<p>程序域里有个干净的例子：两个实现都<strong>正确</strong>，都是三段函数、断点都在 0 和 10。但 A 在 x=10 处只跳变 0.001，B 跳变明显。8 次调用之内，A 只能被恢复出 1 个断点，B 能恢复出 2 个。</p>
+<p>它们在<strong>无限预算下完全等价</strong>；是预算把它们分开的。而分开的那个东西正是<strong>可发现性 / 可测试性</strong>——一个真实的工程品质。这说明限制不是硬凑的考试，<strong>限制逼出的正是"在有限资源下还能不能被正确理解"</strong>，而这在任何域里都是真品质。</p>
+</div>
+
+<h2>6. 已经测到的，和还没测的</h2>
+
+<h3>已测：预算确实控制难度（20 个随机程序，程序域）</h3>
 
 <div class="tablewrap">
 <table>
-<thead><tr><th class="nw">要求</th><th>为什么满足</th></tr></thead>
+<thead><tr><th class="nw">预算（调用次数）</th><th class="nw">平均保真度</th><th class="nw">标准差</th><th class="nw">完整恢复比例</th></tr></thead>
 <tbody>
-<tr><td class="nw">无人</td><td>测试由机器生成，预算只是一个数字</td></tr>
-<tr><td class="nw">信息超出先验</td><td>"这个测试能不能分开它们"是执行的经验事实，不跑不知道</td></tr>
-<tr><td class="nw">难度内生</td><td>系统变好 → 提高预算 → 对手用更多预算去找能区分的测试</td></tr>
-<tr><td class="nw">形状是度量</td><td>可区分性在构造上就是一个距离，不是分数</td></tr>
+<tr><td>4</td><td>0.565</td><td>0.232</td><td>0.05</td></tr>
+<tr><td>6</td><td>0.738</td><td>0.233</td><td>0.25</td></tr>
+<tr><td>8</td><td>0.758</td><td>0.212</td><td>0.15</td></tr>
+<tr><td>10</td><td>0.784</td><td>0.221</td><td>0.15</td></tr>
+<tr><td>14</td><td>0.814</td><td>0.226</td><td>0.40</td></tr>
+<tr><td>20</td><td>0.876</td><td>0.198</td><td>0.40</td></tr>
+<tr><td>30</td><td>0.910</td><td>0.176</td><td>0.60</td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="card">
-<h3>复利从哪来</h3>
-<p><strong>度量的分辨率是算力的函数，而算力是系统可以多花的东西。</strong></p>
-<p>预算越高 → 区分越细 → 空间越锐利 → 选择越精准 → 值得再加预算。"改进者改进自己"在这里有了具体所指：不是让验证器更聪明，而是让它<strong>看得更细</strong>，而看得更细只需要花更多算力。</p>
+<p>这一条是承重的：完整恢复比例从 0.05 单调升到 0.60，说明预算是一个<strong>有效的难度旋钮</strong>，50% 目标点落在可达范围内，阶梯校准有东西可收敛。宽预算下信号确实被压平（0.910，接近顶），验证了"不设限就没有信号"。</p>
+
+<h3>待测：四臂对照（预注册判据，先写死再跑）</h3>
+
+<p>四个臂：<code>度量+预算上升</code> / <code>标量+预算上升</code> / <code>度量+预算固定</code> / <code>标量+预算固定</code>。两种裁判从<strong>同一批探测数据</strong>测得，唯一区别是形状：</p>
+
+<div class="sketch"><b>标量</b>  v(A) = 当前预算下的保真度         ——  一个<b>点</b>上的表现
+<b>度量</b>  v(A) = A 周围仍能正确恢复的体积   ——  点<b>周围</b>的结构</div>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">判据</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td class="nw">成功</td><td>只有 <code>度量+预算上升</code> 的前沿持续上移而不平台化，<strong>并且</strong>它在离自己训练预算 2 倍远的档位上依然成立（否则只是过拟合前沿，不是发现）</td></tr>
+<tr><td class="nw">失败</td><td>四臂都平台化，<strong>或</strong>预算固定的臂同样能涨 → "难度内生"不是关键变量，整条线作废</td></tr>
+<tr><td class="nw">统计</td><td>同种子配对对比，差值小于 2 倍标准误一律写"不显著"，不解读方向</td></tr>
+</tbody>
+</table>
 </div>
 
-<h2>五、尺子的单位从哪来（校准）</h2>
-
-<p>不问"几分"，只问"这两个能不能分开"。然后在一个点周围朝各个方向推一点点，看推多远才<strong>刚好</strong>能被区分：</p>
-
-<div class="sketch">                     ↑  这个方向要推 <b>0.3</b> 才看得出差别（迟钝）
-                     │
-                     │
-       ←─────────────●─────────────→
-        推 <b>0.1</b> 就       A       推 <b>0.1</b> 就
-        看得出                        看得出（敏感）
-                     │
-                     │
-                     ↓  <b>0.3</b>
-
-
-              连起来 =     ╭───────────╮
-                          │     A     │   ← 一个椭圆
-                          ╰───────────╯
-
-              <b>椭圆的形状，就是这一点上的"尺子"。</b></div>
-
-<p>这正是颜色科学一百年前做的事：用"人眼刚好能看出差别"当颜色空间的刻度单位（MacAdam 椭圆 → CIELAB 的 ΔE）。区别只在于——<strong>这里的观察者是一个会因为资源不够而混淆的算法，不是人。</strong></p>
-
-<h2>六、我们要做的研究</h2>
-
-<p>研究问题一句话：</p>
-
-<blockquote><strong>把验证器从"打分函数"换成"资源受限下的可区分性度量"，并让预算自己上升，能不能得到一个不会撞顶的改进循环？</strong></blockquote>
-
-<div class="step"><div class="stepn">1</div><div>
-<h4>先读三篇，决定要不要继续</h4>
-<p>其中一篇可能直接否掉主线：<strong>Survive or Collapse</strong>（arXiv 2605.22217）的受控实验结论是"约束自改进稳定性的是<strong>任务准入</strong>，不是奖励的标定"。如果它对，换度量解决不了问题，我们在调一个不绑定的变量。必须先读，不能绕。</p>
-<p class="quiet">另两篇：Who grades the grader（2607.12790，锚一去掉度量就坍缩成"永远放行"）、Does Capability Transfer to Subjective Behavior（2605.27914，已经做过无真值验证验证器）。</p>
-</div></div>
-
-<div class="step"><div class="stepn">2</div><div>
-<h4>把度量按 MacAdam 的方式重建</h4>
-<p>现有实现的匹配判断已被证伪（两个随机产物几乎从不"读成一样"，匹配率 0.01–0.05）。正确构造是：<strong>在一个产物周围做微扰，找受限读者刚好能分辨的阈值</strong>，得到局部 JND 椭球，那就是局部度量张量。</p>
-</div></div>
-
-<div class="step"><div class="stepn">3</div><div>
-<h4>测那个唯一重要的问题：前沿会不会一直涨</h4>
-<p>四个臂对照：<code>度量+预算上升</code> / <code>标量+预算上升</code> / <code>度量+预算固定</code> / <code>标量+预算固定</code>。</p>
-<p><strong>成功判据</strong>：只有"度量+预算上升"那一臂的前沿持续上移而不平台化，<em>并且</em>它产出的东西在<strong>训练中从未出现过</strong>的预算档位上依然成立（否则只是过拟合前沿，不是发现）。</p>
-<p><strong>失败判据（必须事先写死）</strong>：如果四臂都平台化，或者预算固定的臂同样能涨，则"难度内生"不是关键变量，整条线作废。</p>
-</div></div>
-
-<div class="step"><div class="stepn">4</div><div>
-<h4>先在有真值的域做，再谈没真值的域</h4>
-<p>代码/算法是第一个落点——那里有独立的真值可以核对我们的度量有没有骗自己。<strong>设计/海报是目标域，但不是第一个实验域</strong>：在没有独立核对手段的地方先做，等于自证。</p>
-</div></div>
-
-<h2>七、诚实的账：已经被别人做掉的，和真正的风险</h2>
+<h2>7. 诚实的账</h2>
 
 <div class="tablewrap">
 <table>
 <thead><tr><th class="nw">主张</th><th class="nw">状态</th><th>依据</th></tr></thead>
 <tbody>
 <tr><td>标量有方向可被刷</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>Transitivity Meets Cyclicity（2605.17342, ICML 2026）已把偏好拆成 transitive 标量 + cyclic 向量</td></tr>
-<tr><td>无真值验证验证器</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>2605.27914 的三张证书，且指出人类评分者自身相关只有 ρ≈0.45，人本身不构成锚</td></tr>
-<tr><td>几何自洽能替代锚</td><td class="nw"><span class="verdict v-dead">已被推翻</span></td><td>我们自己的合成实验（检验相关仅 0.13–0.38，六项里两项恒等空转）＋ Double Ratchet 的锚消融（度量坍缩成"永远放行"，而下游分数照样好看，所以发现不了）</td></tr>
-<tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse：绑定约束是任务准入而非奖励标定</td></tr>
+<tr><td>无真值验证验证器</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>2605.27914 的三张证书；并指出人类评分者自身相关仅 ρ≈0.45，人本身不构成锚</td></tr>
+<tr><td>几何自洽检验能替代锚</td><td class="nw"><span class="verdict v-dead">已被推翻</span></td><td>我们自己的合成实验（检验与真实损害的秩相关仅 0.13–0.38；六项里两项恒等空转）＋ Double Ratchet 的锚消融（度量坍缩成"永远放行"，而下游分数照样好看，所以发现不了）</td></tr>
+<tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse（2605.22217）：绑定约束是<strong>任务准入</strong>，不是奖励标定</td></tr>
 <tr><td>标量无法表示异质人群</td><td class="nw"><span class="verdict v-open">仍成立</span></td><td>但不新</td></tr>
 <tr><td><strong>受限恢复当改进信号</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>549 篇里没有；recovery 只出现在审计字段，从未当作改进信号</td></tr>
-<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong></td></tr>
+<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0 命中；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong></td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="callout"><strong>最大的单点风险</strong>：如果 Survive or Collapse 是对的，那么这一整页的主线是在调一个不绑定的变量。<strong>第 1 步不是形式，是真的可能让我们收工的一步。</strong></div>
+<div class="callout"><strong>最大的单点风险。</strong>若 Survive or Collapse 成立——自改进的绑定约束是任务准入而非奖励形状——则本文主线是在调一个不绑定的变量。<strong>第一步是读它，而不是写代码</strong>；这一步的结论可能是收工。对应到本文的构造，它质疑的具体位置是：如果意图分布固定（永远是"三段、一个秩序"），学完就没得学，所以<strong>意图生成器本身必须持续变难</strong>，而这正是"任务准入"问题。</div>
 
-<h2>八、现在的状态</h2>
+<h2>8. 局限</h2>
 
-<div class="tablewrap">
-<table>
-<thead><tr><th class="nw">东西</th><th class="nw">状态</th><th>说明</th></tr></thead>
-<tbody>
-<tr><td class="nw"><code>notes/directions/01</code></td><td class="nw">已写，已修正</td><td>原文保留，第九节记录了哪几句被自己的实验推翻</td></tr>
-<tr><td class="nw"><code>experiments/01</code></td><td class="nw">跑通</td><td>纯 numpy，三个世界（含两个假设失效的）；C1 成立，C2 推翻，C3 未建立</td></tr>
-<tr><td class="nw"><code>experiments/02</code></td><td class="nw">半成品</td><td>意图→实现→受限恢复→保真度 这半边跑通且只要 3 毫秒；度量那半边的匹配构造已证伪，待按 MacAdam 重写</td></tr>
-</tbody>
-</table>
-</div>
+<ul>
+<li><strong>它测的是传达/恢复的鲁棒性，不是美，也不是个人品味。</strong>在视觉设计上，它能让及格线自动上升并精确交还创作自由度（告诉你哪些轴是自由的），但它判断不了美。</li>
+<li>人的位置：<strong>空间由机器免费建成，人只需在已建好的空间里指一个点</strong>，成本 O(维度) 而非 O(样本)。机器建地图，人选目的地。</li>
+<li>首个实验域刻意选<strong>程序</strong>而非设计——那里有独立可计算的真值来核对度量有没有自欺。在没有独立核对手段的域先做，等于自证。</li>
+<li>四臂对照尚未完成（代码在 <code>experiments/03-intent-recovery/</code>，一次改动引入的 <code>NameError</code> 中断了 E-A 之后的部分）。本文不引用任何未完成的对照数字。</li>
+</ul>
 
 </div>
 </main>
-
 <footer>
   <div class="wrap">
     <p>RSI 阅读指南 · 研究计划 2026-09-15 · <a href="index.html">首页</a> · <a href="direction.html">方向判断</a></p>
     <p>本页的判断可被自己的实验推翻，被推翻的部分会留在原处并标注。CC BY 4.0。</p>
   </div>
 </footer>
-
 </body>
 </html>
