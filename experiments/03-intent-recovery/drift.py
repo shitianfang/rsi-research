@@ -109,7 +109,16 @@ def discr(a, b, budget, rng, obs, reps=6):
                     for _ in range(reps)])
 
 
-def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5, reps=6):
+def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5, reps=6,
+        floor_correct=False):
+    """floor_correct (E-D3 amendment): a leaking judge raises the observer's
+    SELF-inconsistency, which the absolute 0.5 target mistakes for
+    discrimination. Psychophysics' catch-trial fix: measure the same-pair
+    disagreement floor and set the target halfway between floor and ceiling,
+    so only discrimination in excess of self-noise counts."""
+    if floor_correct:
+        floor = discr(impl, impl, budget, rng, obs, reps=2 * reps)
+        target = floor + 0.5 * (1.0 - floor)
     for _ in range(steps):
         mid = np.sqrt(lo * hi)
         d = discr(impl, perturb(impl, rng, scale=mid, direction=direction)[0], budget, rng, obs,
@@ -121,14 +130,14 @@ def jnd(impl, direction, budget, rng, obs, lo=0.005, hi=1.2, steps=7, target=0.5
     return float(np.sqrt(lo * hi))
 
 
-def pop_metric(pop, budget, rng, obs, n_dirs, reps=6, agg="median"):
+def pop_metric(pop, budget, rng, obs, n_dirs, reps=6, agg="median", floor_correct=False):
     """agg='median' is E-D's registered readout; E-D2 registers 'mean' because
     the hi-censored tail IS the signal and the median discards it."""
     radii = []
     for impl in pop:
         for _ in range(n_dirs):
             d = rng.normal(size=2 * K_SEG - 1)
-            radii.append(jnd(impl, d, budget, rng, obs, reps=reps))
+            radii.append(jnd(impl, d, budget, rng, obs, reps=reps, floor_correct=floor_correct))
     logs = np.log(radii)
     return float(np.median(logs) if agg == "median" else np.mean(logs))
 
@@ -192,7 +201,8 @@ REG2_SEEDS = range(300, 312)
 
 # E-D3: answer-leaking judge; ceiling defect gone by construction, so the
 # capability injection returns to full strength. Final round for the toy.
-CFG3 = dict(B=5, K=8, p_mode=0.6, thresh=8.0, n_dirs=8, reps=8, rounds=25, calib_steps=9)
+CFG3 = dict(B=5, K=8, p_mode=0.6, thresh=8.0, n_dirs=8, reps=8, rounds=25, calib_steps=9,
+            floor=True)
 REG3_SEEDS = range(400, 412)
 
 
@@ -217,7 +227,8 @@ def run_seed2(seed, cfg, hack=make_lazy):
     pop0 = [random_impl(rng, skewed_intent(rng, cfg["p_mode"])) for _ in range(cfg["K"])]
     brng = np.random.default_rng([seed, 1])
     s0 = pop_scalar(pop0, cfg["B"], brng, honest)
-    m0 = pop_metric(pop0, cfg["B"], brng, honest, cfg["n_dirs"], cfg["reps"], "mean")
+    fc = cfg.get("floor", False)
+    m0 = pop_metric(pop0, cfg["B"], brng, honest, cfg["n_dirs"], cfg["reps"], "mean", fc)
     pop_imp = improve(pop0, cfg["B"], np.random.default_rng([seed, 2]), cfg["rounds"])
     ds3_cal = pop_scalar(pop_imp, cfg["B"], np.random.default_rng([seed, 3]), honest) - s0
     crng = np.random.default_rng([seed, 4])
@@ -238,7 +249,7 @@ def run_seed2(seed, cfg, hack=make_lazy):
         else:
             pop, obs = pop_imp, hack(p, crng)
         s1 = pop_scalar(pop, cfg["B"], crng, obs)
-        m1 = pop_metric(pop0, cfg["B"], crng, obs, cfg["n_dirs"], cfg["reps"], "mean")
+        m1 = pop_metric(pop0, cfg["B"], crng, obs, cfg["n_dirs"], cfg["reps"], "mean", fc)
         out[cname] = (s1 - s0, m1 - m0)
     return out
 
