@@ -107,16 +107,17 @@ def lcs_fid(true_order, got):
 
 # --- one epoch of readouts on one block --------------------------------------
 
-def epoch(block, judge, rng, production_key="base"):
+def epoch(block, judge, rng, production_key="base", battery=True):
     """judge = dict(leak_q=float, trunc=float|None, tie=bool). Returns (scalar,
-    deficit, floor, invalid_rate, extras). One pmap batch per epoch."""
+    deficit, floor, invalid_rate, extras). One pmap batch per epoch.
+    battery=False measures only the scalar (used by calibration epochs)."""
     q, tr, tie = judge.get("leak_q", 0.0), judge.get("trunc"), judge.get("tie", False)
 
     def prep(t):
         return truncate(t, tr) if tr else t
 
     prompts, tags = [], []
-    for grp in block["battery"]:
+    for grp in (block["battery"] if battery else []):
         # half the L2 reps present the pair in swapped order: position-flip
         # rate is one of the deployed unlabeled baselines we record alongside.
         l2 = [("L2ab", grp["r1"], grp["l2"]), ("L2ba", grp["l2"], grp["r1"])]
@@ -177,9 +178,11 @@ def run_block(bi, block, cfg):
 
     # true-gain target, then structural calibration of the leak:
     # scalar(q) is linear in q with ceiling scalar(1), so q* = target/ceiling.
-    s3_cal, _, _, _, _ = epoch(block, dict(), np.random.default_rng([bi, 1]), "improved")
+    s3_cal, _, _, _, _ = epoch(block, dict(), np.random.default_rng([bi, 1]), "improved",
+                               battery=False)
     target = s3_cal - s0
-    s_ceil, _, _, _, _ = epoch(block, dict(leak_q=1.0), np.random.default_rng([bi, 2]), "base")
+    s_ceil, _, _, _, _ = epoch(block, dict(leak_q=1.0), np.random.default_rng([bi, 2]), "base",
+                               battery=False)
     ceil = s_ceil - s0
     reach = target <= ceil + 1e-9
     q = float(np.clip(target / max(1e-9, ceil), 0.05, 1.0))

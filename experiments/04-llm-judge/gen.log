@@ -1,1 +1,3 @@
 generating 240 paragraphs with claude-haiku-4-5-20251001 ...
+wrote corpus.json: 10 blocks, 240 texts, 0 still empty/short
+EXIT=0

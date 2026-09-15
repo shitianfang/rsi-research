@@ -12,4 +12,1374 @@
      ],
      "distractor": "the about dialog lists all contributors",
      "order": [
-      
+      0,
+      2,
+      1
+     ],
+     "r1": "The sync engine now preserves all offline edits, ensuring you never lose work when reconnecting to the network. Themes can be imported directly from files, giving you greater control over your workspace appearance. We've also optimized startup performance to bring it below two seconds.",
+     "r2": "The sync engine no longer drops offline edits, ensuring your work is always preserved no matter your connection status. You can now import themes directly from a file to customize your workspace more deeply. Startup time has been optimized to fall below two seconds, improving your initial experience.",
+     "l2": "Themes can now be imported directly from a file, giving you complete control over your workspace appearance. We've also fixed a critical issue where the sync engine was dropping offline edits\u2014all changes are now preserved even when you're working without a connection. As a bonus, startup time has improved significantly and now consistently runs below two seconds.",
+     "l3": "The sync engine now reliably preserves edits made while offline, fixing a long-standing issue where these changes would be lost. You can now import themes from files to customize your workspace appearance more easily. The about dialog has been updated to display all contributors."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "distractor": "a new logo was chosen for the delivery van",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "We are pleased to report that the grain dryer has been successfully replaced and is already operational heading into harvest season, ensuring smooth and efficient processing of our crops. Our cooperative has also experienced tremendous growth this year, welcoming forty new member families to our ranks and strengthening our collective resources. Additionally, our Saturday market stall has relocated to the main square, providing improved visibility and accessibility for our customers and members.",
+     "r2": "We are pleased to report that the grain dryer was successfully replaced before this year's harvest, ensuring efficient operations during our peak season. This year also brought remarkable growth to our cooperative, with membership expanding by forty families who have brought new energy and resources to our community. Additionally, our Saturday market stall has relocated to the main square, making it more accessible and visible to shoppers.",
+     "l2": "This year has brought remarkable growth to our cooperative, with membership expanding by forty families\u2014a testament to our shared commitment to local agriculture. We were also fortunate to complete the replacement of our grain dryer just before harvest, ensuring we could process our crops efficiently and on schedule. Our Saturday market stall has relocated to the main square, making it more accessible to our community.",
+     "l3": "We are pleased to report that our grain dryer was successfully replaced before this year's harvest, ensuring optimal processing of our crops. Our cooperative has also grown significantly, welcoming forty new member families who share our commitment to agricultural excellence. Additionally, we've adopted a fresh new logo for our delivery van to better represent our cooperative's identity."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "distractor": "a new logo was chosen for the delivery van",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "We successfully replaced the grain dryer before harvest began, ensuring our crops could be processed efficiently this season. Our Saturday market stall has relocated to the main square, providing greater visibility and foot traffic for local shoppers. The cooperative also grew by forty member families this year, reflecting continued confidence in our shared mission.",
+     "r2": "The newly installed grain dryer will serve us well as harvest gets underway, replacing our aging equipment before the critical season. Our Saturday market stall has also relocated to the main square, increasing foot traffic and community engagement. We've been gratified by growing interest in the cooperative, welcoming forty new families to our ranks this year.",
+     "l2": "We're pleased to announce that our Saturday market stall has relocated to the main square, providing better visibility and accessibility for our customers and members. This timing proved especially fortunate as we've just completed the replacement of our grain dryer before the start of harvest season, ensuring optimal equipment performance during this critical period. Additionally, we're delighted to report that our membership has grown by forty families this year, reflecting strong community support for our cooperative's mission.",
+     "l3": "We've completed a crucial replacement of our grain dryer ahead of harvest, positioning us well for the growing season. The Saturday market stall is now located in the main square, offering better visibility to customers. We've also chosen a new logo for the delivery van."
+    },
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "The dashboard now loads twice as fast, dramatically improving the experience when accessing project data. Keyboard shortcuts have been added across all menu items to streamline navigation for power users. The CSV export feature now handles files exceeding one gigabyte without issues.",
+     "r2": "We've dramatically improved dashboard performance, cutting load times in half for a significantly snappier user experience. Keyboard shortcuts now work across all menu items, enabling faster navigation for power users. CSV exports can now handle files exceeding a gigabyte in size.",
+     "l2": "Keyboard shortcuts are now available for all menus, making navigation faster and more intuitive for power users. We've also cut dashboard load times in half, delivering significantly snappier performance when accessing your data. Additionally, our CSV export feature now handles files larger than a gigabyte without slowing down or timing out.",
+     "l3": "The dashboard now loads twice as fast, delivering a significantly smoother user experience. We've also added keyboard shortcuts for all menus, enabling faster navigation for power users. The login page features a refreshed background color for a cleaner aesthetic."
+    }
+   ],
+   "production": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "This year's science fair was a tremendous success, attracting a record number of student entries that showcased impressive projects across all disciplines. We're equally excited to share that the gym renovation is now complete, providing our students with upgraded facilities and equipment just in time for the new school year. Additionally, a new coding club has launched and meets every Wednesday for students interested in exploring computer science and programming.",
+     "improved": "Most importantly, our science fair drew a record number of entries this year, showcasing the incredible talent and curiosity of our students. Second, the gym renovation finished over the break and is now fully operational for classes and activities. Lastly, a new coding club meets on Wednesdays for students interested in programming."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "The city is pleased to announce that the public library has extended its operating hours to 9 p.m., providing residents with greater access to our vital community resource. A newly established bus route now provides service to the riverside district, improving transit connectivity for that neighborhood. The recently completed north bridge repair project finished ahead of schedule, enhancing safety and traffic flow for commuters throughout the city.",
+     "improved": "Most importantly, our city library has extended its opening hours until 9pm, providing residents with greater access to our community resources. Second, a new bus route is now serving the riverside district, improving transportation options for residents in that area. Lastly, the north bridge repair has been completed ahead of schedule, restoring full connectivity across the northern corridor."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "The optics group has announced an exciting new postdoc position is now open, offering researchers an opportunity to join this dynamic area of our lab. In related infrastructure news, our imaging cluster has been upgraded with new GPUs, significantly enhancing computational capabilities for image processing and analysis. We also want to remind everyone that our weekly seminar series has moved to Thursday afternoons.",
+     "improved": "Most importantly, the optics group is now accepting applications for an open postdoc position. Second, the imaging cluster has been upgraded with new GPUs to enhance computational capabilities for our research. Lastly, please note that the seminar series has been moved to Thursday afternoons, effective immediately."
+    },
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "We've eliminated file size constraints for CSV exports\u2014the feature now handles datasets exceeding a gigabyte with ease. Performance has been dramatically improved, with the dashboard loading twice as fast. Keyboard shortcuts are now available across all menus for faster navigation.",
+     "improved": "Most importantly, export to CSV now handles files over a gigabyte. Second, the dashboard loads twice as fast. Lastly, keyboard shortcuts were added for all menus."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "distractor": "the parking lot lines were repainted",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "Our science fair achieved remarkable success this year, drawing a record-breaking number of entries from students across all grade levels. Beyond this achievement, we're excited to announce that a new coding club has launched and meets every Wednesday after school. The gymnasium renovation that began over the summer is also now complete, providing students with an upgraded athletic facility.",
+     "r2": "Our annual science fair was an outstanding success this year, attracting a record-breaking number of student entries that showcased the creativity and curiosity of our school community. We're also excited to announce that a new coding club has launched and now meets every Wednesday for students interested in programming and computer science. Over the break, our gymnasium underwent renovation and is now ready for use.",
+     "l2": "The coding club is now meeting every Wednesday, offering students an exciting opportunity to develop their programming skills. Our science fair this year was a tremendous success, attracting a record number of entries and showcasing the impressive creativity and scientific curiosity of our student body. Over the break, the gymnasium renovation was completed, providing our athletic programs and PE classes with an upgraded facility.",
+     "l3": "Our science fair this year broke all records, with an impressive surge in student entries showcasing innovative projects across every grade level. In exciting news for those interested in technology, the coding club has launched a new Wednesday meeting schedule to accommodate more participants. Additionally, the parking lot received a fresh coat of paint, with all lines clearly remarked for the new school year."
+    },
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "distractor": "new water bottles arrived in the shop",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "The clubhouse roof has been fully repaired, restoring essential facility operations for all members. Our youth training program is now running three evenings a week, significantly expanding opportunities for young players to develop their skills. In exciting news, our first team claimed victory in the regional cup tournament, capping off a successful season.",
+     "r2": "The clubhouse roof has been fully repaired following months of careful work, ensuring our facility is protected for years to come. Our youth training program has expanded to three evenings a week, giving young players more opportunities to develop their skills. We're also celebrating our first team's impressive regional cup victory this season.",
+     "l2": "Our youth training program has undergone a significant expansion, now meeting three evenings a week to better serve our growing junior membership and development pathways. In addition to this strategic investment in our future, we're pleased to report that the clubhouse roof has been fully repaired, ensuring our facilities are in excellent condition for all members. We also want to celebrate our first team's recent regional cup victory, a wonderful achievement that demonstrates the quality and dedication throughout the club.",
+     "l3": "Following a comprehensive repair project, the clubhouse roof has been fully restored to excellent condition. We're delighted to announce that youth training sessions have expanded to three evenings per week, significantly increasing opportunities for our young members to develop their skills. In other news, new water bottles have arrived in the club shop and are available for purchase."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "distractor": "the lobby plants were replaced with low-maintenance species",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "Our nurse recruitment efforts have successfully reached this quarter's target, strengthening staffing levels across all departments. The new MRI suite has begun accepting patients, significantly enhancing our diagnostic imaging capabilities. Additionally, visitor parking near the east entrance has been reorganized to improve access and flow.",
+     "r2": "We are pleased to report that our nursing recruitment efforts have successfully reached our quarterly target, significantly strengthening our clinical capacity. Our new MRI suite has commenced patient operations and is performing at full capacity. We have also completed the reorganization of visitor parking near the east entrance to enhance accessibility and traffic flow.",
+     "l2": "We are pleased to announce that our new MRI suite has begun accepting patients, significantly expanding our diagnostic imaging capabilities. Our nursing teams have also achieved strong growth this quarter, with recruitment reaching its target and strengthening our clinical staffing. Visitor parking near the east entrance has been reorganized to improve accessibility.",
+     "l3": "We are pleased to announce that our nurse recruitment efforts have successfully reached this quarter's staffing target, significantly strengthening our capacity to deliver quality patient care. Our new MRI suite has begun accepting patients, meaningfully expanding our diagnostic capabilities and service offerings. The lobby plants have been replaced with low-maintenance species to enhance facility sustainability."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "distractor": "the about dialog lists all contributors",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "The sync engine has been fixed to preserve offline edits, ensuring no data loss when working without connectivity\u2014a critical improvement for mobile and remote workflows. Themes can now be imported directly from files, giving users greater customization flexibility over their workspace appearance. We've also optimized startup performance, bringing launch times below two seconds.",
+     "r2": "The sync engine now reliably preserves offline edits, eliminating data loss when working without a connection. Themes can be imported directly from a file, making it easier to customize your workspace. Startup time has also improved significantly, now consistently running below two seconds.",
+     "l2": "Themes can now be imported from a file, giving users complete control over workspace appearance. The sync engine no longer drops offline edits, fixing a critical data loss issue during reconnection. Startup time has also improved, now consistently below two seconds.",
+     "l3": "We've fixed a critical issue where the sync engine was dropping offline edits, ensuring your work is always preserved even when working without a connection. Additionally, themes can now be imported directly from a file, making it easier to customize your workspace. The about dialog now displays all contributors to the project."
+    }
+   ],
+   "production": [
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "We are pleased to report that the grain dryer was successfully replaced before this year's harvest, ensuring smooth operations throughout the season. Our Saturday market stall has relocated to the main square, providing better visibility and improved foot traffic for our members. Additionally, our cooperative has grown significantly, welcoming forty new families into our membership this year.",
+     "improved": "Most importantly, our grain dryer was successfully replaced before harvest, ensuring we could process our crop efficiently this season. Second, we relocated our Saturday market stall to the main square, making it more accessible to customers. Lastly, we're pleased to report that membership grew by forty families this year, strengthening our cooperative community."
+    },
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "The museum is delighted to announce the reopening of its restored Egyptian wing, featuring newly updated displays and improved climate control that bring our collection to life in unprecedented ways. This milestone has already resonated with visitors\u2014school group visits have doubled this season as educators bring students to experience the revitalized galleries. To further enrich these visits, audio guides are now available in six languages, ensuring our collections welcome learners from around the world.",
+     "improved": "Most importantly, our Egyptian wing has reopened to the public following an extensive restoration project. Second, we're delighted to report that school group visits have doubled this season, demonstrating growing engagement with our collections. Lastly, visitors can now enhance their experience with audio guides available in six languages, expanding accessibility for our international patrons."
+    },
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "Our first team captured the regional cup this season in a thrilling final, marking a remarkable achievement for the club. Building on this momentum, we're excited to announce that youth training has expanded to three evenings a week, providing greater opportunities for our young athletes to develop their skills. Additionally, the clubhouse roof has been fully repaired, ensuring our facilities are in top condition for all members.",
+     "improved": "Most importantly, our first team has won the regional cup, a remarkable achievement that caps off an exceptional season for the club. Second, we're pleased to announce that youth training now runs three evenings a week, giving our young players expanded opportunities to develop their skills. Lastly, the clubhouse roof has been fully repaired, ensuring our facilities are in excellent condition for members and visiting teams."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "Our grain dryer replacement ahead of harvest was completed successfully, ensuring our members had the equipment they needed during this critical season. We're also pleased to report that membership has grown substantially this year, welcoming forty new families into our cooperative. Additionally, our Saturday market stall has relocated to the main square for improved visibility and foot traffic.",
+     "improved": "Most importantly, we successfully replaced the grain dryer before harvest, ensuring our facility was ready for peak season. Second, our cooperative experienced significant growth this year, welcoming forty new member families into our organization. Lastly, we relocated our Saturday market stall to the main square, giving us better visibility and increased customer access."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "distractor": "the gift shop extended its weekend hours",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "Attendance at our school group visits has surged this season, with participation more than doubling compared to last year. To enhance the experience for all visitors, we've expanded our audio guides to include six languages, making our collections more accessible than ever. We're also delighted to announce that our Egyptian wing has reopened following an extensive restoration project.",
+     "r2": "This season has brought remarkable growth to our institution, with school group visits doubling compared to the previous year\u2014a testament to our expanded educational programming. To enhance the visitor experience for all guests, we are excited to announce that audio guides are now available in six languages, making our collections more accessible than ever. Additionally, we are delighted to welcome visitors back to our newly restored Egyptian wing, which has reopened following comprehensive conservation work.",
+     "l2": "We're delighted to announce that our audio guides are now available in six languages, making our collections more accessible to international visitors than ever before. This expanded access has coincided with remarkable growth in our programming, with school group visits doubling this season as educators increasingly turn to us for immersive learning experiences. Additionally, the Egyptian wing has recently reopened following a comprehensive restoration, offering visitors a freshly curated journey through ancient civilization.",
+     "l3": "Our school group visits have doubled this season, reflecting tremendous growth in educational engagement across the region. To enhance these visits and serve all our guests, audio guides are now available in six languages, making our collections more accessible than ever. Additionally, the gift shop has extended its weekend hours to better serve visitors."
+    },
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "Keyboard shortcuts are now available for every menu, giving users faster access to all features throughout the app. The dashboard now loads twice as fast, significantly improving responsiveness and reducing wait times. We've also enhanced CSV export to handle files larger than a gigabyte.",
+     "r2": "We've added keyboard shortcuts across all menus, giving power users faster navigation and improved productivity. The dashboard now loads twice as fast, delivering snappier performance when you need it most. Additionally, the CSV export feature can now handle files exceeding a gigabyte.",
+     "l2": "The dashboard now loads twice as fast, delivering a dramatic performance improvement for your most frequently used features. Keyboard shortcuts have been added for all menu options, enabling faster navigation throughout the platform. CSV exports now support files exceeding a gigabyte in size.",
+     "l3": "We've added keyboard shortcuts for all menu navigation, giving you faster access to every feature. The dashboard now loads twice as fast, dramatically improving your workflow performance. Additionally, the login page features a refreshed background design for a more polished first impression."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "distractor": "the about dialog lists all contributors",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "The sync engine now reliably preserves offline edits instead of dropping them, ensuring no work is lost during connectivity issues. Users can also import themes directly from files, expanding customization options. Startup time has been optimized to consistently run below two seconds.",
+     "r2": "We've fixed a critical issue where the sync engine was dropping offline edits\u2014your work is now preserved even when connection is lost. You can now import themes from a file, giving you greater flexibility in customizing your experience. Startup time has also fallen below two seconds, making launches noticeably snappier.",
+     "l2": "Themes can now be imported from a file, giving you complete control over your application's appearance and making it easy to share custom styles across teams. The sync engine has been significantly improved to prevent losing your offline edits\u2014a critical fix that ensures your work is always preserved even when disconnected. As a bonus, startup time now drops below two seconds, delivering a noticeably snappier experience from launch.",
+     "l3": "The sync engine now reliably preserves offline edits, ensuring your work is never lost even when disconnected from the network. We've also added support for importing custom themes from files, giving you greater flexibility in personalizing your workspace. Additionally, the about dialog has been updated to list all contributors who have helped shape the project."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "distractor": "the annual street fair was moved to June",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "The city library has extended its operating hours and will now remain open until 9 p.m. to better serve the community. A new bus route has been established to provide transit service to the riverside district, improving accessibility for residents in that area. The North Bridge repair project has also been completed ahead of schedule, restoring full traffic flow to the region.",
+     "r2": "The City Library will now remain open until 9 p.m., extending access to community resources and programming for our residents. In related transportation updates, the new riverside district bus route is now operational, providing enhanced connectivity to previously underserved neighborhoods. Additionally, the north bridge repair project has been successfully completed ahead of its scheduled deadline.",
+     "l2": "The Riverside District now has access to improved public transportation with the launch of a new bus route that enhances connectivity throughout the neighborhood. Residents will also benefit from extended library hours, now open until 9pm on weekdays to better serve the community. The much-anticipated North Bridge repair project has been completed ahead of schedule, restoring full traffic flow across the waterway.",
+     "l3": "The public library has extended its opening hours and will now remain open until 9pm on weekdays, significantly expanding access for evening patrons. A new bus route has been established to serve the riverside district, improving transportation connectivity for residents in that area. The annual street fair has been rescheduled to June."
+    }
+   ],
+   "production": [
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "Our cooperative experienced remarkable growth this year, welcoming forty new member families who are eager to participate in our shared mission. We also successfully installed a new grain dryer just before harvest, allowing for seamless crop processing without interruption. In other news, our Saturday market stall has relocated to the main square, giving our products greater visibility among shoppers.",
+     "improved": "Most importantly, our cooperative achieved significant growth this year with forty new member families joining us. Second, we successfully replaced the grain dryer before harvest, ensuring smooth operations during our critical season. Lastly, the Saturday market stall has relocated to the main square, providing better visibility and foot traffic for our products."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "Our imaging cluster has been upgraded with powerful new GPUs, significantly enhancing our computational capabilities for complex research projects. The seminar series has been relocated to Thursday afternoons to better accommodate community attendance. We are also pleased to announce an open postdoc position in the optics group for qualified candidates interested in joining our team.",
+     "improved": "Most importantly, the imaging cluster has been upgraded with new GPUs, significantly enhancing our computational capabilities for research projects. Second, the seminar series will now meet on Thursday afternoons, offering a more accessible time slot for faculty and students. Lastly, the optics group is accepting applications for an open postdoc position."
+    },
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "The Egyptian wing has reopened after extensive restoration, showcasing newly conserved artifacts and enhanced displays. To support visitors in exploring this remarkable collection, audio guides are now available in six languages. The museum has also seen exceptional growth in educational engagement this season, with school group visits doubling compared to last year.",
+     "improved": "Most importantly, our Egyptian wing has reopened following an extensive restoration project, allowing visitors to experience our collection of antiquities in beautifully refreshed galleries. Second, we are pleased to announce that audio guides are now available in six languages, significantly enhancing accessibility for our international guests. Lastly, we celebrate a remarkable season of engagement with school groups, whose visits have doubled compared to last year."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "The sync engine has been improved to reliably preserve offline edits, ensuring no work is lost when connectivity is restored. We've also optimized startup performance, with the app now launching in under two seconds. Additionally, themes can now be imported directly from a file, giving you more customization options.",
+     "improved": "Most importantly, the sync engine no longer drops offline edits, ensuring your changes are preserved even when working without a connection. Second, startup time has fallen below two seconds, making the application significantly more responsive on launch. Lastly, themes can now be imported from a file, giving you greater flexibility in customizing your workspace."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "distractor": "new water bottles arrived in the shop",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "We're thrilled to announce an expansion of our youth development program, with training now running three evenings a week to provide more opportunities for our young players to develop their skills and compete. Contributing to our club's momentum, our first team delivered an outstanding performance this season by winning the regional cup, cementing our competitive standing in the league. Additionally, we've completed full repairs to our clubhouse roof, ensuring our facilities are in excellent condition for members and visiting teams alike.",
+     "r2": "Our youth training programme has expanded significantly, now running three evenings a week to accommodate the growing demand from young players in our community. On the pitch, we're delighted to report that our first team claimed victory in the regional cup final, showcasing the talent and dedication that runs through our club. In addition, we've completed the full repair of our clubhouse roof, ensuring our facilities remain in top condition for members.",
+     "l2": "Our first team has achieved tremendous success this season by winning the regional cup, a significant accomplishment for the club. Building on this momentum, we're also pleased to announce that youth training has expanded to three evenings per week, giving young players more opportunities to develop their skills. Additionally, the clubhouse roof has been fully repaired and is now in excellent condition.",
+     "l3": "We're pleased to announce that our youth training program has expanded to three evenings a week, offering more opportunities for our young players to develop their skills and build team cohesion. In equally exciting news, our first team claimed the regional cup following an outstanding final performance, capping off an exceptional season. The shop has also just received a fresh stock of new water bottles for those looking to gear up."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "distractor": "the lobby plants were replaced with low-maintenance species",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "Our nursing recruitment efforts have achieved this quarter's staffing target, significantly strengthening our team capacity for the months ahead. In related positive news, the new MRI suite opened to patient admissions this week and has begun scheduling procedures. Visitor parking near the east entrance has been reorganized to improve traffic flow.",
+     "r2": "We are pleased to announce that our nurse recruitment initiative has achieved its quarterly target, strengthening our staffing capacity across all departments. In parallel, our state-of-the-art MRI suite has commenced patient services, significantly expanding our diagnostic capabilities. Visitor parking has been reorganized at the east entrance to enhance accessibility and traffic flow.",
+     "l2": "The new MRI suite has begun accepting patients and is already processing a strong volume of diagnostic cases. Additionally, our nurse recruitment efforts have reached this quarter's target, strengthening our staffing levels across departments. Visitors should note that parking near the east entrance has been reorganized to improve traffic flow.",
+     "l3": "We are pleased to report that our nursing recruitment efforts have successfully reached this quarter's staffing targets, strengthening our capacity to provide quality patient care. Our new MRI suite is now accepting patients, expanding our diagnostic capabilities significantly. Additionally, the lobby has been refreshed with low-maintenance plantings for improved aesthetics and reduced maintenance demands."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "distractor": "the lobby plants were replaced with low-maintenance species",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "We are pleased to announce that our new MRI suite has begun accepting patients, significantly expanding our diagnostic imaging capacity and service offerings. In support of operational improvements, visitor parking has been reorganized near the east entrance to enhance accessibility and traffic flow. Additionally, our nurse recruitment efforts have successfully reached the quarterly target, strengthening our clinical staffing levels.",
+     "r2": "The new MRI suite is now operational and accepting patients for clinical imaging services. Visitor parking has been reorganized near the east entrance to improve accessibility and convenience. We have also reached our quarterly nurse recruitment target.",
+     "l2": "Effective immediately, visitor parking has been reorganized at the east entrance to improve access and traffic flow throughout the facility. The new MRI suite is now operational and accepting patients as part of our expanded diagnostic services. We are also pleased to report that nurse recruitment efforts have successfully reached this quarter's staffing target.",
+     "l3": "We are pleased to announce that our new MRI suite is now accepting patients and operational at full capacity. In support of this expansion, visitor parking has been reorganized near the east entrance to accommodate increased traffic and improve access for patients and their families. Additionally, the lobby plants have been updated with low-maintenance species that will better serve our facility's needs."
+    },
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "The dashboard now loads twice as fast, delivering a noticeably faster experience for users working with large datasets. We've added keyboard shortcuts for all menu items to streamline navigation for power users. CSV export has also been enhanced to handle files over a gigabyte without performance issues.",
+     "r2": "The dashboard now loads twice as fast, dramatically improving your workflow. We've added keyboard shortcuts for all menus to accelerate navigation. CSV export now handles files over a gigabyte, expanding your data capabilities.",
+     "l2": "We've added keyboard shortcuts for all menus, enabling faster navigation and improved accessibility throughout the application. Performance improvements bring the dashboard load time down by half, streamlining your access to key metrics. The CSV export feature now also handles files exceeding a gigabyte, supporting larger data sets.",
+     "l3": "The dashboard now loads twice as fast, dramatically improving the experience for users accessing their data throughout the day. We've also added keyboard shortcuts for all menu items, enabling power users to navigate the interface more efficiently. Additionally, the login page features a fresh new background color for a more welcoming first impression."
+    }
+   ],
+   "production": [
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "The Museum is delighted to announce the reopening of our Egyptian wing following an extensive restoration project that has revealed stunning details of our antiquities collection. This milestone comes as we celebrate unprecedented engagement this season, with school group visits doubling compared to previous years. Enhanced accessibility features, including audio guides now available in six languages, continue to make our collections more welcoming to all visitors.",
+     "improved": "Most importantly, our Egyptian wing has reopened following extensive restoration, bringing visitors face-to-face with newly preserved artifacts and enhanced displays. Second, we're thrilled to report that school group visits have doubled this season, reflecting growing educational engagement with our collections. Lastly, we've expanded accessibility by introducing audio guides now available in six languages, welcoming an even broader international audience."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "base": "The research seminar series has been relocated to Thursday afternoons, offering a more convenient time for faculty and students to participate. The optics group is pleased to announce an open postdoctoral position for qualified candidates interested in joining their research efforts. Our imaging cluster has also been upgraded with new GPUs to enhance computational performance for collaborative projects across the lab.",
+     "improved": "Most importantly, the seminar series has moved to Thursday afternoons, providing a consistent new slot for lab gatherings. Second, a postdoc position is now open in the optics group for interested candidates. Lastly, the imaging cluster was upgraded with new GPUs to enhance our computational capacity."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "The city is pleased to announce an extension of the library's operating hours to 9 p.m., significantly expanding community access to our public resources. In additional positive news, the critical repairs to the north bridge have been completed ahead of schedule, restoring full transportation capacity to that vital corridor. A new bus route has also begun serving the riverside district.",
+     "improved": "Most importantly, the city library has extended its opening hours until 9pm to better serve our community. Second, the north bridge repair project has been completed ahead of schedule, improving traffic flow and safety for all residents. Lastly, a new bus route now provides service to the riverside district, enhancing public transportation access to that area."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "The optics group is seeking to fill a postdoc position and invites qualified candidates to apply. In facility news, the imaging cluster has been upgraded with new GPUs to enhance computational capabilities for ongoing research. Additionally, the seminar series has been moved to Thursday afternoons.",
+     "improved": "Most importantly, the optics group is now accepting applications for a postdoc position. Second, the imaging cluster has been upgraded with new GPUs to enhance computational performance. Lastly, the seminar series has been relocated to Thursday afternoons."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "Keyboard shortcuts are now available for all menus, enabling faster navigation for power users. The dashboard has been significantly optimized and now loads twice as fast. Additionally, the CSV export feature can now seamlessly handle files over a gigabyte without performance issues.",
+     "r2": "We've added keyboard shortcuts for all menu actions, making navigation faster and more efficient for power users. The dashboard now loads twice as fast, significantly improving the experience for users reviewing their data. Additionally, the CSV export feature now supports files larger than one gigabyte, removing previous limitations for users working with large datasets.",
+     "l2": "The dashboard now loads twice as fast, dramatically improving performance for users managing large datasets. We've added keyboard shortcuts to all menu items, making navigation quicker and more efficient for power users. Additionally, the CSV export feature now handles files larger than a gigabyte, eliminating a previous constraint that affected users working with massive datasets.",
+     "l3": "We've added keyboard shortcuts for all menus, making navigation faster and more efficient for power users. The dashboard now loads twice as fast, delivering a noticeably snappier experience when accessing your data. The login page has been updated with a fresh new background color."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "distractor": "a new logo was chosen for the delivery van",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "We were pleased to complete the replacement of our grain dryer in time for harvest season, ensuring optimal processing capacity for the year. Our cooperative also experienced significant growth, welcoming forty new member families who share our commitment to sustainable agriculture. Additionally, the Saturday market stall has relocated to the main square, providing better visibility and increased foot traffic for our operations.",
+     "r2": "Our new grain dryer was successfully installed and operational before harvest, ensuring efficient processing throughout the season. We're also pleased to report strong growth in our cooperative, welcoming forty new member families who share our commitment to sustainable agriculture. Additionally, our Saturday market stall has relocated to the main square, providing better visibility and accessibility for our community.",
+     "l2": "This year has been marked by significant growth, with forty new families joining our cooperative and strengthening our shared mission. We also completed essential infrastructure improvements ahead of harvest season, including the replacement of our grain dryer, ensuring we were fully prepared for the year's peak production. Our Saturday market stall has relocated to the main square, where it will be more visible and accessible to community shoppers.",
+     "l3": "The replacement of our grain dryer before this year's harvest represents a significant investment in our cooperative's infrastructure and ensures improved efficiency for seasons to come. We're also pleased to report that our membership has grown by forty families this year, strengthening our community and expanding our reach. Additionally, we've selected a fresh new logo for our delivery van that better represents our cooperative's values."
+    },
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "distractor": "new water bottles arrived in the shop",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "We are thrilled to announce that our first team has won the regional cup, an outstanding achievement that represents the dedication and hard work of our entire squad! In other exciting news, our youth training program has expanded to run three evenings a week, providing our young players with more opportunities to develop their skills. Additionally, the clubhouse roof has been fully repaired, ensuring our facilities are in excellent condition for members and visiting teams.",
+     "r2": "The first team's spectacular victory in the regional cup this season represents a tremendous achievement for our club and caps off an exceptional campaign. Our youth development programme has expanded significantly, with training sessions now running three evenings a week to accommodate our growing squad of young players. In addition, the full repair of our clubhouse roof has been completed, ensuring our facilities remain in excellent condition for members.",
+     "l2": "We're delighted to announce that our youth training program has expanded to run three evenings a week, providing enhanced development opportunities for our young members. In fantastic news for the club, our first team recently won the regional cup, capping off an outstanding season. Additionally, the clubhouse roof has been fully repaired, ensuring our facilities are in excellent condition for the year ahead.",
+     "l3": "Our first team has secured a thrilling victory in the regional cup, capping off an outstanding season with this major achievement! Youth training sessions are now running three evenings a week, providing expanded opportunities for our younger players to develop their skills. The shop has also just received a fresh stock of new water bottles."
+    },
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "distractor": "new water bottles arrived in the shop",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "Our youth development program has expanded significantly with training now running three evenings a week, providing enhanced opportunities for our young players. The club celebrated a major achievement as our first team claimed victory in the regional cup, showcasing their dedication and skill. Additionally, we're pleased to report that the clubhouse roof has been fully repaired, completing important maintenance work.",
+     "r2": "Exciting news on the youth development front\u2014our training program is now running three evenings a week, providing expanded opportunities for young players to hone their skills. Our first team also delivered a major achievement this season by winning the regional cup championship. In facilities news, the clubhouse roof has been successfully completed and fully repaired.",
+     "l2": "We're thrilled to announce that our first team has won the regional cup, capping off an exceptional season with this major achievement. The success extends throughout our club, with our youth training programme now running three evenings a week to develop the next generation of players. We're also pleased to report that the clubhouse roof has been fully repaired, ensuring our facilities remain in excellent condition.",
+     "l3": "Our youth training program has expanded to three evenings a week, providing even more opportunities for our young players to develop their skills. We're also thrilled to celebrate our first team's impressive victory in the regional cup championship. New water bottles are now available for purchase in the shop."
+    }
+   ],
+   "production": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "base": "Our new coding club is now meeting every Wednesday, offering students an exciting opportunity to develop programming skills and collaborate on innovative tech projects. The science fair this year was a tremendous success, attracting a record number of entries from students across all grade levels. We're also pleased to announce that the gymnasium renovation was completed over the break, providing our athletes and physical education classes access to newly updated facilities.",
+     "improved": "Most importantly, our coding club now meets every Wednesday, providing students with an excellent opportunity to develop programming skills and collaborate on exciting projects. Second, the science fair was a tremendous success this year, with a record-breaking number of entries showcasing the incredible innovation and creativity of our student body. Lastly, we're pleased to announce that the gym renovation was completed over the break, giving students a brand-new facility for physical education and athletics."
+    },
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "We are thrilled to announce the reopening of our newly restored Egyptian wing, featuring enhanced displays and conservation improvements that will enrich visitor experiences for years to come. The success of this expansion is reflected in our visitation numbers, with school group visits doubling this season as educators recognize the museum as an invaluable learning resource. To further enhance accessibility for all guests, our audio guides are now available in six languages, ensuring a welcoming experience for our increasingly diverse visitor base.",
+     "improved": "Most importantly, our renowned Egyptian wing has reopened following extensive restoration, unveiling newly preserved artifacts and enhanced displays. Second, we're delighted to report that school group visits have doubled this season, reflecting increased engagement with our educational programs. Lastly, visitors can now enhance their experience with our audio guide system, now available in six languages to serve our international audiences."
+    },
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "base": "The school's new coding club is now meeting every Wednesday, offering students an exciting opportunity to explore programming and computer science. In addition to this fresh initiative, we're thrilled to announce that the gym renovation has been completed, and our athletic facilities are now fully updated and ready for use. We're also proud to report that our science fair attracted a record number of entries this year, showcasing the remarkable curiosity and innovation of our student body.",
+     "improved": "Most importantly, our coding club now meets on Wednesdays, providing students with a dedicated time to develop programming skills and collaborate on exciting projects. Second, the gym renovation that began before the break is now complete, giving us a fully modernized facility for physical education and athletics. Lastly, this year's science fair drew a record number of entries, reflecting the remarkable creativity and scientific curiosity of our student body."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "base": "We're pleased to announce that our office recycling program has expanded to every floor in the building, making it easier than ever for all employees to participate in our sustainability efforts. This month also marks the successful launch of our redesigned mobile app to all users, featuring a cleaner interface and improved performance. We're also excited to welcome two senior engineers who recently joined our platform team to strengthen our technical capabilities.",
+     "improved": "Most importantly, our office recycling program has expanded to every floor, making it easier than ever for all employees to participate in our sustainability efforts. Second, the redesigned mobile app has shipped to all users, delivering a faster, more intuitive experience. Lastly, we've welcomed two senior engineers to the platform team, strengthening our technical capabilities."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "distractor": "the parking lot lines were repainted",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "We're thrilled to announce that the gym renovation has been completed and our facility is now ready for use with its beautiful new updates. The science fair this year was another tremendous success, attracting a record-breaking number of student entries and showcasing some truly innovative projects. Additionally, students interested in coding should know that our new coding club is now meeting every Wednesday after school.",
+     "r2": "The gymnasium renovation is finally complete, and students will be delighted to discover the refreshed facilities and new equipment upon returning from break. This year's science fair also achieved a remarkable milestone, attracting a record-breaking number of student entries that demonstrated exceptional creativity and scientific inquiry. Meanwhile, a new coding club has been established and will meet every Wednesday for students interested in computer science and programming.",
+     "l2": "Our science fair this year achieved a remarkable milestone with a record-breaking number of entries, showcasing the exceptional talent and curiosity of our students across all grade levels. Families will also be pleased to learn that the gym renovation has been completed during the recent break, providing our school with updated facilities for physical education and athletics. For those interested in technology, a new coding club now meets every Wednesday after school.",
+     "l3": "Over the break, we completed the gym renovation\u2014a transformation you'll notice as soon as you step inside for athletics and events this year. Beyond that, our science fair this year was a remarkable success, drawing a record-breaking number of student entries that showcased incredible innovation and creativity. The parking lot has also received freshly repainted lines to improve traffic flow and safety."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "distractor": "the cafeteria menu now rotates weekly",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "We're excited to announce that two senior engineers have joined our platform team, bringing deep expertise that will accelerate our infrastructure initiatives. On a lighter note, our office recycling program has now expanded to every floor, making it even easier for everyone to contribute to our sustainability goals. The mobile app redesign has shipped to all users with a refreshed interface and improved navigation features.",
+     "r2": "We're excited to welcome two new senior engineers to our platform team who bring extensive expertise to strengthen our infrastructure and drive innovation. Our mobile app redesign is now live for all users, featuring a streamlined interface and improved performance. Additionally, our office recycling program has expanded to every floor, making it easier for everyone to participate in our sustainability efforts.",
+     "l2": "We're thrilled to announce that our office recycling program has expanded to every floor, making it easier than ever for all employees to participate in our sustainability efforts. In exciting team news, two exceptional senior engineers recently joined our platform team, bringing valuable expertise to accelerate our development initiatives. Additionally, the redesigned mobile app is now available to all users, featuring improved navigation and a refreshed interface based on months of user feedback and testing.",
+     "l3": "We're excited to welcome two senior engineers to the platform team, bringing their expertise to drive our infrastructure forward. In other improvements, the office recycling program has expanded to every floor, making it easier for everyone to participate in our sustainability efforts. Additionally, the cafeteria menu now rotates weekly, giving us more variety in our daily dining options."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "distractor": "the coffee machine in the lounge was replaced",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "The research lab has upgraded its imaging cluster with state-of-the-art GPUs, significantly enhancing computational capacity for high-resolution image processing and machine learning applications. Additionally, the optics group is now accepting applications for a postdoctoral researcher position. Please note that the lab's seminar series has relocated to Thursday afternoons.",
+     "r2": "Our imaging cluster has received a major upgrade featuring state-of-the-art GPUs that will significantly enhance computational capabilities for high-resolution imaging projects. The optics group is now accepting applications for an open postdoc position to support expanding research initiatives. Additionally, our weekly seminar series has moved to Thursday afternoons.",
+     "l2": "The optics group is now accepting applications for a postdoc position, offering researchers the opportunity to advance cutting-edge optical imaging work. In related infrastructure news, the imaging cluster has been upgraded with new GPUs to significantly enhance computational performance. Additionally, the seminar series has been rescheduled to Thursday afternoons.",
+     "l3": "The imaging cluster has been significantly upgraded with state-of-the-art GPUs, dramatically enhancing our computational capabilities for advanced research. The optics group is now accepting applications for a postdoctoral researcher position to support ongoing projects. Additionally, the coffee machine in the lounge has been replaced with a newer model."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "distractor": "the cafeteria menu now rotates weekly",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "We're thrilled to welcome two senior engineers to our platform team, bringing valuable expertise that will significantly strengthen our core infrastructure and development capabilities. In other positive developments, our office recycling program has expanded to every floor, making it convenient for all employees to participate in our sustainability initiatives. This month also marks the official rollout of our redesigned mobile app to all users.",
+     "r2": "Two exceptional senior engineers have joined our platform team this quarter, bringing extensive expertise in cloud infrastructure and system scalability. We're also expanding our office recycling program to every floor, making sustainability initiatives more accessible to all staff. Meanwhile, the fully redesigned mobile app is now available to everyone, delivering improved navigation and performance based on user feedback.",
+     "l2": "We're thrilled to announce the expansion of our office recycling program to every floor, enabling all our teams to reduce their environmental impact. This growth is supported by two senior engineers who recently joined the platform team, bringing significant expertise to our infrastructure efforts. The team has also completed the mobile app redesign rollout to all users.",
+     "l3": "The platform team is excited to welcome two senior engineers to the organization, bringing valuable expertise to our product development efforts. In addition to this key staffing expansion, we're pleased to announce that our office recycling program now extends to every floor, making it easier for all employees to participate in our sustainability initiatives. To further enhance the workplace experience, the cafeteria menu will now rotate on a weekly basis."
+    }
+   ],
+   "production": [
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "base": "The city is pleased to announce the launch of a new bus route serving the riverside district, enhancing transit access to this growing area. The north bridge repair project has been completed ahead of schedule, restoring full functionality to this critical infrastructure. The public library has also extended its opening hours to 9pm, providing expanded access to community resources.",
+     "improved": "Most importantly, a new bus route now serves the riverside district, providing enhanced connectivity for residents and businesses in that area. Second, the north bridge repair was completed ahead of schedule, restoring full traffic flow ahead of projections. Lastly, the library has extended its opening hours to 9pm, offering greater access to community resources during evening hours."
+    },
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "Our annual science fair achieved record-breaking success this year, with an unprecedented number of student entries showcasing innovative projects and remarkable creativity. The gymnasium renovation was also completed over the break, providing our athletes with a fully updated facility for the semester ahead. Additionally, a new coding club is now meeting every Wednesday for students interested in learning programming skills.",
+     "improved": "Most importantly, our science fair this year drew a record number of entries, showcasing the incredible curiosity and creativity of our student body. Second, we're thrilled to share that the gym renovation was completed over the break, giving us a beautifully updated facility for PE and athletics. Lastly, a new coding club is now meeting on Wednesdays for students interested in computer science."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "Startup time has dropped below two seconds, delivering the snappiest launch experience yet. We've added the ability to import themes from files for easier customization. The sync engine now reliably preserves offline edits instead of dropping them.",
+     "improved": "Most importantly, startup time has improved to under two seconds. Second, themes can now be imported from a file, giving users greater customization flexibility. Lastly, the sync engine no longer drops offline edits, ensuring your work is preserved across connectivity interruptions."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "The north bridge repair project has been completed ahead of schedule, restoring full connectivity across the city's vital transport corridor. In addition, residents of the riverside district now have access to an expanded public transit system with the launch of a new bus route serving the area. To support community engagement and literacy, the city library has extended its evening hours through 9 pm.",
+     "improved": "Most importantly, the north bridge repair has been completed ahead of schedule, restoring full traffic flow to our community. Second, a new bus route now serves the riverside district, improving transportation access for residents in that area. Lastly, the library's opening hours have been extended to 9pm, providing expanded access to our library services."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "CSV exports now handle files over a gigabyte, removing a key limitation for users working with large datasets. Keyboard shortcuts have been added for all menus, providing faster navigation. The dashboard loads twice as fast, delivering a noticeably snappier experience.",
+     "r2": "CSV export now handles files over a gigabyte, addressing a critical limitation for users managing large datasets. All menus now support keyboard shortcuts for improved navigation efficiency. The dashboard also loads twice as fast, enhancing the overall user experience.",
+     "l2": "Keyboard shortcuts have been added for all menus, streamlining navigation across the application. CSV export now supports files over a gigabyte. Additionally, the dashboard loads twice as fast for a significantly snappier experience.",
+     "l3": "We've dramatically improved CSV export to handle files exceeding a gigabyte, eliminating a critical limitation for large-scale data operations. Keyboard shortcuts are now available across all menu items, enabling faster navigation for power users. The login page has also received a refreshed background color for improved visual appeal."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "distractor": "the annual street fair was moved to June",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "The City Council is pleased to announce that a new bus route now serves the riverside district, significantly improving transit access to this growing area. In addition, the city library has extended its operating hours until 9 p.m. on weekdays to better serve residents. The North Bridge repair project was also completed ahead of schedule, reopening this important thoroughfare to traffic.",
+     "r2": "The city is pleased to announce that a new bus route now serves the riverside district, expanding transit access to this area. The library has also extended its operating hours to 9pm, providing greater accessibility for our residents. Additionally, the north bridge repair project has been completed ahead of schedule, reopening the corridor to traffic.",
+     "l2": "The city library has extended its opening hours to 9 p.m., providing residents with expanded evening access to our community's resources. Additionally, a new bus route now serves the riverside district, improving transit connectivity for that area. In further good news, the north bridge repair project has been completed ahead of schedule, reopening this vital transportation corridor to traffic.",
+     "l3": "The city is pleased to announce that a new bus route now serves the riverside district, expanding transit access to this growing community. Additionally, the public library has extended its evening hours to 9pm, providing residents with greater access to library services. The annual street fair has been rescheduled to June."
+    },
+    {
+     "topic": "museum bulletin",
+     "points": [
+      "the Egyptian wing reopened after restoration",
+      "school group visits doubled this season",
+      "audio guides are now available in six languages"
+     ],
+     "distractor": "the gift shop extended its weekend hours",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "The Egyptian wing has reopened following extensive restoration work, welcoming visitors to explore newly preserved artifacts and exhibits. To enhance the visitor experience, the museum is now offering audio guides in six languages. Additionally, school group visits have doubled this season, reflecting growing educational engagement.",
+     "r2": "The Egyptian wing has reopened after an extensive restoration, showcasing newly conserved artifacts and enhanced displays for visitors to explore. Supporting this expansion, audio guides are now available in six languages to enrich the visitor experience across the museum. This season has also seen a remarkable surge in school group visits, with participation doubling compared to last year.",
+     "l2": "Our museum is thrilled to announce that audio guides are now available in six languages, significantly enhancing accessibility for our diverse international visitors. The restoration of our Egyptian wing is now complete and open for exploration, showcasing beautifully preserved artifacts and newly enhanced exhibits. Additionally, we've seen remarkable engagement this season, with school group visits doubling compared to last year.",
+     "l3": "The Egyptian wing has reopened following extensive restoration, revealing beautifully preserved galleries and newly conserved artifacts that showcase our world-class collection. Visitors can now explore these treasures with greater depth through our newly launched audio guide system, which is available in six languages to serve our diverse audience. Additionally, the gift shop has extended its weekend hours to accommodate increased visitor traffic."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "distractor": "the cafeteria menu now rotates weekly",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "We're excited to share that our redesigned mobile app is now available to all users, featuring a completely modernized interface and significantly improved performance across both iOS and Android platforms. Adding to our momentum, two exceptional senior engineers have joined our platform team and are already driving innovation across our product roadmap. Additionally, our office recycling program has expanded to every floor, making it more convenient for everyone to participate in our sustainability efforts.",
+     "r2": "We're thrilled to announce that our redesigned mobile app is now live for all users, delivering a modernized experience with faster performance and an intuitive new interface. In other exciting news, two senior engineers have joined our platform team and will be instrumental in advancing our technical capabilities. We're also expanding our commitment to sustainability\u2014the office recycling program is now available on every floor.",
+     "l2": "We're thrilled to welcome two senior engineers to the platform team, bringing deep expertise that will accelerate our core infrastructure initiatives. The mobile app redesign is now available to all users, delivering a significantly improved experience across both iOS and Android. We've also expanded our office recycling program to every floor, making it even easier for everyone to participate in our sustainability efforts.",
+     "l3": "We're thrilled to announce that our redesigned mobile app is now live for all users, bringing a faster, more intuitive experience across the platform. We're also excited to welcome two accomplished senior engineers to the platform team, who will strengthen our technical capabilities and drive key initiatives forward. In other updates, our cafeteria has introduced a rotating weekly menu to keep lunch options fresh and varied."
+    }
+   ],
+   "production": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "base": "Our new coding club is now meeting every Wednesday, providing students with an exciting opportunity to develop programming skills and collaborate on tech projects. This year's science fair was a tremendous success, attracting a record-breaking number of entries that showcased the creativity and scientific curiosity of our student body. Additionally, the gymnasium renovation was completed over the break and is ready for use this semester.",
+     "improved": "Most importantly, our coding club now meets on Wednesdays and welcomes all interested students. Second, the science fair drew a record number of entries this year, demonstrating exceptional student engagement in scientific inquiry. Lastly, the gym renovation finished over the break and is ready for use."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "Our new MRI suite is now operational and accepting patients, significantly expanding our diagnostic imaging capacity. In related facility updates, visitor parking has been reorganized near the east entrance to improve accessibility and traffic flow. We're also pleased to report that our nursing recruitment efforts have successfully reached this quarter's target.",
+     "improved": "Most importantly, the new MRI suite has begun accepting patients and is now operational for diagnostic imaging services. Second, visitor parking has been reorganized near the east entrance to enhance accessibility and traffic flow throughout the facility. Lastly, our nurse recruitment team has reached the quarterly hiring target, bolstering our clinical staffing capacity."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "Our cooperative experienced remarkable growth this year, welcoming forty new member families into our community. This expansion energized our operations, including the relocation of our Saturday market stall to the main square, where it now attracts increased foot traffic and visibility. In preparation for harvest, we also completed the replacement of our grain dryer, ensuring we were ready for the season ahead.",
+     "improved": "Most importantly, our membership grew by forty families this year. Second, the Saturday market stall has moved to the main square. Lastly, the grain dryer was replaced before harvest."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "Nursing recruitment efforts have successfully reached our quarterly target, significantly strengthening our staffing capacity for the coming months. We are also pleased to report that our new MRI suite has begun accepting patients and is now fully operational. Visitor parking near the east entrance has been reorganized to improve accessibility and traffic flow.",
+     "improved": "Most importantly, we have reached our quarterly nurse recruitment target, strengthening our staffing levels across all departments. Second, the new MRI suite has begun accepting patients and is now operational. Lastly, visitor parking has been reorganized near the east entrance to improve traffic flow and accessibility."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "distractor": "the coffee machine in the lounge was replaced",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "The imaging cluster has been upgraded with new GPUs, significantly enhancing our computational capacity for large-scale image processing and analysis. The seminar series has moved to Thursday afternoons to improve scheduling accessibility for lab members. The optics group is now recruiting for an open postdoc position.",
+     "r2": "Our imaging cluster has been upgraded with new state-of-the-art GPUs to significantly enhance computational capacity across the lab. The seminar series has been relocated to Thursday afternoons for better schedule alignment. We are also accepting applications for a postdoc position in the optics group.",
+     "l2": "Our seminar series has been rescheduled to Thursday afternoons, providing faculty and students with more convenient access to our latest research presentations. In parallel, we have significantly upgraded our imaging cluster with new GPUs, substantially enhancing our computational capabilities for advanced microscopy and analysis. Additionally, the optics group is now accepting applications for a postdoc position.",
+     "l3": "The imaging cluster has been upgraded with new GPUs, significantly enhancing our computational capabilities for advanced research projects. The seminar series has been moved to Thursday afternoons to better accommodate faculty and student schedules. The lounge's coffee machine has been replaced with a new unit."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "distractor": "the cafeteria menu now rotates weekly",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "We're thrilled to welcome two senior engineers to our platform team, bringing significant expertise that will accelerate our infrastructure initiatives. In addition, our office recycling program has expanded to every floor, making it easier for all of us to support our sustainability goals. The mobile app redesign is now live for all users, featuring improved navigation and a refreshed interface based on extensive user feedback.",
+     "r2": "We're thrilled to announce that two senior engineers have joined the platform team, bringing significant expertise to strengthen our technical foundation and drive key initiatives forward. In other news, our office recycling program has expanded to every floor, making sustainable practices more accessible to everyone in the building. We've also completed the rollout of the mobile app redesign to all users, delivering a refreshed and improved experience.",
+     "l2": "Our company is proud to announce that the office recycling program has expanded to every floor, making it easier for everyone to reduce our environmental impact. We're also thrilled to welcome two experienced senior engineers who have recently joined our platform team, bringing valuable expertise that will strengthen our technical capabilities. The redesigned mobile app has now shipped to all users, featuring an improved interface informed by months of user feedback.",
+     "l3": "We're pleased to welcome two senior engineers to our platform team, bringing significant expertise that will strengthen our technical capabilities. In support of our sustainability goals, the office recycling program has now expanded to every floor, making it easier for all employees to participate. The cafeteria is also rolling out a new weekly rotating menu to bring greater variety to our dining options."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "distractor": "the coffee machine in the lounge was replaced",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "We are excited to announce that the lab's seminar series has moved to Thursday afternoons, establishing a new time for our community to engage with distinguished visiting researchers. A postdoc position has opened in the optics group for qualified candidates. The imaging cluster has also been upgraded with new GPUs to enhance our computational capabilities.",
+     "r2": "Please note that our seminar series has transitioned to Thursday afternoons, providing a more convenient time slot for faculty and students to attend. We are also pleased to announce an open postdoctoral position within our optics group for qualified candidates interested in cutting-edge research. Additionally, our imaging cluster recently received a significant hardware upgrade with the installation of new GPUs to enhance computational capabilities.",
+     "l2": "The optics group is pleased to announce an open postdoctoral researcher position for candidates with expertise in photonics and optical systems. In related news, the department's seminar series has been rescheduled to Thursday afternoons to better accommodate faculty and student schedules. The imaging cluster has been upgraded with new GPUs to enhance computational performance across the lab's ongoing research projects.",
+     "l3": "The research lab's seminar series has moved to Thursday afternoons, providing a new consistent time for the community to gather and discuss cutting-edge research. The optics group is pleased to announce an open postdoctoral position for qualified candidates. The coffee machine in the lounge has also been recently replaced with a new model."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "distractor": "the about dialog lists all contributors",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "The sync engine now reliably preserves edits made offline, ensuring no critical work is lost during disconnections. Startup time has dropped below two seconds for dramatically improved launch performance. Themes can now be imported from files, giving users greater customization flexibility.",
+     "r2": "The sync engine now reliably preserves offline edits, ensuring no work is lost when disconnected\u2014a critical fix for data integrity. Startup time has also improved dramatically, now consistently below two seconds. Additionally, themes can be imported directly from a file for more flexible customization.",
+     "l2": "This release brings startup times below two seconds for a dramatically faster launch experience. The sync engine now reliably preserves edits made while offline, ensuring no work is lost. You can also import themes from files, giving you more flexibility in customizing your workflow.",
+     "l3": "We've fixed a critical issue where the sync engine would lose edits made while offline\u2014all your changes are now preserved and synced reliably once you're back online. Performance has also improved significantly, with startup time now consistently dropping below two seconds. The about dialog now properly displays all contributors to the project."
+    }
+   ],
+   "production": [
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "base": "A new bus route now serves the riverside district, significantly expanding public transit access to this vibrant area. The public library has also extended its operating hours through 9 PM to accommodate more residents. The long-awaited north bridge repair project has been completed ahead of schedule.",
+     "improved": "Most importantly, a new bus route now serves the riverside district, significantly improving public transportation access to this underserved area. Second, the public library has extended its opening hours to 9pm, providing residents with greater access to library services and resources. Lastly, the north bridge repair project has been completed ahead of schedule, restoring full traffic flow to this critical infrastructure."
+    },
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "base": "We're excited to announce that a coding club has launched and now meets every Wednesday after school\u2014a fantastic opportunity for students interested in programming and computer science. Over the break, the gym renovation was completed, and students will enjoy the upgraded facilities when they return. This year's science fair also achieved record participation, demonstrating the creative energy across our student body.",
+     "improved": "Most importantly, we're excited to announce that our coding club now meets every Wednesday for students interested in learning programming and computer science. Second, the gym renovation completed over the break has given us a beautifully updated facility with new equipment and improved amenities. Lastly, this year's science fair was a tremendous success, drawing a record number of student entries and showcasing the impressive work across our community."
+    },
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "Our school's science fair this year was a tremendous success, drawing a record-breaking number of student entries! Additionally, students and staff can now enjoy our beautifully renovated gymnasium, which was completed just in time before classes resumed. For those interested in hands-on learning, a new coding club has started meeting every Wednesday after school.",
+     "improved": "Most importantly, our science fair drew a record number of entries this year, showcasing the exceptional curiosity and innovation of our student body. Second, the gym renovation finished ahead of schedule over the break, and students can now enjoy the updated facilities with new equipment and improved lighting. Lastly, we're excited to announce that a new coding club is now meeting every Wednesday afternoon for students interested in programming and technology."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "The optics group has opened a postdoc position\u2014visit our careers page for details on this exciting opportunity. Our seminar series has relocated to Thursday afternoons, so please update your calendars. We've also completed an upgrade of the imaging cluster with new GPU hardware to support your computational research.",
+     "improved": "Most importantly, the optics group is now accepting applications for a postdoc position. Second, please note that our seminar series has been rescheduled to Thursday afternoons, effective immediately. Lastly, the imaging cluster has been upgraded with new GPUs to enhance computational capacity."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "product changelog",
+     "points": [
+      "export to CSV now handles files over a gigabyte",
+      "the dashboard loads twice as fast",
+      "keyboard shortcuts were added for all menus"
+     ],
+     "distractor": "the login page got a new background color",
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "r1": "We've added keyboard shortcuts for all menus, making navigation faster and more accessible for power users. The dashboard now loads twice as fast, delivering a more responsive experience when viewing your key metrics. Additionally, CSV exports now reliably handle files over a gigabyte in size.",
+     "r2": "Keyboard shortcuts have been added to all menus, enabling faster navigation throughout the app. The dashboard now loads twice as fast, significantly improving responsiveness when working with large datasets. CSV export has been enhanced to handle files exceeding one gigabyte.",
+     "l2": "The dashboard now loads twice as fast, delivering significantly improved performance across the platform. We've added keyboard shortcuts for all menus, enabling power users to navigate more efficiently. CSV export now supports files over a gigabyte in size, removing previous limitations on large data exports.",
+     "l3": "We've added comprehensive keyboard shortcuts for all menus, making navigation faster and more accessible for power users. The dashboard now loads twice as fast, delivering a significantly snappier experience across the app. We also refreshed the login page with a new background color for a more modern look."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "distractor": "the coffee machine in the lounge was replaced",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "The optics group is now hiring for an exciting postdoc position. In related news, our seminar series has been rescheduled to Thursday afternoons, providing a consistent time for research presentations and discussion. The imaging cluster has also received a significant upgrade with new GPUs to enhance computational capabilities for our research.",
+     "r2": "The optics group is recruiting for a postdoc position and welcomes applications from talented researchers. The seminar series schedule has been moved to Thursday afternoons to better accommodate faculty and student participation. The imaging cluster has also been upgraded with new GPUs to expand our computational resources.",
+     "l2": "The department seminar series has relocated to Thursday afternoons, providing a convenient new time slot for faculty and students to engage with cutting-edge presentations. We're also pleased to announce an open postdoctoral position in our optics group for qualified researchers ready to join our collaborative efforts. Finally, our imaging cluster has been upgraded with new GPU hardware, significantly expanding our computational capacity for ongoing research.",
+     "l3": "The Optics Group is pleased to announce an opening for a postdoctoral researcher position. In related administrative updates, the department's seminar series has been rescheduled to Thursday afternoons, offering a new time for our community to gather and share research. Additionally, the coffee machine in the lounge has been replaced with a new model."
+    },
+    {
+     "topic": "sports club update",
+     "points": [
+      "the first team won the regional cup",
+      "youth training now runs three evenings a week",
+      "the clubhouse roof was fully repaired"
+     ],
+     "distractor": "new water bottles arrived in the shop",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "Our youth training programme has expanded significantly with sessions now running three evenings a week, reflecting the club's commitment to developing the next generation of players. We're also pleased to report that the clubhouse roof has been fully repaired, ensuring the facility is in excellent condition for members. In addition, the first team recently won the regional cup, capping off another successful season for the club.",
+     "r2": "We're excited to announce that our youth training program has expanded to run three evenings a week, providing more opportunities for our young players to develop their skills. The clubhouse roof has also been fully repaired, ensuring our facility is in excellent condition for members. Our first team capped off another successful season by winning the regional cup.",
+     "l2": "The clubhouse roof has been fully repaired, addressing a critical facility issue that had impacted our operations for months. Our youth training program is also expanding, now running three evenings a week to better serve our young players' development. On the sporting side, our first team recently captured the regional cup, delivering an exciting achievement for the club.",
+     "l3": "We're excited to announce that our youth training programme has expanded to run three evenings a week, giving our young members significantly more opportunities to develop their skills and fitness. In other positive developments, the clubhouse roof has been fully repaired, ensuring our facilities remain in excellent condition. The shop has also received a new stock of club-branded water bottles, available for purchase during your next visit."
+    },
+    {
+     "topic": "software release note",
+     "points": [
+      "the sync engine no longer drops offline edits",
+      "startup time fell below two seconds",
+      "themes can now be imported from a file"
+     ],
+     "distractor": "the about dialog lists all contributors",
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "r1": "The sync engine now reliably preserves all offline edits, addressing a critical issue where changes were previously lost during periods without connectivity. We've also achieved significant performance improvements, with startup time now consistently below two seconds. Additionally, themes can be imported directly from a file, expanding customization options.",
+     "r2": "The sync engine now reliably preserves offline edits, ensuring no work is lost when reconnecting. We've optimized startup performance to consistently run below two seconds for faster application launches. Additionally, themes can now be imported from a file for greater customization flexibility.",
+     "l2": "Startup time has dropped below two seconds, dramatically improving the first-launch experience. The sync engine now reliably preserves offline edits, ensuring no work is lost during connectivity disruptions. Themes can also be imported directly from files, making customization faster and easier.",
+     "l3": "We've fixed a critical issue where the sync engine could drop edits made while offline\u2014those changes are now reliably preserved. Performance improvements have brought startup time below two seconds on most systems. The about dialog now provides a comprehensive listing of all project contributors."
+    }
+   ],
+   "production": [
+    {
+     "topic": "school newsletter",
+     "points": [
+      "the science fair drew a record number of entries",
+      "the gym renovation finished over the break",
+      "a coding club now meets on Wednesdays"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "We're thrilled to announce that our gymnasium renovation is complete, and students can now enjoy the upgraded facilities with new equipment and improved amenities. In other exciting news, a new Coding Club has launched and meets every Wednesday for students interested in programming and computer science. Our Science Fair this year was a tremendous success, drawing a record number of student entries and showcasing innovative projects across all grade levels.",
+     "improved": "Most importantly, the gym renovation finished over the break, and our new state-of-the-art facilities are ready for the school year. Second, we're excited to announce that a coding club now meets on Wednesdays for students interested in programming and computer science. Lastly, this year's science fair drew a record number of entries, showcasing the incredible creativity and curiosity of our student body."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "We are pleased to announce that our nurse recruitment initiative has successfully met its quarterly target, significantly strengthening our staffing levels. Visitor parking has also been reorganized near the east entrance to improve access and traffic flow. The new MRI suite is now accepting patients.",
+     "improved": "Most importantly, our nurse recruitment efforts have successfully reached the quarterly target. Second, visitor parking has been reorganized near the east entrance for improved access and convenience. Lastly, our new MRI suite has begun accepting patients."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "base": "The city is pleased to announce that a new bus route now serves the riverside district, providing residents with improved access and connectivity to this growing community area. In response to community requests, the main library has extended its opening hours to 9 p.m., offering residents greater flexibility in accessing library services and resources. Additionally, the north bridge repair project has been completed ahead of schedule, restoring full traffic flow to this important transportation corridor.",
+     "improved": "Most importantly, a new bus route now serves the riverside district, providing improved transportation access to this growing community. Second, the city library has extended its opening hours until 9pm, offering residents greater flexibility for after-work visits. Lastly, the north bridge repair project has been completed ahead of schedule, fully reopening this vital transportation corridor."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "This year brought exceptional growth to our cooperative, welcoming forty new member families into our community. We successfully replaced our grain dryer before harvest season, ensuring reliable operations during our peak processing period. Our Saturday market stall has also relocated to the main square for greater visibility.",
+     "improved": "Most importantly, our cooperative experienced significant growth this year with forty new member families joining our organization. Second, we successfully replaced the grain dryer ahead of harvest season, ensuring smooth operations during the critical period. Lastly, the Saturday market stall has relocated to the main square to better serve our customers and community."
+    }
+   ]
+  },
+  {
+   "battery": [
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "distractor": "a new logo was chosen for the delivery van",
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "r1": "This year brought remarkable growth to our cooperative, with forty new families joining our ranks and strengthening our collective mission. We're also pleased to announce that our Saturday market stall has relocated to the main square, making our products more visible and accessible to the community. Additionally, we successfully replaced the grain dryer before harvest season, ensuring we were fully prepared for this year's operations.",
+     "r2": "We are delighted to report that our cooperative membership has grown by forty families this year, reflecting strong community support for our shared mission. Our Saturday market stall has relocated to the main square, enhancing visibility and accessibility for our customers. Additionally, we successfully replaced the grain dryer before harvest, ensuring reliable operations through the season.",
+     "l2": "We're pleased to announce that our Saturday market stall has relocated to the main square, positioning us for greater visibility and expanded reach. This year has been particularly rewarding as our cooperative has welcomed forty new member families, strengthening our community and our capacity for growth. We also successfully replaced the grain dryer before the harvest season began.",
+     "l3": "We're thrilled to report that our membership grew by forty families this year, reflecting strong community support for our mission. Our Saturday market stall has also relocated to the main square, making us more visible and accessible to our customers. Additionally, we've adopted a fresh new logo for our delivery van, updating our visual identity as we continue to expand."
+    },
+    {
+     "topic": "hospital memo",
+     "points": [
+      "the new MRI suite began accepting patients",
+      "nurse recruitment reached its quarterly target",
+      "visitor parking was reorganized near the east entrance"
+     ],
+     "distractor": "the lobby plants were replaced with low-maintenance species",
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "r1": "We are pleased to announce that our nurse recruitment initiative has successfully reached this quarter's staffing target, significantly strengthening our capacity to deliver exceptional patient care. Supporting this milestone, our new MRI suite has now begun accepting patients and is operating at full capacity. Additionally, we have reorganized visitor parking near the east entrance to improve accessibility and traffic flow.",
+     "r2": "We are pleased to report that nurse recruitment has reached its quarterly target, strengthening our staffing levels across all units. The new MRI suite has also begun accepting patients, significantly expanding our diagnostic capabilities. Additionally, visitor parking has been reorganized near the east entrance for improved access and convenience.",
+     "l2": "We are pleased to announce that our new MRI suite has begun accepting patients, significantly expanding our diagnostic imaging capabilities. Our nursing recruitment efforts have also reached their quarterly target, strengthening our clinical team during this period of growth. Visitor parking has been reorganized near the east entrance to improve accessibility and traffic flow.",
+     "l3": "We're pleased to announce that our nurse recruitment initiative has reached its quarterly target, significantly strengthening our staffing levels across departments. The new MRI suite has also begun accepting patients, substantially expanding our diagnostic capabilities. The lobby renovation is complete, featuring low-maintenance plant species that will enhance the patient environment."
+    },
+    {
+     "topic": "company newsletter",
+     "points": [
+      "the mobile app redesign shipped to all users",
+      "two senior engineers joined the platform team",
+      "the office recycling program expanded to every floor"
+     ],
+     "distractor": "the cafeteria menu now rotates weekly",
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "r1": "Our highly anticipated mobile app redesign is now live for all users, delivering a completely refreshed interface that transforms how our customers interact with the platform. We're also excited to expand our office recycling program to every floor, deepening our commitment to environmental responsibility. Rounding out the month, two senior engineers have joined the platform team, bringing significant expertise in scalability and infrastructure.",
+     "r2": "We're thrilled to announce that our redesigned mobile app is now available to all users, bringing a faster, more intuitive experience to everyone on the platform. We've also expanded our office recycling program to every floor, making it easier for all employees to participate in our sustainability efforts. Additionally, our platform team has grown with the addition of two experienced senior engineers who will help us scale our infrastructure and deliver new features.",
+     "l2": "Our office recycling program has expanded to every floor, bringing sustainable practices to every workspace in the building. The mobile app redesign has now shipped to all users, offering a completely refreshed interface with improved navigation and performance. We're also thrilled to welcome two senior engineers who have recently joined our platform team and are already making an impact.",
+     "l3": "We're thrilled to announce that our completely redesigned mobile app is now available to all users\u2014a major upgrade that streamlines navigation and enhances the user experience across every feature. Beyond our digital improvements, our commitment to sustainability continues to grow with our office recycling program expanding to every floor, making it easier than ever to reduce our environmental impact. Our cafeteria team has also introduced a new weekly rotating menu to bring fresh variety and excitement to daily dining options."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "distractor": "the annual street fair was moved to June",
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "r1": "The city is pleased to announce the launch of a new bus route that now serves the riverside district, expanding public transportation access to this growing community. In related infrastructure news, the north bridge repair project has concluded ahead of schedule, improving regional connectivity. Additionally, residents will enjoy extended library hours, now open until 9 p.m. on weekdays.",
+     "r2": "The riverside district is now served by a new bus route, providing essential transit connectivity to the community. The north bridge repair project has been completed ahead of schedule, restoring full transportation capacity. The city library has extended its evening hours through 9pm to better accommodate residents.",
+     "l2": "The long-anticipated north bridge repair project has been completed ahead of schedule, ensuring uninterrupted traffic flow for residents. To further improve connectivity across our city, a new bus route now serves the riverside district with convenient access to local businesses and amenities. Additionally, the city library has extended its opening hours until 9 PM on weekdays to better accommodate working residents and students.",
+     "l3": "A new bus route now serves the riverside district, enhancing public transportation access to this growing neighborhood. The city is also pleased to announce that the north bridge repair was completed ahead of schedule, restoring full traffic flow across this crucial corridor. Additionally, residents should note that the annual street fair has been rescheduled to June."
+    }
+   ],
+   "production": [
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "base": "We are pleased to announce that the north bridge repair project has been completed ahead of schedule, ensuring safe and improved traffic flow for our residents. Additionally, a new bus route now provides convenient service to the riverside district, enhancing transportation access for that community. Library opening hours have also been extended to 9 p.m., providing additional evening access for patrons.",
+     "improved": "Most importantly, the north bridge repair has been completed ahead of schedule, restoring full access to this critical thoroughfare sooner than anticipated. Second, a new bus route now serves the riverside district, providing enhanced public transportation connectivity to this previously underserved area. Lastly, the public library has extended its opening hours until 9pm to better accommodate residents' schedules."
+    },
+    {
+     "topic": "research lab news",
+     "points": [
+      "the imaging cluster was upgraded with new GPUs",
+      "a postdoc position opened in the optics group",
+      "the seminar series moved to Thursday afternoons"
+     ],
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "base": "The optics group is pleased to announce an opening for a postdoc position, with applications welcomed from candidates with expertise in optical imaging and computational methods. In related updates, the department's seminar series has been moved to Thursday afternoons to better accommodate participant schedules. Additionally, the imaging cluster has recently been upgraded with new GPUs to enhance computational capacity for ongoing research projects.",
+     "improved": "Most importantly, a postdoc position has opened in the optics group, with applications now being accepted for qualified candidates interested in joining our cutting-edge research. Second, the seminar series has been relocated to Thursday afternoons, so please update your calendars accordingly. Lastly, the imaging cluster has been upgraded with new GPUs to enhance our computational capabilities for ongoing projects."
+    },
+    {
+     "topic": "farm cooperative note",
+     "points": [
+      "the grain dryer was replaced before harvest",
+      "membership grew by forty families this year",
+      "the Saturday market stall moved to the main square"
+     ],
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "base": "Our cooperative successfully replaced the grain dryer before harvest, ensuring we were fully prepared for the season ahead. We're also pleased to report that membership expanded by forty families this year, strengthening our community ties. Additionally, our Saturday market stall has relocated to the main square for increased visibility.",
+     "improved": "Most importantly, the grain dryer was replaced before harvest, ensuring our crops were processed efficiently this season. Second, membership grew by forty families this year, significantly strengthening our cooperative community. Lastly, the Saturday market stall moved to the main square, making it more accessible to shoppers."
+    },
+    {
+     "topic": "city council notice",
+     "points": [
+      "the north bridge repair was completed ahead of schedule",
+      "library opening hours were extended to 9pm",
+      "a new bus route now serves the riverside district"
+     ],
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "base": "The Riverside Public Library has announced an exciting expansion of service hours, now remaining open until 9pm on weekdays to better serve our community. The north bridge repair project has been completed ahead of schedule, restoring full traffic flow and regional connectivity. Additionally, a new bus route has been established to provide enhanced public transportation access to the riverside district.",
+     "improved": "Most importantly, the library's opening hours have been extended to 9pm, providing residents with greater access to community resources and services. Second, the north bridge repair project has been completed ahead of schedule, restoring full traffic flow to the area. Lastly, a new bus route now serves the riverside district, enhancing public transportation connectivity for that community."
+    }
+   ]
+  }
+ ]
+}
