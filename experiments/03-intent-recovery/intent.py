@@ -222,12 +222,17 @@ def staircase(budget, pass_rate, target=0.5, lo=3, hi=40):
 # 5. The loop
 # ---------------------------------------------------------------------------
 
-def run(rng, shape, escalate, T=60, K=6, budget0=14, tries=3):
-    """shape in {'scalar','metric'}; escalate toggles the staircase."""
+def run(rng, shape, escalate, T=60, K=6, budget0=14, tries=3, checkpoints=()):
+    """shape in {'scalar','metric'}; escalate toggles the staircase.
+
+    `checkpoints`: iteration counts at which the held-out ladder truth is
+    measured mid-run. The pre-registered success criterion needs "keeps rising
+    vs plateaus", which a single end-of-run number cannot show."""
     intents = [random_intent(rng) for _ in range(K)]
     pop = [random_impl(rng, s) for s in intents]
     budget = budget0
     traj = []
+    checks = []
 
     def value(impl):
         if shape == "scalar":
@@ -246,7 +251,9 @@ def run(rng, shape, escalate, T=60, K=6, budget0=14, tries=3):
             pr = float(np.mean([fidelity(s, budget, rng, reps=4) > 0.99 for s in pop]))
             budget = staircase(budget, pr)
         traj.append((t, budget, float(np.mean([value(s) for s in pop]))))
-    return pop, budget, traj
+        if (t + 1) in checkpoints:
+            checks.append((t + 1, float(np.mean(ladder_truth(pop, rng)))))
+    return pop, budget, traj, checks
 
 
 def ladder_truth(pop, rng, ladder=(4, 6, 8, 10, 14, 20)):
@@ -279,7 +286,7 @@ def main():
     probe_impl = random_impl(rng, random_intent(rng))
     print("\n[E-A] Is the metric anisotropic? (if it were isotropic it would add nothing)")
     for b in (6, 12):
-        prof = jnd_profile(imp, b, rng, n_dirs=8)
+        prof = jnd_profile(probe_impl, b, rng, n_dirs=8)
         print(f"   budget {b:>2}: JND per direction " + " ".join(f"{v:.3f}" for v in np.sort(prof)) +
               f"   ratio max/min = {prof.max()/max(prof.min(),1e-9):.1f}x")
 
@@ -303,22 +310,34 @@ def main():
     for shape in ("scalar", "metric"):
         for esc in (False, True):
             name = f"{shape}{'+escalate' if esc else '+fixed'}"
-            lad, far, bf = [], [], []
+            lad, far, bf, ck20, ck40 = [], [], [], [], []
             for seed in range(N_SEEDS):
                 r = np.random.default_rng(100 + seed)
-                pop, bfinal, traj = run(r, shape, esc, T=60)
+                pop, bfinal, traj, checks = run(r, shape, esc, T=60, checkpoints=(20, 40))
                 truth = np.array(ladder_truth(pop, r))
                 lad.append(truth.mean())
+                ck20.append(checks[0][1])
+                ck40.append(checks[1][1])
                 # budgets at least 2x away from where this arm ended up training
                 far_idx = [i for i, b in enumerate(LADDER)
                            if b >= 2 * bfinal or b <= 0.5 * bfinal]
                 far.append(truth[far_idx].mean() if far_idx else np.nan)
                 bf.append(bfinal)
-            summary[name] = (np.array(lad), np.array(far), np.array(bf))
+            summary[name] = (np.array(lad), np.array(far), np.array(bf),
+                             np.array(ck20), np.array(ck40))
             fa = np.array(far)[~np.isnan(far)]
             print(f"   {name:<17}{np.mean(lad):>8.3f} ±{np.std(lad):.3f}"
                   f"{np.mean(fa):>13.3f} ±{np.std(fa):.3f}"
                   f"{np.mean(bf):>10.1f} ±{np.std(bf):.1f}")
+
+    print("\n   frontier over time (mean ladder truth at t=20 / 40 / 60; plateau test:")
+    print("   paired Δ(60-40) against 2 standard errors):")
+    for name, (lad, far, bf, ck20, ck40) in summary.items():
+        d = lad - ck40
+        se = d.std(ddof=1) / np.sqrt(len(d))
+        star = "still rising" if d.mean() > 2 * se else "plateaued"
+        print(f"   {name:<17}{ck20.mean():>7.3f} -> {ck40.mean():.3f} -> {lad.mean():.3f}"
+              f"   Δ(60-40) = {d.mean():+.3f} ± {se:.3f}  -> {star}")
 
     print("\n   paired contrasts (same seeds, so the comparison is paired):")
     def contrast(a, b, idx=0):

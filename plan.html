@@ -112,6 +112,8 @@ footer a{color:var(--muted)}
 <p class="lede">自我改进系统最难的一格是验证：改进循环需要一个裁判，而裁判本身无法被验证，递归下去没有底。本文主张这个困难来自裁判的<strong>形状</strong>——标量——并给出一个不需要人、难度自己上升的替代构造。</p>
 <p class="stamp">研究计划 · 2026-09-15 · 承接 <a href="direction.html">方向判断</a>、notes/directions/01、experiments/01–03</p>
 
+<div class="callout"><strong>状态（2026-09-15 晚）：本计划的核心主张已被自己的预注册实验推翻。</strong>四臂对照触发失败分支（第 6 节），单点风险论文 2605.22217 正文已读并落地（第 7 节风险框）。下文第 1–5 节按原样保留作为论证记录；仍然成立的碎片与转向指向见第 6、7 节。</div>
+
 <h2>1. 问题：RSI 里最难的那一格</h2>
 
 <p>一个能自我改进的系统需要判断"这次改动是不是更好"。在有确定性裁判的域里（代码跑不跑得过、定理证不证得出），这不是问题。困难出现在裁判本身也会被改进、或者裁判一开始就不存在的时候。</p>
@@ -274,7 +276,7 @@ footer a{color:var(--muted)}
 
 <p>这一条是承重的：完整恢复比例从 0.05 单调升到 0.60，说明预算是一个<strong>有效的难度旋钮</strong>，50% 目标点落在可达范围内，阶梯校准有东西可收敛。宽预算下信号确实被压平（0.910，接近顶），验证了"不设限就没有信号"。</p>
 
-<h3>待测：四臂对照（预注册判据，先写死再跑）</h3>
+<h3>已测：四臂对照（判据先写死；2026-09-15 跑完，失败分支触发）</h3>
 
 <p>四个臂：<code>度量+预算上升</code> / <code>标量+预算上升</code> / <code>度量+预算固定</code> / <code>标量+预算固定</code>。两种裁判从<strong>同一批探测数据</strong>测得，唯一区别是形状：</p>
 
@@ -292,6 +294,30 @@ footer a{color:var(--muted)}
 </table>
 </div>
 
+<h4>结果（8 种子，全部同种子配对；完整输出在 <code>experiments/03-intent-recovery/run.log</code>）</h4>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">臂</th><th class="nw">阶梯真值 t=20→40→60</th><th class="nw">Δ(60−40)</th><th class="nw">终点预算</th></tr></thead>
+<tbody>
+<tr><td class="nw">标量+固定</td><td class="nw">0.794 → 0.814 → 0.834</td><td class="nw">+0.020（2se 0.016，仍在涨）</td><td class="nw">14（固定）</td></tr>
+<tr><td class="nw">标量+上升</td><td class="nw">0.797 → 0.822 → 0.862</td><td class="nw">+0.040（2se 0.040，临界）</td><td class="nw">7.9 ±3.7</td></tr>
+<tr><td class="nw">度量+固定</td><td class="nw">0.825 → 0.890 → 0.893</td><td class="nw">+0.003（2se 0.018，平台化）</td><td class="nw">14（固定）</td></tr>
+<tr><td class="nw">度量+上升</td><td class="nw">0.829 → 0.863 → 0.868</td><td class="nw">+0.005（2se 0.030，平台化）</td><td class="nw">5.1 ±0.9</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout"><strong>按上表写死的判据，失败分支成立。</strong>「度量+预算上升」自己平台化了；且预算固定的臂同样能涨——escalating vs fixed 在两种形状下都不显著（度量 −0.025，2se 0.048；标量 +0.028，2se 0.050）。结论按预注册执行：<strong>难度内生（预算阶梯）在这个实例化里不是关键变量，本线的核心主张作废。</strong>负结果的适用边界：意图空间极小（3 段仅 6 种排列）、产物 5 维，前沿几乎立即饱和——这限制它向更富域的外推，但不构成翻案；要翻案只能用新设计的新预注册实验，不能用事后解释。</div>
+
+<p>幸存的（均为预先指定的次要观测，不构成主线）：</p>
+<ul>
+<li><strong>固定预算下度量显著优于标量</strong>：Δ阶梯真值 +0.059（2se 0.040，配对 8 种子）。「优化体积比优化点迁移得好」这半句活着；「预算上升是引擎」那半句死了。</li>
+<li><strong>度量确实各向异性</strong>（E-A）：同一实现不同方向的 JND 半径差 54.7×（预算 6）/ 22.3×（预算 12）。几何是真实的——若各向同性，度量将退化为标量。</li>
+<li><strong>阶梯自己找到 50% 点</strong>（E-B，从 20 收敛到 12 附近震荡）。机制活着，只是不带来收益。</li>
+<li>far-from-training 列跨臂不可比（各臂终点预算不同，"2 倍远"的档位集合随之不同），不据它下任何结论。</li>
+</ul>
+
 <h2>7. 诚实的账</h2>
 
 <div class="tablewrap">
@@ -301,15 +327,15 @@ footer a{color:var(--muted)}
 <tr><td>标量有方向可被刷</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>Transitivity Meets Cyclicity（2605.17342, ICML 2026）已把偏好拆成 transitive 标量 + cyclic 向量</td></tr>
 <tr><td>无真值验证验证器</td><td class="nw"><span class="verdict v-done">已有人做</span></td><td>2605.27914 的三张证书；并指出人类评分者自身相关仅 ρ≈0.45，人本身不构成锚</td></tr>
 <tr><td>几何自洽检验能替代锚</td><td class="nw"><span class="verdict v-dead">已被推翻</span></td><td>我们自己的合成实验（检验与真实损害的秩相关仅 0.13–0.38；六项里两项恒等空转）＋ Double Ratchet 的锚消融（度量坍缩成"永远放行"，而下游分数照样好看，所以发现不了）</td></tr>
-<tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse（2605.22217）：绑定约束是<strong>任务准入</strong>，不是奖励标定</td></tr>
+<tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse（2605.22217）：绑定约束是<strong>任务准入</strong>，不是奖励标定。正文已读（2026-09-15）：其 reward variant 全部是标量的<strong>接地</strong>变体（grounded / self-consistency），未测形状，主张限于稳定性/坍缩——所以它没有直接否定度量主张，但把"稳定性"整块从奖励层划走</td></tr>
 <tr><td>标量无法表示异质人群</td><td class="nw"><span class="verdict v-open">仍成立</span></td><td>但不新</td></tr>
-<tr><td><strong>受限恢复当改进信号</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>549 篇里没有；recovery 只出现在审计字段，从未当作改进信号</td></tr>
-<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0 命中；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong></td></tr>
+<tr><td><strong>受限恢复当改进信号</strong></td><td class="nw"><span class="verdict v-dead">主线作废</span></td><td>文献仍零命中，但我们自己的四臂触发预注册失败分支（第 6 节）：固定预算下作为选择目标显著优于标量（+0.059，2se 0.040），而<strong>预算内生上升不带来额外收益</strong>——引擎主张死，仪器主张活</td></tr>
+<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0 命中；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong>。E-A 证实该几何非退化（各向异性 54.7×/22.3×）；作为<strong>测量仪器</strong>的主张仍开放，作为引擎的主张已随四臂作废</td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="callout"><strong>最大的单点风险。</strong>若 Survive or Collapse 成立——自改进的绑定约束是任务准入而非奖励形状——则本文主线是在调一个不绑定的变量。<strong>第一步是读它，而不是写代码</strong>；这一步的结论可能是收工。对应到本文的构造，它质疑的具体位置是：如果意图分布固定（永远是"三段、一个秩序"），学完就没得学，所以<strong>意图生成器本身必须持续变难</strong>，而这正是"任务准入"问题。</div>
+<div class="callout"><strong>单点风险已落地（2026-09-15 正文已读）。</strong>Survive or Collapse 的受控矩阵（7 配置 × 编码/DSL 双任务）确认：<strong>数据级有效性门控单独就足以稳定，任何标量奖励变体在无门时都救不了</strong>；带门时接地与自洽奖励几乎无差（0.71/0.67/0.67）。它从未测奖励的"形状"，也不涉及漂移可观测性。对本构造的映射：意图先写 = 按构造自带有效性门（对应其 DSL 孪生任务"解释器即隐式门"的论证），这解释了我们四臂全部稳定、无一坍缩；而它指出稳定域内真正的绑定约束是 <strong>proposer 容量天花板</strong>（新颖任务产能耗尽即停滞，&lt;1% 合格率，靠课程或外部种子解决，不靠松门），恰好与我们四臂负结果同形——意图空间 6 种排列，立即饱和，预算阶梯无物可推。两份独立证据指向同一处：<strong>要害在意图/任务生成器怎么持续变难（数据轴），不在裁判形状（奖励轴）。</strong>另外其 Grounded Proposer Paradox 对本构造不构成威胁：我们的观察者从不接触 S，比对是外部机械的，不存在自洽奖励回路。</div>
 
 <h2>8. 局限</h2>
 
@@ -317,7 +343,7 @@ footer a{color:var(--muted)}
 <li><strong>它测的是传达/恢复的鲁棒性，不是美，也不是个人品味。</strong>在视觉设计上，它能让及格线自动上升并精确交还创作自由度（告诉你哪些轴是自由的），但它判断不了美。</li>
 <li>人的位置：<strong>空间由机器免费建成，人只需在已建好的空间里指一个点</strong>，成本 O(维度) 而非 O(样本)。机器建地图，人选目的地。</li>
 <li>首个实验域刻意选<strong>程序</strong>而非设计——那里有独立可计算的真值来核对度量有没有自欺。在没有独立核对手段的域先做，等于自证。</li>
-<li>四臂对照尚未完成（代码在 <code>experiments/03-intent-recovery/</code>，一次改动引入的 <code>NameError</code> 中断了 E-A 之后的部分）。本文不引用任何未完成的对照数字。</li>
+<li>四臂对照已于 2026-09-15 完成（<code>NameError</code> 已修，E-A/E-B/E-C 全部跑通；为"平台化"判据补了 t=20/40 两个中途阶梯测量点，判据本身未动）。结果与裁定见第 6 节：预注册失败分支触发。</li>
 </ul>
 
 </div>
