@@ -18,3 +18,25 @@ E-D: DOES THE METRIC SEE THE RULER MOVE?
 VERDICT: INCONCLUSIVE branch -- the scalar separated C1 from C3 on
 fresh seeds (calibration did not transfer); toy uninformative, redesign.
 EXIT=0
+==============================================================================
+E-D: DOES THE METRIC SEE THE RULER MOVE?
+==============================================================================
+
+[E-D2 REGISTERED RUN, fresh seeds] seeds=12  cfg={'B': 5, 'K': 8, 'p_mode': 0.6, 'thresh': 6.0, 'n_dirs': 8, 'reps': 8, 'rounds': 8, 'calib_steps': 9}
+   cond      d scalar    d metric (log JND)
+   C0       -0.003 ±0.045         +0.080 ±0.219
+   C1       +0.088 ±0.056         +1.244 ±1.719
+   C2       -0.370 ±0.076         +0.422 ±0.634
+   C3       +0.114 ±0.056         +0.093 ±0.219
+   C4       +0.141 ±0.062         +1.266 ±1.695
+   P1a  dM(C1)-dM(C3) = +1.152 (2se 0.988)  -> significant
+   P1b  ds(C1)-ds(C3) = -0.026 (2se 0.016)  -> significant
+   S1   dM(C4)-dM(C3) = +1.173 (2se 0.973)  -> significant
+   S2   dM(C2)-dM(C0) = +0.342 (2se 0.391)  -> NOT significant
+   calibrated p per seed: 1.00 0.50 0.25 0.50 0.03 0.52 0.75 1.00 0.78 1.00 0.37 1.00
+   MC  |ds(C1)-ds(C3)| = -0.026 (2se 0.016)  -> FAILS
+
+------------------------------------------------------------------------------
+VERDICT: INCONCLUSIVE (final) -- calibration failed on fresh seeds;
+reported as-is, no further redesign (termination clause).
+EXIT=0

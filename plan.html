@@ -331,7 +331,7 @@ footer a{color:var(--muted)}
 <tr><td>换度量能解决 Goodhart</td><td class="nw"><span class="verdict v-dead">很可能错</span></td><td>Survive or Collapse（2605.22217）：绑定约束是<strong>任务准入</strong>，不是奖励标定。正文已读（2026-09-15）：其 reward variant 全部是标量的<strong>接地</strong>变体（grounded / self-consistency），未测形状，主张限于稳定性/坍缩——所以它没有直接否定度量主张，但把"稳定性"整块从奖励层划走</td></tr>
 <tr><td>标量无法表示异质人群</td><td class="nw"><span class="verdict v-open">仍成立</span></td><td>但不新</td></tr>
 <tr><td><strong>受限恢复当改进信号</strong></td><td class="nw"><span class="verdict v-dead">主线作废</span></td><td>文献仍零命中，但我们自己的四臂触发预注册失败分支（第 6 节）：固定预算下作为选择目标显著优于标量（+0.059，2se 0.040），而<strong>预算内生上升不带来额外收益</strong>——引擎主张死，仪器主张活</td></tr>
-<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0 命中；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong>。E-A 证实该几何非退化（各向异性 54.7×/22.3×）；作为<strong>测量仪器</strong>的主张仍开放，作为引擎的主张已随四臂作废</td></tr>
+<tr><td><strong>验证器本身是带距离的空间</strong></td><td class="nw"><span class="verdict v-open">零命中</span></td><td>metric space / embedding / behavior descriptor 全部 0 命中；L4 的 30 篇都在演化 rubric 或权重，<strong>没有一篇在演化几何</strong>。E-A 证实该几何非退化（各向异性 54.7×/22.3×）；作为引擎的主张已随四臂作废。仪器主张经 E-D/E-D2 两轮预注册（第 9 节）：主对比两次注册显著，但完整判据未立，终局裁定「不定」</td></tr>
 </tbody>
 </table>
 </div>
@@ -439,6 +439,23 @@ footer a{color:var(--muted)}
 </tbody>
 </table>
 </div>
+
+<h4>E-D2 注册结果（12 个全新种子）：终局裁定「不定」——校准以 0.026 之差失效</h4>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th class="nw">判据</th><th class="nw">数值</th><th class="nw">裁定</th></tr></thead>
+<tbody>
+<tr><td class="nw">MC　|Δs(C1)−Δs(C3)|</td><td class="nw">−0.026（2se 0.016）</td><td class="nw"><strong>失效</strong>：4/12 种子校准 p 触顶 1.00，真进步再次超出刷分天花板</td></tr>
+<tr><td class="nw">P1′　ΔM(C1)−ΔM(C3)</td><td class="nw">+1.152（2se 0.988）</td><td class="nw">显著</td></tr>
+<tr><td class="nw">S1′ / S2′</td><td class="nw">+1.173（2se 0.973）/ +0.342（2se 0.391）</td><td class="nw">显著 / 不显著</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout"><strong>按终止条款，本轮构造的最终裁定是「不定」，不再重设计。</strong>预检时 MC 成立、注册种子上失效——同一个失效机制出现第二次（个别种子的能力涨幅超出这种 hack 的分数天花板）。</div>
+
+<p><strong>注册裁定之外的如实观察（事后评述，不改变裁定）：</strong>主对比「度量分出被刷裁判与真进步」在两次注册跑里都显著（E-D +0.616，2se 0.538；E-D2 +1.152，2se 0.988），五个条件的方向读数全部符合预期——真进步让参照件的 M 静止（+0.093，与空白条件的 +0.080 同级），被刷与混合条件让它剧烈膨胀（+1.24 / +1.27）；「真实进步进行中漂移仍可见」（S1′）也显著。MC 失效的幅度是 0.026 个保真度单位，小于单种子噪声（sd ±0.056）——单一部署里标量仍然分不出，是 12 种子配对检验的功效把它揪出来的；但判据就是判据。诚实的总结：<strong>「度量看得见尺子在动」获得了重复出现的显著主信号，但本轮构造未能在完整预注册配置下立案。</strong>要立案需要天花板永远可及的 hack 模型（例如在单次读取层面插值诚实读取与先验猜测，而非轨迹层面的固定概率），那是新一轮构造，超出本轮终止条款。</p>
 
 </div>
 </main>

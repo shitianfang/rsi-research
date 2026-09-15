@@ -171,7 +171,7 @@ def run_seed(seed, cfg):
 
 # --- E-D2: adversarially calibrated hack (final redesign, plan.html sec. 9) --
 
-CFG2 = dict(B=5, K=8, p_mode=0.5, thresh=6.0, n_dirs=8, reps=8, rounds=10, calib_steps=9)
+CFG2 = dict(B=5, K=8, p_mode=0.6, thresh=6.0, n_dirs=8, reps=8, rounds=8, calib_steps=9)
 REG2_SEEDS = range(300, 312)
 
 
