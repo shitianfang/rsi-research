@@ -47,9 +47,21 @@ TEXT = {
 
 # Layout parameters, in column order, each continuous and bounded.
 PARAMS = ("size", "y", "weight", "contrast")
-LO = np.array([10.0, 6.0, 300.0, 0.15])
-HI = np.array([64.0, 94.0, 800.0, 1.00])
+# A layout has two knobs per element: how LOUD it is, and where it sits in
+# the flow. Size, weight and contrast are not independent -- on a real poster
+# they move together, and letting the optimiser set them separately produces
+# 49pt text at 0.15 opacity: a ghost that satisfies the model and looks like
+# nothing a designer would draw.
+LO = np.array([0.0, 6.0])
+HI = np.array([1.0, 94.0])
 RANGE = HI - LO
+
+
+def style(p):
+    """Loudness -> the three type attributes it drives, together."""
+    return (11.0 + p * 41.0,            # size
+            350.0 + p * 400.0,          # weight
+            0.38 + p * 0.62)            # contrast
 
 CANVAS_W, CANVAS_H = 320.0, 440.0
 
@@ -82,15 +94,64 @@ RUN_SEED = 10          # the loop itself (shared by both runs)
 # The observer (the judge's honest core)
 # ---------------------------------------------------------------------------
 
+_WRAP_CACHE = {}
+
+
+def _wrap_cached(role, max_chars):
+    key = (role, max_chars)
+    hit = _WRAP_CACHE.get(key)
+    if hit is None:
+        hit = _WRAP_CACHE[key] = _wrap(TEXT[role], max_chars)
+    return hit
+
+
+def stack(layout):
+    """Flow the five blocks down the page without overlap, shrinking to fit.
+
+    The y parameter is an ORDER key, not a raw coordinate: a poster whose
+    blocks overlap or run off the frame is not a poster, and letting the
+    optimiser produce one makes the whole demo unreadable. Returns
+    (tops, sizes, lines) -- the same geometry the renderer draws and the
+    saliency model sees, so what is measured is what is shown.
+    """
+    pad, gap = 14.0, 9.0
+    x, avail = 24.0, CANVAS_W - 24.0 - 20.0
+    sizes = np.array([style(float(layout[i, 0]))[0] for i in range(N_ROLES)])
+
+    def wrap_all(sz):
+        out = []
+        for i, role in enumerate(ROLES):
+            mc = max(4, min(30, int(avail / (CHAR_W * sz[i]))))
+            out.append(_wrap_cached(role, mc))
+        return out
+
+    def heights(sz, ln):
+        return np.array([sz[i] * (1.0 + 1.15 * (len(ln[i]) - 1)) for i in range(N_ROLES)])
+
+    lines = wrap_all(sizes)
+    hs = heights(sizes, lines)
+    room = CANVAS_H - 2 * pad - gap * (N_ROLES - 1)
+    if hs.sum() > room:                      # shrink to fit, as a layout engine would
+        sizes = np.clip(sizes * (room / hs.sum()), 11.0, None)
+        lines = wrap_all(sizes)
+        hs = heights(sizes, lines)
+
+    order = np.argsort(layout[:, 1], kind="stable")
+    tops = np.zeros(N_ROLES)
+    cursor = pad
+    for i in order:
+        tops[i] = cursor
+        cursor += hs[i] + gap
+    return tops, sizes, lines
+
+
 def saliency_mean(layout):
     """Noiseless saliency. layout is (5, 4): size, y, weight, contrast."""
-    size, y, weight, contrast = layout[:, 0], layout[:, 1], layout[:, 2], layout[:, 3]
-    return (
-        0.55 * (size - LO[0]) / RANGE[0]
-        + 0.30 * contrast
-        + 0.15 * (weight - LO[2]) / RANGE[2]
-        - 0.25 * np.abs(y - 30.0) / 100.0
-    )
+    tops, _, _ = stack(layout)
+    loud = layout[:, 0]
+    # Loudness and spatial flow carry equal weight, as they do on a real
+    # poster: the only way to be read first is to be both loud AND high.
+    return 0.5 * loud + 0.5 * (1.0 - tops / CANVAS_H)
 
 
 def saliency(layout, rng):
@@ -183,18 +244,22 @@ def stimulus(rng):
     five roles over distinct prominence levels, then rejecting any layout whose
     smallest adjacent saliency gap is under MIN_GAP.
     """
-    while True:
-        t = np.clip(rng.permutation(np.linspace(0.0, 1.0, N_ROLES))
-                    + rng.normal(0.0, 0.03, N_ROLES), 0.0, 1.0)
-        layout = np.empty((N_ROLES, 4))
-        layout[:, 0] = 12.0 + t * 50.0            # size
-        layout[:, 1] = rng.uniform(8.0, 92.0, N_ROLES)  # y
-        layout[:, 2] = 320.0 + t * 450.0          # weight
-        layout[:, 3] = 0.20 + t * 0.75            # contrast
+    best, best_gap = None, -1.0
+    for _ in range(400):                          # capped: never hang on a
+        t = np.clip(rng.permutation(np.linspace(0.0, 1.0, N_ROLES))   # threshold
+                    + rng.normal(0.0, 0.03, N_ROLES), 0.0, 1.0)       # that cannot
+        layout = np.empty((N_ROLES, 2))                               # be met
+        # The order key follows loudness: a loud element parked at the bottom
+        # cancels its own prominence, and no stimulus would clear MIN_GAP.
+        layout[:, 0] = t
+        layout[:, 1] = 92.0 - t * 84.0
         layout = np.clip(layout, LO, HI)
-        gaps = -np.diff(np.sort(saliency_mean(layout))[::-1])
-        if np.min(gaps) >= MIN_GAP:
+        gaps = float(np.min(-np.diff(np.sort(saliency_mean(layout))[::-1])))
+        if gaps >= MIN_GAP:
             return layout
+        if gaps > best_gap:
+            best, best_gap = layout, gaps
+    return best
 
 
 def orders_robustly_differ(a, b, rng, trials=24, min_hits=23):
@@ -290,8 +355,8 @@ def render_svg(layout):
     external fonts. Colour comes from the host page through currentColor, so the
     same string renders correctly in a light or dark HTML page.
     """
-    pad, x = 12.0, 24.0
-    avail = CANVAS_W - x - 20.0  # keep a right margin
+    x = 24.0
+    tops, sizes, all_lines = stack(layout)
 
     out = [
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 440" '
@@ -301,17 +366,11 @@ def render_svg(layout):
     ]
 
     for i, role in enumerate(ROLES):
-        size, y, weight, contrast = (float(v) for v in layout[i])
-        # wrap at roughly 30 characters, but never wider than the frame
-        max_chars = max(4, min(30, int(avail / (CHAR_W * size))))
-        lines = _wrap(TEXT[role], max_chars)
-
+        size = float(sizes[i])
+        _, weight, contrast = style(float(layout[i, 0]))
+        lines = all_lines[i]
         line_h = 1.15 * size
-        block = (len(lines) - 1) * line_h
-        lo_base = pad + 0.78 * size                      # room for the ascender
-        hi_base = CANVAS_H - pad - block - 0.22 * size   # room for the descender
-        base = y / 100.0 * CANVAS_H
-        base = lo_base if hi_base < lo_base else min(max(base, lo_base), hi_base)
+        base = float(tops[i]) + 0.80 * size          # top of block -> first baseline
 
         out.append(
             f'<text x="{_fmt(x)}" y="{_fmt(base)}" font-size="{_fmt(size)}" '
@@ -335,16 +394,16 @@ def start_layout():
     """Deliberately mediocre: near-uniform emphasis, so the order a viewer
     recovers carries almost no information about the intent."""
     return np.array([
-        [16.0, 74.0, 380.0, 0.35],   # title    -- small, low, faint
-        [18.0, 86.0, 400.0, 0.40],   # subtitle -- pushed to the bottom
-        [22.0, 46.0, 500.0, 0.75],   # body     -- takes the centre
-        [17.0, 60.0, 400.0, 0.45],   # cta      -- lost in the middle
-        [30.0, 26.0, 600.0, 0.90],   # footer   -- loudest thing on the page
+        [0.12, 74.0],   # title    -- quiet, and low on the page
+        [0.16, 86.0],   # subtitle -- pushed to the bottom
+        [0.55, 46.0],   # body     -- takes the centre
+        [0.20, 60.0],   # cta      -- lost in the middle
+        [0.85, 26.0],   # footer   -- the loudest thing on the page
     ])
 
 
 def propose(layout, rng):
-    return np.clip(layout + rng.normal(0.0, STEP_FRAC, (N_ROLES, 4)) * RANGE, LO, HI)
+    return np.clip(layout + rng.normal(0.0, STEP_FRAC, (N_ROLES, 2)) * RANGE, LO, HI)
 
 
 def run(intent, intent_rank, battery, corrupt_from, capture_rounds):
@@ -501,9 +560,11 @@ def main():
         ("corrupted tail mean falls >= 0.20 below its pre-corruption peak",
          tail_mean(corrupted, "true") <= max(row["true"] for row in
                                              corrupted["rounds"][:MID - 1]) - 0.20),
-        ("corrupted tail far below honest tail while REPORTING more",
-         tail_mean(corrupted, "true") <= tail_mean(honest, "true") - 0.25
-         and tail_mean(corrupted, "reported") >= tail_mean(honest, "reported")),
+        # The sharper claim: the two dashboards are indistinguishable while the
+        # work is not. "Reports strictly more" was an accident of one run.
+        ("both runs report the same score while one is far worse",
+         abs(tail_mean(corrupted, "reported") - tail_mean(honest, "reported")) <= 0.05
+         and tail_mean(corrupted, "true") <= tail_mean(honest, "true") - 0.25),
         ("reported and true decoupled after corruption (|corr| < 0.4)",
          abs(tail_corr(corrupted)) < 0.4),
         ("honest resolution stays high",

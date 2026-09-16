@@ -216,7 +216,7 @@ html = f"""<title>海报会变好，也会被骗</title>
 <h2>裁判被污染之后：分数飙升，海报烂掉</h2>
 <p>第二遍完全一样，只有一处不同：从第 {CF} 轮起，裁判有 80% 的概率<strong>根本不看海报</strong>，直接报出"正确答案"。这对应现实中最危险的裁判失效——记住了测试集、或者和出题的一方串通。</p>
 {posters("corrupted", caps, ["同一张初稿", f"污染前一轮：好海报", "污染之后"])}
-<div class="warn"><p><strong>第 {caps[1]} 轮那张，和上面诚实线的那张是同一张海报</strong>（前 {CF-1} 轮两条线完全相同，连随机数都一样）。分叉发生在之后。最后 {TAIL} 轮取平均：污染线<strong>报告 {tmean(C,'reported'):.2f}</strong>，真实只有 <strong>{tmean(C,'true'):.2f}</strong>；诚实线报告 {tmean(H,'reported'):.2f}，真实 {tmean(H,'true'):.2f}。<strong>污染线报出来的分数比诚实线还高，做出来的海报却差了 {tmean(H,'true')-tmean(C,'true'):.2f}。</strong></p></div>
+<div class="warn"><p><strong>第 {caps[1]} 轮那张，和上面诚实线的那张是同一张海报</strong>（前 {CF-1} 轮两条线完全相同，连随机数都一样）。分叉发生在之后。最后 {TAIL} 轮取平均：<strong>两条线报告的分数几乎一样</strong>——诚实 {tmean(H,'reported'):.2f}，污染 {tmean(C,'reported'):.2f}；而真实质量是 <strong>{tmean(H,'true'):.2f} 对 {tmean(C,'true'):.2f}</strong>，差了 {tmean(H,'true')-tmean(C,'true'):.2f}。<strong>两个团队盯着一模一样的仪表盘，一个手里是好海报，另一个手里是废纸。</strong></p></div>
 
 <div class="note"><strong>为什么污染线是乱走的，不是一路下滑。</strong>裁判一旦每次都报满分，任何候选都不低于当前，于是全部被接受——爬山退化成<em>随机游走</em>。随机游走会乱晃：某一轮可能碰巧好看，下一轮又掉下去。所以这里不看单独某一轮（那只是游走的一次取样），而看最后 {TAIL} 轮的整体。最能说明问题的是这个数：污染后，<strong>报告分数与真实分数的相关系数是 {tcorr(C):+.2f}</strong>——已经完全没有关系了。第 {N} 轮那张海报真实分 {at(C,N)['true']:.2f}，只是游走中的一次取样，别当成终点。</div>
 </section>
