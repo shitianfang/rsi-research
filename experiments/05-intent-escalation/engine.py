@@ -127,6 +127,13 @@ def probe(segs, budget, rng):
 # --- top-down recovery: a wrong split destroys everything beneath it ----------
 
 def recover(x, y, depth):
+    """Binary segmentation, top-down. The split statistic is the standard
+    between-group sum of squares j(n-j)/n * (mL - mR)^2, NOT |mL - mR|: the
+    plain mean difference is maximised near the ends of the interval where a
+    two-sample mean is pure noise, so it picks spurious cuts and -- the
+    tell -- does not improve with budget. The first version of this file
+    used |mL - mR| and produced level-2 fidelity of 0.38, below chance, flat
+    from 64 to 256 probes."""
     out = []
     frontier = [(0.0, 1.0)]
     for _ in range(depth):
@@ -134,19 +141,20 @@ def recover(x, y, depth):
         for lo, hi in frontier:
             m = (x >= lo) & (x < hi)
             xs, ys = x[m], y[m]
-            if len(ys) < 4:
+            n = len(ys)
+            if n < 6:
                 level.append(0)
                 mid = 0.5 * (lo + hi)
                 nxt += [(lo, mid), (mid, hi)]
                 continue
-            best, cut = -1.0, 0.5 * (lo + hi)
-            for j in range(2, len(ys) - 1):
-                d = abs(ys[:j].mean() - ys[j:].mean())
-                if d > best:
-                    best, cut = d, 0.5 * (xs[j - 1] + xs[j])
-            left = ys[xs < cut]
-            right = ys[xs >= cut]
-            level.append(1 if (len(left) and len(right) and left.mean() > right.mean()) else 0)
+            c = np.cumsum(ys)
+            tot = c[-1]
+            j = np.arange(2, n - 1)
+            ml = c[j - 1] / j
+            mr = (tot - c[j - 1]) / (n - j)
+            k = int(np.argmax(j * (n - j) / n * (ml - mr) ** 2))
+            cut = 0.5 * (xs[j[k] - 1] + xs[j[k]])
+            level.append(1 if ml[k] > mr[k] else 0)
             nxt += [(lo, cut), (cut, hi)]
         out.append(level)
         frontier = nxt
@@ -235,14 +243,15 @@ def gates():
     ok2 = r < 0.75
     print(f"   random-policy held-out fidelity {r:.3f} (chance = 0.500) -> {'OK' if ok2 else 'FAIL'}")
 
-    print("\n[G3] does the learner learn? (arm A at its starting depth)")
+    print("\n[G3] does the learner learn? (held-out depth-D, arm A vs its own init)")
     rr = np.random.default_rng(1)
     th0 = init_theta(rr)
-    base = np.mean([score(random_intent(rr, 1), th0[:1], rr, reps=4) for _ in range(12)])
-    th, _ = train(np.random.default_rng(1), "escalate", evals=300)
-    after = np.mean([score(random_intent(rr, 1), th[:1], rr, reps=4) for _ in range(12)])
+    base = heldout(th0, np.random.default_rng(11), n=12)
+    th, _ = train(np.random.default_rng(1), "escalate", evals=400)
+    after = heldout(th, np.random.default_rng(11), n=12)
     ok3 = after > base + 0.02
-    print(f"   depth-1 fidelity {base:.3f} -> {after:.3f} -> {'OK' if ok3 else 'FAIL'}")
+    print(f"   held-out fidelity {base:.3f} -> {after:.3f} -> {'OK' if ok3 else 'FAIL'}")
+
     print(f"\n   gates {'PASSED' if (ok1 and ok2 and ok3) else 'NOT passed'}")
 
 
