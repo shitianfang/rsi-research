@@ -56,11 +56,15 @@ CANVAS_W, CANVAS_H = 320.0, 440.0
 # Observer
 BUDGET_K = 5          # fixations the viewer can spend
 NOISE_SD = 0.06       # saliency noise
-FIDELITY_REPS = 12    # repetitions averaged into one fidelity score
+FIDELITY_REPS = 32    # glances averaged into one fidelity score. A noisy
+                      # judge makes hill climbing accept lucky-but-worse
+                      # candidates; more glances is the judge looking longer
+                      # before it decides, and it is what makes the trace
+                      # legible without hiding anything.
 
 # Loop
-ROUNDS = 60
-CORRUPT_FROM = 38   # late enough that the loop has already climbed high: corruption must destroy something good, not drift up from a bad start
+ROUNDS = 80
+CORRUPT_FROM = 52   # late enough that the loop has already built a genuinely good poster: corruption must destroy something, not drift up from a bad start
 P_LEAK = 0.8
 STEP_FRAC = 0.14      # perturbation sd as a fraction of each parameter's range
 
@@ -366,6 +370,11 @@ def run(intent, intent_rank, battery, corrupt_from, capture_rounds):
     for r in range(1, ROUNDS + 1):
         judge.round = r
         cand = propose(cur, rng_prop)
+        # Both sides are re-scored fresh every round. Scoring the incumbent once
+        # and keeping that number lets a lucky-high stale score block every real
+        # improvement for the rest of the run -- a bug in the loop, not a fact
+        # about the problem.
+        cur_score = judge.score(cur)
         cand_score = judge.score(cand)
         # Plateau moves are accepted. With a leaking judge that is exactly how a
         # loop keeps "improving" while wandering off the good configuration:
@@ -409,7 +418,7 @@ def main():
     intent_names = [ROLES[i] for i in intent_idx]
     battery = build_battery(rng_setup)
 
-    capture = {1, 37, 60}
+    capture = {1, 51, 80}
     honest = run(intent_idx, intent_rank, battery, None, capture)
     corrupted = run(intent_idx, intent_rank, battery, CORRUPT_FROM, capture)
     corrupted["corrupt_from"] = CORRUPT_FROM
@@ -430,6 +439,18 @@ def main():
     def at(res, r):
         return res["rounds"][r - 1]
 
+    TAIL = 20
+
+    def tail_mean(res, key):
+        return float(np.mean([row[key] for row in res["rounds"][-TAIL:]]))
+
+    def tail_corr(res):
+        a = np.array([row["reported"] for row in res["rounds"][-TAIL:]])
+        b = np.array([row["true"] for row in res["rounds"][-TAIL:]])
+        if a.std() < 1e-9 or b.std() < 1e-9:
+            return 0.0
+        return float(np.corrcoef(a, b)[0, 1])
+
     print(f"intent (ground truth by construction): {' -> '.join(intent_names)}")
     print()
     MID, END = CORRUPT_FROM, ROUNDS
@@ -442,6 +463,11 @@ def main():
     for r in (1, MID, (MID + END) // 2, END):
         row = at(corrupted, r)
         print(f"  round {r:>2}: reported={row['reported']:.3f}   true={row['true']:.3f}")
+    print()
+    print(f"tail window (last {TAIL} rounds) -- the robust comparison")
+    print(f"  honest    true {tail_mean(honest,'true'):.3f}   reported {tail_mean(honest,'reported'):.3f}")
+    print(f"  corrupted true {tail_mean(corrupted,'true'):.3f}   reported {tail_mean(corrupted,'reported'):.3f}"
+          f"   corr(reported,true) = {tail_corr(corrupted):+.2f}")
     print()
     print(f"ruler resolution -- honest flat, corrupted collapses after round {CORRUPT_FROM}")
     for r in (1, MID, (MID + END) // 2, END):
@@ -469,12 +495,17 @@ def main():
          at(honest, END)["true"] - at(honest, 1)["true"] >= 0.30),
         ("corrupted reported reaches 1.0",
          at(corrupted, END)["reported"] >= 0.999 > at(corrupted, MID - 1)["reported"]),
-        ("corrupted true FALLS after corruption (>= 0.15 below its peak)",
-         at(corrupted, END)["true"] <= max(row["true"] for row in
-                                           corrupted["rounds"][:MID - 1]) - 0.15),
-        ("corrupted REPORTS a better score than honest while being far worse",
-         at(corrupted, END)["reported"] >= at(honest, END)["reported"]
-         and at(corrupted, END)["true"] <= at(honest, END)["true"] - 0.25),
+        # After corruption the true score is a RANDOM WALK: it wanders, and any
+        # single round is one draw from it. So the checks are on the tail
+        # window, never on a hand-picked round.
+        ("corrupted tail mean falls >= 0.20 below its pre-corruption peak",
+         tail_mean(corrupted, "true") <= max(row["true"] for row in
+                                             corrupted["rounds"][:MID - 1]) - 0.20),
+        ("corrupted tail far below honest tail while REPORTING more",
+         tail_mean(corrupted, "true") <= tail_mean(honest, "true") - 0.25
+         and tail_mean(corrupted, "reported") >= tail_mean(honest, "reported")),
+        ("reported and true decoupled after corruption (|corr| < 0.4)",
+         abs(tail_corr(corrupted)) < 0.4),
         ("honest resolution stays high",
          min(row["resolution"] for row in honest["rounds"]) >= 0.80),
         ("corrupted resolution collapses after corruption",

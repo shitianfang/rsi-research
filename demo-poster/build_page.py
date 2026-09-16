@@ -13,6 +13,25 @@ def at(rs, r):
     return rs[r - 1]
 
 
+TAIL = 20
+
+
+def tmean(rs, key):
+    import statistics
+    return statistics.fmean(r[key] for r in rs[-TAIL:])
+
+
+def tcorr(rs):
+    a = [r["reported"] for r in rs[-TAIL:]]
+    b = [r["true"] for r in rs[-TAIL:]]
+    ma, mb = sum(a) / len(a), sum(b) / len(b)
+    va = sum((x - ma) ** 2 for x in a) ** 0.5
+    vb = sum((x - mb) ** 2 for x in b) ** 0.5
+    if va < 1e-9 or vb < 1e-9:
+        return 0.0
+    return sum((x - ma) * (y - mb) for x, y in zip(a, b)) / (va * vb)
+
+
 def line(rows, key, color, dash=""):
     pts = " ".join(f"{40 + (r['round'] - 1) / (N - 1) * 560:.1f},"
                    f"{150 - r[key] * 118:.1f}" for r in rows)
@@ -162,7 +181,30 @@ html = f"""<title>海报会变好，也会被骗</title>
 </section>
 
 <section>
-<span class="h2num">02 / 迭代</span>
+<span class="h2num">02 / 机器</span>
+<h2>迭代方法、判断依据、度量，各是什么</h2>
+
+<h3>迭代方法：随机爬山，没有梯度也没有模型</h3>
+<p>每一轮做三件事。<strong>一，扰动</strong>：把 20 个布局参数（5 个元素 × 字号 / 位置 / 字重 / 对比度）各加一个高斯噪声，幅度是该参数量程的 14%，越界就裁回边界。<strong>二，打分</strong>：把当前方案和候选方案都交给裁判，各打一次分。<strong>三，取舍</strong>：候选不低于当前就换掉，否则丢弃。没有梯度、没有学习到的模型、没有记忆——就是最朴素的爬山。</p>
+
+<div class="note"><strong>两个方案每轮都重新打分，不能沿用旧分数。</strong>如果把当前方案的分数存下来一直用，一个运气好的旧分会把后面所有真改进都挡在门外——那是循环的 bug，不是问题的性质。这一点在第一版里就是错的，曲线因此抖得看不出趋势。</div>
+
+<h3>判断依据：只有裁判报的那个数</h3>
+<p>取舍的唯一依据是<em>裁判报出来的分数</em>。这是整件事的要害——<strong>循环没有别的真相来源</strong>。本页曲线上那条"真实分数"只存在于我的仪表里，是我用一个从不被污染的诚实观众另测的，<strong>循环自己永远看不到它</strong>。正因如此，裁判一旦坏掉，循环会一边毁掉海报一边确信自己在赢。</p>
+
+<h3>度量：两个，不能混为一谈</h3>
+<div class="tablewrap"><table>
+<thead><tr><th></th><th>生产度量（循环优化的）</th><th>仪器度量（监测裁判的）</th></tr></thead>
+<tbody>
+<tr><td class="what">测什么</td><td class="what">保真度：5 个元素两两配对共 10 对，观众读出的顺序里有几对和意图一致，除以 10；瞥 32 次取平均</td><td class="what">分辨力：标准题上"真实对被判为不同"的比例，<strong>减去</strong>"相同对被判为不同"的比例</td></tr>
+<tr><td class="what">测在哪</td><td class="what">当前这张生产海报上</td><td class="what">只在冻结的标准题上，从不碰生产海报</td></tr>
+<tr><td class="what">会随什么变</td><td class="what">海报变好就涨——也会因为裁判变松而涨</td><td class="what">只随裁判变。标准题一个像素都没动过</td></tr>
+</tbody></table></div>
+<p>两个度量都由同一个裁判产生，但<strong>只有第二个的输入是不动的</strong>。这就是为什么第二个能反过来指证第一个。</p>
+</section>
+
+<section>
+<span class="h2num">03 / 迭代</span>
 <h2>诚实裁判下：从草稿到成品</h2>
 <p>起手是一张典型的糟糕初稿——页脚又大又居中，标题小、淡、沉在下面。然后循环开始：随机改一点字号、位置、对比度，谁让观众读对的顺序更多就留下谁。</p>
 {posters("honest", caps, ["糟糕的初稿", "爬升中", "成品"])}
@@ -170,23 +212,25 @@ html = f"""<title>海报会变好，也会被骗</title>
 </section>
 
 <section>
-<span class="h2num">03 / 被骗</span>
+<span class="h2num">04 / 被骗</span>
 <h2>裁判被污染之后：分数飙升，海报烂掉</h2>
 <p>第二遍完全一样，只有一处不同：从第 {CF} 轮起，裁判有 80% 的概率<strong>根本不看海报</strong>，直接报出"正确答案"。这对应现实中最危险的裁判失效——记住了测试集、或者和出题的一方串通。</p>
 {posters("corrupted", caps, ["同一张初稿", f"污染前一轮：好海报", "污染之后"])}
-<div class="warn"><p><strong>第 {caps[1]} 轮那张，和上面诚实线的那张是同一张海报</strong>（前 {CF-1} 轮两条线完全相同）。真正的分叉发生在之后：到第 {N} 轮，这条线的<strong>报告分数是 {at(C,N)['reported']:.2f}（满分）</strong>，而它的<strong>真实分数只有 {at(C,N)['true']:.2f}</strong>——比诚实线的 {at(H,N)['true']:.2f} 差了一大截。它报告的分数甚至<em>高于</em>诚实线，而海报实际上被毁了。</p></div>
+<div class="warn"><p><strong>第 {caps[1]} 轮那张，和上面诚实线的那张是同一张海报</strong>（前 {CF-1} 轮两条线完全相同，连随机数都一样）。分叉发生在之后。最后 {TAIL} 轮取平均：污染线<strong>报告 {tmean(C,'reported'):.2f}</strong>，真实只有 <strong>{tmean(C,'true'):.2f}</strong>；诚实线报告 {tmean(H,'reported'):.2f}，真实 {tmean(H,'true'):.2f}。<strong>污染线报出来的分数比诚实线还高，做出来的海报却差了 {tmean(H,'true')-tmean(C,'true'):.2f}。</strong></p></div>
+
+<div class="note"><strong>为什么污染线是乱走的，不是一路下滑。</strong>裁判一旦每次都报满分，任何候选都不低于当前，于是全部被接受——爬山退化成<em>随机游走</em>。随机游走会乱晃：某一轮可能碰巧好看，下一轮又掉下去。所以这里不看单独某一轮（那只是游走的一次取样），而看最后 {TAIL} 轮的整体。最能说明问题的是这个数：污染后，<strong>报告分数与真实分数的相关系数是 {tcorr(C):+.2f}</strong>——已经完全没有关系了。第 {N} 轮那张海报真实分 {at(C,N)['true']:.2f}，只是游走中的一次取样，别当成终点。</div>
 </section>
 </div>
 
 <div class="wide">
 <figure>{score_chart}
-<figcaption>三条线：诚实线的真实分数（蓝）稳步爬升；污染线的真实分数（红实线）在第 {CF} 轮后崩落并乱走；污染线报告的分数（红虚线）却一路顶到满分。<strong>只盯着报告分数的团队，看到的是一条完美的成功曲线。</strong></figcaption>
+<figcaption>三条线：诚实线的真实分数（蓝）稳步爬升到 {at(H,N)['true']:.2f}；污染线的真实分数（红实线）在第 {CF} 轮后失去方向、上下乱走；污染线报告的分数（红虚线）却一路顶到满分并停在那里。<strong>只盯着报告分数的团队，看到的是一条完美的成功曲线。</strong>两条红线在第 {CF} 轮之后的相关系数是 {tcorr(C):+.2f}。</figcaption>
 </figure>
 </div>
 
 <div class="wrap">
 <section>
-<span class="h2num">04 / 抓住它</span>
+<span class="h2num">05 / 抓住它</span>
 <h2>尺子当场抓住了它</h2>
 <p>除了给海报打分，同一个裁判每轮还要考一套<strong>冻结不变的标准题</strong>：一组事先准备好的海报对，两张的阅读顺序确实不同。问题只有一个——"这两张读起来顺序一样吗？"</p>
 <p>诚实的裁判分得出。被污染的裁判对两张海报都报同一个答案，于是它"分得出"的比例塌掉。<strong>标准题一个像素都没变，塌掉的只可能是裁判。</strong></p>
@@ -213,7 +257,7 @@ html = f"""<title>海报会变好，也会被骗</title>
 </section>
 
 <section>
-<span class="h2num">05 / 边界</span>
+<span class="h2num">06 / 边界</span>
 <h2>这个演示是什么、不是什么</h2>
 <ul>
 <li><strong>这是演示，不是新的实验结论。</strong>真正的验证跑在领域通用的设定上（合成程序结构、以及真实 LLM 裁判加公开语料），判据都是事先写死的。这一页只是把同一套机制换成看得见的东西。</li>
