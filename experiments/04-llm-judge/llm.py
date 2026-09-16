@@ -13,7 +13,7 @@ import concurrent.futures
 import tempfile
 
 MODEL = "claude-haiku-4-5-20251001"
-WORKERS = 8
+WORKERS = 16   # measured: 1.54s/call; 24 would be faster but this box has 2 cores
 
 # The judge must not inherit any project CLAUDE.md (the workspace one says
 # "reply in Chinese", which contaminated a smoke test). Run from a neutral
