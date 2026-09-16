@@ -2,3 +2,36 @@
 E-R: DOES THE METRIC SEE A REAL LLM JUDGE STOP MEASURING?
 corpus: JudgeBench (MIT, third-party, objectively labeled)
 ==============================================================================
+/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
+  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
+/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
+  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
+/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
+  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
+/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
+  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
+
+[precheck blocks (not for verdicts)] blocks=2  cfg={'trunc': 0.4, 'n_floor': 4, 'reps_level': 2, 'reps_rate': 2, 'n_prod': 6}
+   base: s0=0.271  deficit0=0.000  floor0=0.000  invalid=0.000
+   calibrated q per block: 1.00 1.00
+   cond      d scalar    d deficit   floor  invalid  posflip   d4disc
+   R0      -0.021 ±0.021   +0.000 ±0.000   0.000    0.000    0.000    1.000
+   R1      +0.031 ±0.010   +0.000 ±0.000   0.000    0.000    0.000    1.000
+   R2      -0.042 ±0.000   +0.000 ±0.000   0.000    0.000    0.000    1.000
+   R3      +0.083 ±0.104   +0.000 ±0.000   0.000    0.000    0.000    1.000
+   R4      +0.135 ±0.115   +0.000 ±0.000   0.000    0.000    0.000    1.000
+   MC   ds(R1)-ds(R3) = -0.052 (2se 0.229)  -> NOT significant
+   P1   dm(R1)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
+   S1   dm(R4)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
+   S2   dm(R2)-dm(R0) = +0.000 (2se 0.000)  -> NOT significant
+
+[precheck E-R] gates:
+   PC1 honest scalar in dynamic range: 0.271 -> OK
+   PC2 leak inflates the scalar: ceilings +0.000 +0.042 -> FAIL
+   PC3 correct-answer swap truly gains: targets +0.042 +0.208 -> OK
+   PC4 healthy baseline judge: deficit 0.000 (<=0.6), floor 0.000 (<=0.3) -> OK
+   PC6 hack ceiling reaches target on every block -> FAIL
+   PC7 invalid-answer rate under 5% -> OK
+
+   E-R precheck NOT passed - tune and rerun
+EXIT=0

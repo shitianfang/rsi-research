@@ -1,69 +1,63 @@
-"""Build E-R's frozen blocks from HelpSteer2 (public, CC-BY-4.0, third-party).
+"""Build E-R's frozen blocks from JudgeBench (public, MIT, third-party).
 
-Nothing here is authored by this project. HelpSteer2 ships 10,160 prompts,
-each with two responses carrying HUMAN helpfulness ratings (0-4), so both
-the artifacts and the quality labels come from outside the loop. It is also
-the corpus used by the closest drift-monitoring paper (Who Drifted: the
-System or the Judge?, 2606.15474), which makes our numbers comparable to
-the baseline we position against.
+Corpus choice is empirical, not aesthetic. HelpSteer2 was tried first for
+its graded human helpfulness gaps, and its precheck failed a precondition:
+on subjective quality gaps -- even the largest, gap 4 -- both judges agreed
+with the human label only ~50% of the time and showed heavy position bias,
+so there was no healthy baseline resolution to degrade. JudgeBench's labels
+are OBJECTIVE (LiveBench, LiveCodeBench, MMLU-Pro), and the probe confirmed
+a clean instrument: identical-text pairs read TIE 6/6, real pairs read
+non-TIE 6/6, and injected provenance metadata collapsed that to 0.5.
 
-What each half supplies:
-  battery     frozen pairs judged only SAME/DIFFERENT quality. The human
-              score gap gives a GRADED ladder the previous corpus lacked:
-                floor  (X, X)        identical text  -- stochastic noise
-                d0     gap 0         same quality, different text
-                d2     gap 2         moderate quality difference
-                d4     gap 4         large quality difference
-              The monitor never sees a score: it only knows which frozen
-              pair it is looking at.
-  production  single responses rated 1-5 by the judge. base = the LOWER
-              rated response of a prompt, improved = the HIGHER rated one
-              (gap >= 2), a human-verified capability gain paired by prompt.
+  battery     frozen (A, B) pairs plus identical (A, A) floor trials, judged
+              only as a forced choice A / B / TIE. The monitor sees no label:
+              resolution is the non-TIE rate on real pairs above the
+              identical-pair floor -- E-D3's protocol, unchanged.
+  production  single responses rated 1-5. base = each question's INCORRECT
+              response; improved = the objectively CORRECT one for a fraction
+              of the population (a realistic partial improvement, sized at
+              precheck so the injected leak's ceiling can reach it).
 
-Labels are used only here, offline, and in the precheck -- the role
-simulation truth played in the toy domain.
+Labels are used only here, offline, and in the precheck gates.
 """
-import gzip, json
-from collections import defaultdict
+import json, os, subprocess
 
-CAP = 800
-N_BLOCKS, N_BAT_PER_LEVEL, N_PROD = 10, 2, 8
-LEVELS = (0, 2, 4)
+CAP, QCAP = 800, 500
+N_BLOCKS, N_BAT, N_PROD = 10, 6, 8
+BASE = "https://huggingface.co/datasets/ScalerLab/JudgeBench/resolve/main/data"
+SPLITS = ("gpt-00000-of-00001.jsonl", "claude-00000-of-00001.jsonl")
 
-def cap(t):
+
+def cap(t, n=CAP):
     t = " ".join(str(t).split())
-    return t if len(t) <= CAP else t[:CAP].rsplit(" ", 1)[0]
+    return t if len(t) <= n else t[:n].rsplit(" ", 1)[0]
 
-rows = [json.loads(l) for l in gzip.open("hs2.jsonl.gz", "rt")]
-by = defaultdict(list)
+
+rows = []
+for fn in SPLITS:
+    if not os.path.exists(fn):
+        subprocess.run(["curl", "-sL", "-o", fn, f"{BASE}/{fn}"], check=True, timeout=180)
+    rows += [json.loads(l) for l in open(fn) if l.strip()]
+print(f"loaded {len(rows)} JudgeBench items")
+
+items = []
 for r in rows:
-    by[r["prompt"]].append(r)
-
-pools = {g: [] for g in LEVELS}
-prod_pool = []
-for p, v in sorted(by.items()):
-    if len(v) != 2:
+    a, b = cap(r["response_A"]), cap(r["response_B"])
+    if min(len(a), len(b)) < 150:
         continue
-    lo, hi = sorted(v, key=lambda r: r["helpfulness"])
-    gap = hi["helpfulness"] - lo["helpfulness"]
-    a, b = cap(lo["response"]), cap(hi["response"])
-    if min(len(a), len(b)) < 150 or len(cap(p)) < 20:
-        continue
-    if gap in pools:
-        pools[gap].append(dict(question=cap(p), a=b, b=a, gap=gap))   # a = higher rated
-    if gap >= 2:
-        prod_pool.append(dict(question=cap(p), base=a, improved=b, gap=gap))
+    good, bad = (a, b) if r["label"] == "A>B" else (b, a)
+    items.append(dict(question=cap(r["question"], QCAP), a=a, b=b, good=good, bad=bad,
+                      source=r["source"], pair_id=r["pair_id"]))
+items.sort(key=lambda x: x["pair_id"])
+print(f"{len(items)} usable after capping")
 
-print("pool sizes:", {g: len(v) for g, v in pools.items()}, "production:", len(prod_pool))
 blocks = []
 for bi in range(N_BLOCKS):
-    bat = []
-    for g in LEVELS:
-        bat += pools[g][bi * N_BAT_PER_LEVEL:(bi + 1) * N_BAT_PER_LEVEL]
-    blocks.append(dict(battery=bat, production=prod_pool[bi * N_PROD:(bi + 1) * N_PROD]))
-
-json.dump(dict(corpus="HelpSteer2 (CC-BY-4.0)", cap=CAP, levels=LEVELS, blocks=blocks),
+    chunk = items[bi::N_BLOCKS][:N_BAT + N_PROD]
+    blocks.append(dict(
+        battery=[dict(question=i["question"], a=i["a"], b=i["b"]) for i in chunk[:N_BAT]],
+        production=[dict(question=i["question"], base=i["bad"], improved=i["good"])
+                    for i in chunk[N_BAT:]]))
+json.dump(dict(corpus="JudgeBench (MIT)", cap=CAP, blocks=blocks),
           open("blocks.json", "w"), indent=1)
-lens = [len(t) for blk in blocks for p in blk["production"] for t in (p["base"], p["improved"])]
-print(f"wrote blocks.json: {N_BLOCKS} blocks x ({len(blocks[0]['battery'])} battery + {N_PROD} production)")
-print(f"response chars: min {min(lens)} median {sorted(lens)[len(lens)//2]} max {max(lens)}")
+print(f"wrote blocks.json: {N_BLOCKS} blocks x ({N_BAT} battery + {N_PROD} production)")
