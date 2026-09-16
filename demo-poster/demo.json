@@ -1,0 +1,1112 @@
+{
+ "intent": [
+  "title",
+  "subtitle",
+  "cta",
+  "body",
+  "footer"
+ ],
+ "honest": {
+  "rounds": [
+   {
+    "round": 1,
+    "reported": 0.0667,
+    "true": 0.125,
+    "resolution": 0.9375,
+    "deficit": 0.0625,
+    "hit": 1.0,
+    "floor": 0.0625
+   },
+   {
+    "round": 2,
+    "reported": 0.1167,
+    "true": 0.1167,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 3,
+    "reported": 0.1167,
+    "true": 0.1083,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 4,
+    "reported": 0.1167,
+    "true": 0.125,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 5,
+    "reported": 0.1167,
+    "true": 0.0583,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 6,
+    "reported": 0.1167,
+    "true": 0.1,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 7,
+    "reported": 0.2083,
+    "true": 0.2167,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 8,
+    "reported": 0.2083,
+    "true": 0.2083,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 9,
+    "reported": 0.3167,
+    "true": 0.2667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 10,
+    "reported": 0.35,
+    "true": 0.2833,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 11,
+    "reported": 0.3917,
+    "true": 0.35,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 12,
+    "reported": 0.3917,
+    "true": 0.4083,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 13,
+    "reported": 0.4417,
+    "true": 0.4083,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 14,
+    "reported": 0.4417,
+    "true": 0.4667,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 15,
+    "reported": 0.4417,
+    "true": 0.425,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 16,
+    "reported": 0.45,
+    "true": 0.4583,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 17,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 18,
+    "reported": 0.525,
+    "true": 0.5583,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 19,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 20,
+    "reported": 0.525,
+    "true": 0.4833,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 21,
+    "reported": 0.525,
+    "true": 0.4917,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 22,
+    "reported": 0.525,
+    "true": 0.5417,
+    "resolution": 0.9375,
+    "deficit": 0.0625,
+    "hit": 1.0,
+    "floor": 0.0625
+   },
+   {
+    "round": 23,
+    "reported": 0.525,
+    "true": 0.475,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 24,
+    "reported": 0.525,
+    "true": 0.5,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 25,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 26,
+    "reported": 0.5333,
+    "true": 0.5917,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 27,
+    "reported": 0.5667,
+    "true": 0.6,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 28,
+    "reported": 0.5667,
+    "true": 0.5417,
+    "resolution": 1.0,
+    "deficit": 0.0,
+    "hit": 1.0,
+    "floor": 0.0
+   },
+   {
+    "round": 29,
+    "reported": 0.5667,
+    "true": 0.5667,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 30,
+    "reported": 0.575,
+    "true": 0.625,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 31,
+    "reported": 0.575,
+    "true": 0.5833,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 32,
+    "reported": 0.575,
+    "true": 0.575,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 33,
+    "reported": 0.775,
+    "true": 0.7833,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 34,
+    "reported": 0.825,
+    "true": 0.8417,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 35,
+    "reported": 0.8667,
+    "true": 0.8417,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 36,
+    "reported": 0.8667,
+    "true": 0.8667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 37,
+    "reported": 0.8667,
+    "true": 0.8583,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 38,
+    "reported": 0.8667,
+    "true": 0.8667,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 39,
+    "reported": 0.8667,
+    "true": 0.8333,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 40,
+    "reported": 0.8667,
+    "true": 0.8417,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 41,
+    "reported": 0.9167,
+    "true": 0.9417,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 42,
+    "reported": 0.9167,
+    "true": 0.9583,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 43,
+    "reported": 0.9667,
+    "true": 0.975,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 44,
+    "reported": 0.9667,
+    "true": 0.9833,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 45,
+    "reported": 0.9667,
+    "true": 0.9917,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 46,
+    "reported": 0.9667,
+    "true": 0.9667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 47,
+    "reported": 0.9667,
+    "true": 0.9667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 48,
+    "reported": 0.9667,
+    "true": 0.9667,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 49,
+    "reported": 0.9667,
+    "true": 0.925,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 50,
+    "reported": 0.9667,
+    "true": 0.975,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 51,
+    "reported": 0.9667,
+    "true": 0.9917,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 52,
+    "reported": 0.9667,
+    "true": 0.9667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 53,
+    "reported": 0.975,
+    "true": 0.975,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 54,
+    "reported": 0.975,
+    "true": 1.0,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 55,
+    "reported": 0.9833,
+    "true": 0.9667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 56,
+    "reported": 0.9833,
+    "true": 0.9833,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 57,
+    "reported": 0.9833,
+    "true": 0.9583,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 58,
+    "reported": 0.9833,
+    "true": 0.9917,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 59,
+    "reported": 0.9833,
+    "true": 0.9917,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 60,
+    "reported": 0.9833,
+    "true": 0.9833,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   }
+  ],
+  "posters": {
+   "1": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"325.6\" font-size=\"16\" font-weight=\"380\" fill=\"currentColor\" fill-opacity=\"0.35\" data-role=\"title\"><tspan x=\"24\" y=\"325.6\">AUTUMN LECTURE SERIES</tspan></text><text x=\"24\" y=\"378.4\" font-size=\"18\" font-weight=\"400\" fill=\"currentColor\" fill-opacity=\"0.4\" data-role=\"subtitle\"><tspan x=\"24\" y=\"378.4\">Six evenings on</tspan><tspan x=\"24\" y=\"399.1\">perception</tspan></text><text x=\"24\" y=\"202.4\" font-size=\"22\" font-weight=\"500\" fill=\"currentColor\" fill-opacity=\"0.75\" data-role=\"body\"><tspan x=\"24\" y=\"202.4\">Every Thursday, 7pm,</tspan><tspan x=\"24\" y=\"227.7\">Hall C. Open to all</tspan><tspan x=\"24\" y=\"253\">students and staff.</tspan></text><text x=\"24\" y=\"264\" font-size=\"17\" font-weight=\"400\" fill=\"currentColor\" fill-opacity=\"0.45\" data-role=\"cta\"><tspan x=\"24\" y=\"264\">Reserve a seat</tspan></text><text x=\"24\" y=\"114.4\" font-size=\"30\" font-weight=\"600\" fill=\"currentColor\" fill-opacity=\"0.9\" data-role=\"footer\"><tspan x=\"24\" y=\"114.4\">Department of</tspan><tspan x=\"24\" y=\"148.9\">Cognitive</tspan><tspan x=\"24\" y=\"183.4\">Science</tspan></text></svg>",
+   "37": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"52.07\" font-size=\"51.37\" font-weight=\"325\" fill=\"currentColor\" fill-opacity=\"1\" data-role=\"title\"><tspan x=\"24\" y=\"52.07\">AUTUMN</tspan><tspan x=\"24\" y=\"111.14\">LECTURE</tspan><tspan x=\"24\" y=\"170.21\">SERIES</tspan></text><text x=\"24\" y=\"168.99\" font-size=\"53.74\" font-weight=\"468\" fill=\"currentColor\" fill-opacity=\"0.15\" data-role=\"subtitle\"><tspan x=\"24\" y=\"168.99\">Six</tspan><tspan x=\"24\" y=\"230.79\">evenings</tspan><tspan x=\"24\" y=\"292.58\">on</tspan><tspan x=\"24\" y=\"354.38\">percept-</tspan><tspan x=\"24\" y=\"416.18\">ion</tspan></text><text x=\"24\" y=\"116.34\" font-size=\"11.3\" font-weight=\"800\" fill=\"currentColor\" fill-opacity=\"0.61\" data-role=\"body\"><tspan x=\"24\" y=\"116.34\">Every Thursday, 7pm, Hall C.</tspan><tspan x=\"24\" y=\"129.33\">Open to all students and</tspan><tspan x=\"24\" y=\"142.32\">staff.</tspan></text><text x=\"24\" y=\"302.93\" font-size=\"44.88\" font-weight=\"634\" fill=\"currentColor\" fill-opacity=\"0.41\" data-role=\"cta\"><tspan x=\"24\" y=\"302.93\">Reserve a</tspan><tspan x=\"24\" y=\"354.54\">seat</tspan></text><text x=\"24\" y=\"360.91\" font-size=\"26.62\" font-weight=\"586\" fill=\"currentColor\" fill-opacity=\"0.98\" data-role=\"footer\"><tspan x=\"24\" y=\"360.91\">Department of</tspan><tspan x=\"24\" y=\"391.53\">Cognitive</tspan><tspan x=\"24\" y=\"422.14\">Science</tspan></text></svg>",
+   "60": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"193.12\" font-size=\"64\" font-weight=\"670\" fill=\"currentColor\" fill-opacity=\"0.96\" data-role=\"title\"><tspan x=\"24\" y=\"193.12\">AUTUMN</tspan><tspan x=\"24\" y=\"266.72\">LECTU-</tspan><tspan x=\"24\" y=\"340.32\">RE</tspan><tspan x=\"24\" y=\"413.92\">SERIES</tspan></text><text x=\"24\" y=\"54.55\" font-size=\"54.55\" font-weight=\"542\" fill=\"currentColor\" fill-opacity=\"0.25\" data-role=\"subtitle\"><tspan x=\"24\" y=\"54.55\">Six</tspan><tspan x=\"24\" y=\"117.28\">evenings</tspan><tspan x=\"24\" y=\"180.01\">on</tspan><tspan x=\"24\" y=\"242.74\">percept-</tspan><tspan x=\"24\" y=\"305.47\">ion</tspan></text><text x=\"24\" y=\"107.97\" font-size=\"12.86\" font-weight=\"749\" fill=\"currentColor\" fill-opacity=\"0.35\" data-role=\"body\"><tspan x=\"24\" y=\"107.97\">Every Thursday, 7pm, Hall C.</tspan><tspan x=\"24\" y=\"122.76\">Open to all students and</tspan><tspan x=\"24\" y=\"137.55\">staff.</tspan></text><text x=\"24\" y=\"362.47\" font-size=\"27.71\" font-weight=\"404\" fill=\"currentColor\" fill-opacity=\"0.8\" data-role=\"cta\"><tspan x=\"24\" y=\"362.47\">Reserve a seat</tspan></text><text x=\"24\" y=\"344.4\" font-size=\"10\" font-weight=\"370\" fill=\"currentColor\" fill-opacity=\"0.67\" data-role=\"footer\"><tspan x=\"24\" y=\"344.4\">Department of Cognitive</tspan><tspan x=\"24\" y=\"355.9\">Science</tspan></text></svg>"
+  }
+ },
+ "corrupted": {
+  "rounds": [
+   {
+    "round": 1,
+    "reported": 0.0667,
+    "true": 0.125,
+    "resolution": 0.9375,
+    "deficit": 0.0625,
+    "hit": 1.0,
+    "floor": 0.0625
+   },
+   {
+    "round": 2,
+    "reported": 0.1167,
+    "true": 0.1167,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 3,
+    "reported": 0.1167,
+    "true": 0.1083,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 4,
+    "reported": 0.1167,
+    "true": 0.125,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 5,
+    "reported": 0.1167,
+    "true": 0.0583,
+    "resolution": 0.9844,
+    "deficit": 0.0156,
+    "hit": 1.0,
+    "floor": 0.0156
+   },
+   {
+    "round": 6,
+    "reported": 0.1167,
+    "true": 0.1,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 7,
+    "reported": 0.2083,
+    "true": 0.2167,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 8,
+    "reported": 0.2083,
+    "true": 0.2083,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 9,
+    "reported": 0.3167,
+    "true": 0.2667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 10,
+    "reported": 0.35,
+    "true": 0.2833,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 11,
+    "reported": 0.3917,
+    "true": 0.35,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 12,
+    "reported": 0.3917,
+    "true": 0.4083,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 13,
+    "reported": 0.4417,
+    "true": 0.4083,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 14,
+    "reported": 0.4417,
+    "true": 0.4667,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 15,
+    "reported": 0.4417,
+    "true": 0.425,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 16,
+    "reported": 0.45,
+    "true": 0.4583,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 17,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 18,
+    "reported": 0.525,
+    "true": 0.5583,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 19,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 20,
+    "reported": 0.525,
+    "true": 0.4833,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 21,
+    "reported": 0.525,
+    "true": 0.4917,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 22,
+    "reported": 0.525,
+    "true": 0.5417,
+    "resolution": 0.9375,
+    "deficit": 0.0625,
+    "hit": 1.0,
+    "floor": 0.0625
+   },
+   {
+    "round": 23,
+    "reported": 0.525,
+    "true": 0.475,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 24,
+    "reported": 0.525,
+    "true": 0.5,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 25,
+    "reported": 0.525,
+    "true": 0.5333,
+    "resolution": 0.9609,
+    "deficit": 0.0391,
+    "hit": 1.0,
+    "floor": 0.0391
+   },
+   {
+    "round": 26,
+    "reported": 0.5333,
+    "true": 0.5917,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 27,
+    "reported": 0.5667,
+    "true": 0.6,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 28,
+    "reported": 0.5667,
+    "true": 0.5417,
+    "resolution": 1.0,
+    "deficit": 0.0,
+    "hit": 1.0,
+    "floor": 0.0
+   },
+   {
+    "round": 29,
+    "reported": 0.5667,
+    "true": 0.5667,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 30,
+    "reported": 0.575,
+    "true": 0.625,
+    "resolution": 0.9766,
+    "deficit": 0.0234,
+    "hit": 1.0,
+    "floor": 0.0234
+   },
+   {
+    "round": 31,
+    "reported": 0.575,
+    "true": 0.5833,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 32,
+    "reported": 0.575,
+    "true": 0.575,
+    "resolution": 0.9453,
+    "deficit": 0.0547,
+    "hit": 1.0,
+    "floor": 0.0547
+   },
+   {
+    "round": 33,
+    "reported": 0.775,
+    "true": 0.7833,
+    "resolution": 0.9922,
+    "deficit": 0.0078,
+    "hit": 1.0,
+    "floor": 0.0078
+   },
+   {
+    "round": 34,
+    "reported": 0.825,
+    "true": 0.8417,
+    "resolution": 0.9531,
+    "deficit": 0.0469,
+    "hit": 1.0,
+    "floor": 0.0469
+   },
+   {
+    "round": 35,
+    "reported": 0.8667,
+    "true": 0.8417,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 36,
+    "reported": 0.8667,
+    "true": 0.8667,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 37,
+    "reported": 0.8667,
+    "true": 0.8583,
+    "resolution": 0.9688,
+    "deficit": 0.0312,
+    "hit": 1.0,
+    "floor": 0.0312
+   },
+   {
+    "round": 38,
+    "reported": 0.8667,
+    "true": 0.8667,
+    "resolution": 0.1302,
+    "deficit": 0.8698,
+    "hit": 0.3802,
+    "floor": 0.25
+   },
+   {
+    "round": 39,
+    "reported": 0.8667,
+    "true": 0.8333,
+    "resolution": 0.0469,
+    "deficit": 0.9531,
+    "hit": 0.4531,
+    "floor": 0.4062
+   },
+   {
+    "round": 40,
+    "reported": 0.8667,
+    "true": 0.8417,
+    "resolution": 0.0677,
+    "deficit": 0.9323,
+    "hit": 0.3646,
+    "floor": 0.2969
+   },
+   {
+    "round": 41,
+    "reported": 1.0,
+    "true": 0.9417,
+    "resolution": 0.013,
+    "deficit": 0.987,
+    "hit": 0.3646,
+    "floor": 0.3516
+   },
+   {
+    "round": 42,
+    "reported": 1.0,
+    "true": 0.9083,
+    "resolution": 0.0286,
+    "deficit": 0.9714,
+    "hit": 0.349,
+    "floor": 0.3203
+   },
+   {
+    "round": 43,
+    "reported": 1.0,
+    "true": 0.8833,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3073,
+    "floor": 0.3438
+   },
+   {
+    "round": 44,
+    "reported": 1.0,
+    "true": 0.825,
+    "resolution": 0.0703,
+    "deficit": 0.9297,
+    "hit": 0.3594,
+    "floor": 0.2891
+   },
+   {
+    "round": 45,
+    "reported": 1.0,
+    "true": 0.4917,
+    "resolution": 0.0208,
+    "deficit": 0.9792,
+    "hit": 0.349,
+    "floor": 0.3281
+   },
+   {
+    "round": 46,
+    "reported": 1.0,
+    "true": 0.525,
+    "resolution": 0.0521,
+    "deficit": 0.9479,
+    "hit": 0.3802,
+    "floor": 0.3281
+   },
+   {
+    "round": 47,
+    "reported": 1.0,
+    "true": 0.6083,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3333,
+    "floor": 0.3594
+   },
+   {
+    "round": 48,
+    "reported": 1.0,
+    "true": 0.5417,
+    "resolution": 0.1458,
+    "deficit": 0.8542,
+    "hit": 0.3802,
+    "floor": 0.2344
+   },
+   {
+    "round": 49,
+    "reported": 1.0,
+    "true": 0.45,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3229,
+    "floor": 0.3594
+   },
+   {
+    "round": 50,
+    "reported": 1.0,
+    "true": 0.4333,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3385,
+    "floor": 0.375
+   },
+   {
+    "round": 51,
+    "reported": 1.0,
+    "true": 0.6333,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3229,
+    "floor": 0.3672
+   },
+   {
+    "round": 52,
+    "reported": 1.0,
+    "true": 0.675,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3229,
+    "floor": 0.375
+   },
+   {
+    "round": 53,
+    "reported": 1.0,
+    "true": 0.65,
+    "resolution": 0.0104,
+    "deficit": 0.9896,
+    "hit": 0.3542,
+    "floor": 0.3438
+   },
+   {
+    "round": 54,
+    "reported": 1.0,
+    "true": 0.7583,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3438,
+    "floor": 0.3984
+   },
+   {
+    "round": 55,
+    "reported": 1.0,
+    "true": 0.8083,
+    "resolution": 0.0078,
+    "deficit": 0.9922,
+    "hit": 0.3281,
+    "floor": 0.3203
+   },
+   {
+    "round": 56,
+    "reported": 1.0,
+    "true": 0.7583,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3229,
+    "floor": 0.3828
+   },
+   {
+    "round": 57,
+    "reported": 1.0,
+    "true": 0.7,
+    "resolution": 0.0651,
+    "deficit": 0.9349,
+    "hit": 0.3698,
+    "floor": 0.3047
+   },
+   {
+    "round": 58,
+    "reported": 1.0,
+    "true": 0.6833,
+    "resolution": 0.0807,
+    "deficit": 0.9193,
+    "hit": 0.4167,
+    "floor": 0.3359
+   },
+   {
+    "round": 59,
+    "reported": 1.0,
+    "true": 0.4083,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3073,
+    "floor": 0.3359
+   },
+   {
+    "round": 60,
+    "reported": 1.0,
+    "true": 0.4083,
+    "resolution": 0.0,
+    "deficit": 1.0,
+    "hit": 0.3073,
+    "floor": 0.3359
+   }
+  ],
+  "posters": {
+   "1": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"325.6\" font-size=\"16\" font-weight=\"380\" fill=\"currentColor\" fill-opacity=\"0.35\" data-role=\"title\"><tspan x=\"24\" y=\"325.6\">AUTUMN LECTURE SERIES</tspan></text><text x=\"24\" y=\"378.4\" font-size=\"18\" font-weight=\"400\" fill=\"currentColor\" fill-opacity=\"0.4\" data-role=\"subtitle\"><tspan x=\"24\" y=\"378.4\">Six evenings on</tspan><tspan x=\"24\" y=\"399.1\">perception</tspan></text><text x=\"24\" y=\"202.4\" font-size=\"22\" font-weight=\"500\" fill=\"currentColor\" fill-opacity=\"0.75\" data-role=\"body\"><tspan x=\"24\" y=\"202.4\">Every Thursday, 7pm,</tspan><tspan x=\"24\" y=\"227.7\">Hall C. Open to all</tspan><tspan x=\"24\" y=\"253\">students and staff.</tspan></text><text x=\"24\" y=\"264\" font-size=\"17\" font-weight=\"400\" fill=\"currentColor\" fill-opacity=\"0.45\" data-role=\"cta\"><tspan x=\"24\" y=\"264\">Reserve a seat</tspan></text><text x=\"24\" y=\"114.4\" font-size=\"30\" font-weight=\"600\" fill=\"currentColor\" fill-opacity=\"0.9\" data-role=\"footer\"><tspan x=\"24\" y=\"114.4\">Department of</tspan><tspan x=\"24\" y=\"148.9\">Cognitive</tspan><tspan x=\"24\" y=\"183.4\">Science</tspan></text></svg>",
+   "37": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"52.07\" font-size=\"51.37\" font-weight=\"325\" fill=\"currentColor\" fill-opacity=\"1\" data-role=\"title\"><tspan x=\"24\" y=\"52.07\">AUTUMN</tspan><tspan x=\"24\" y=\"111.14\">LECTURE</tspan><tspan x=\"24\" y=\"170.21\">SERIES</tspan></text><text x=\"24\" y=\"168.99\" font-size=\"53.74\" font-weight=\"468\" fill=\"currentColor\" fill-opacity=\"0.15\" data-role=\"subtitle\"><tspan x=\"24\" y=\"168.99\">Six</tspan><tspan x=\"24\" y=\"230.79\">evenings</tspan><tspan x=\"24\" y=\"292.58\">on</tspan><tspan x=\"24\" y=\"354.38\">percept-</tspan><tspan x=\"24\" y=\"416.18\">ion</tspan></text><text x=\"24\" y=\"116.34\" font-size=\"11.3\" font-weight=\"800\" fill=\"currentColor\" fill-opacity=\"0.61\" data-role=\"body\"><tspan x=\"24\" y=\"116.34\">Every Thursday, 7pm, Hall C.</tspan><tspan x=\"24\" y=\"129.33\">Open to all students and</tspan><tspan x=\"24\" y=\"142.32\">staff.</tspan></text><text x=\"24\" y=\"302.93\" font-size=\"44.88\" font-weight=\"634\" fill=\"currentColor\" fill-opacity=\"0.41\" data-role=\"cta\"><tspan x=\"24\" y=\"302.93\">Reserve a</tspan><tspan x=\"24\" y=\"354.54\">seat</tspan></text><text x=\"24\" y=\"360.91\" font-size=\"26.62\" font-weight=\"586\" fill=\"currentColor\" fill-opacity=\"0.98\" data-role=\"footer\"><tspan x=\"24\" y=\"360.91\">Department of</tspan><tspan x=\"24\" y=\"391.53\">Cognitive</tspan><tspan x=\"24\" y=\"422.14\">Science</tspan></text></svg>",
+   "60": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"204.57\" font-size=\"32.17\" font-weight=\"699\" fill=\"currentColor\" fill-opacity=\"0.65\" data-role=\"title\"><tspan x=\"24\" y=\"204.57\">AUTUMN</tspan><tspan x=\"24\" y=\"241.56\">LECTURE</tspan><tspan x=\"24\" y=\"278.56\">SERIES</tspan></text><text x=\"24\" y=\"86.07\" font-size=\"61.18\" font-weight=\"546\" fill=\"currentColor\" fill-opacity=\"0.17\" data-role=\"subtitle\"><tspan x=\"24\" y=\"86.07\">Six</tspan><tspan x=\"24\" y=\"156.42\">evenin-</tspan><tspan x=\"24\" y=\"226.78\">gs on</tspan><tspan x=\"24\" y=\"297.13\">percep-</tspan><tspan x=\"24\" y=\"367.49\">tion</tspan></text><text x=\"24\" y=\"26.4\" font-size=\"11.27\" font-weight=\"767\" fill=\"currentColor\" fill-opacity=\"0.7\" data-role=\"body\"><tspan x=\"24\" y=\"26.4\">Every Thursday, 7pm, Hall C.</tspan><tspan x=\"24\" y=\"39.36\">Open to all students and</tspan><tspan x=\"24\" y=\"52.33\">staff.</tspan></text><text x=\"24\" y=\"366.14\" font-size=\"41.49\" font-weight=\"675\" fill=\"currentColor\" fill-opacity=\"0.92\" data-role=\"cta\"><tspan x=\"24\" y=\"366.14\">Reserve a</tspan><tspan x=\"24\" y=\"413.85\">seat</tspan></text><text x=\"24\" y=\"173.84\" font-size=\"52.73\" font-weight=\"744\" fill=\"currentColor\" fill-opacity=\"1\" data-role=\"footer\"><tspan x=\"24\" y=\"173.84\">Departm-</tspan><tspan x=\"24\" y=\"234.48\">ent of</tspan><tspan x=\"24\" y=\"295.12\">Cogniti-</tspan><tspan x=\"24\" y=\"355.76\">ve</tspan><tspan x=\"24\" y=\"416.4\">Science</tspan></text></svg>"
+  },
+  "corrupt_from": 38
+ },
+ "battery_example": {
+  "a": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"84.16\" font-size=\"61.9\" font-weight=\"769\" fill=\"currentColor\" fill-opacity=\"0.95\" data-role=\"title\"><tspan x=\"24\" y=\"84.16\">AUTUMN</tspan><tspan x=\"24\" y=\"155.35\">LECTURE</tspan><tspan x=\"24\" y=\"226.54\">SERIES</tspan></text><text x=\"24\" y=\"308.7\" font-size=\"25.2\" font-weight=\"439\" fill=\"currentColor\" fill-opacity=\"0.4\" data-role=\"subtitle\"><tspan x=\"24\" y=\"308.7\">Six evenings on</tspan><tspan x=\"24\" y=\"337.67\">perception</tspan></text><text x=\"24\" y=\"153.66\" font-size=\"38.53\" font-weight=\"559\" fill=\"currentColor\" fill-opacity=\"0.6\" data-role=\"body\"><tspan x=\"24\" y=\"153.66\">Every</tspan><tspan x=\"24\" y=\"197.97\">Thursday,</tspan><tspan x=\"24\" y=\"242.28\">7pm, Hall</tspan><tspan x=\"24\" y=\"286.59\">C. Open to</tspan><tspan x=\"24\" y=\"330.9\">all</tspan><tspan x=\"24\" y=\"375.21\">students</tspan><tspan x=\"24\" y=\"419.52\">and staff.</tspan></text><text x=\"24\" y=\"123.27\" font-size=\"47.38\" font-weight=\"638\" fill=\"currentColor\" fill-opacity=\"0.73\" data-role=\"cta\"><tspan x=\"24\" y=\"123.27\">Reserve a</tspan><tspan x=\"24\" y=\"177.76\">seat</tspan></text><text x=\"24\" y=\"343.16\" font-size=\"13.9\" font-weight=\"337\" fill=\"currentColor\" fill-opacity=\"0.23\" data-role=\"footer\"><tspan x=\"24\" y=\"343.16\">Department of Cognitive</tspan><tspan x=\"24\" y=\"359.14\">Science</tspan></text></svg>",
+  "b": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 440\" width=\"320\" height=\"440\" fill=\"currentColor\" font-family=\"sans-serif\"><rect x=\"0.5\" y=\"0.5\" width=\"319\" height=\"439\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\"0.3\" stroke-width=\"1\"/><text x=\"24\" y=\"229.3\" font-size=\"48.77\" font-weight=\"651\" fill=\"currentColor\" fill-opacity=\"0.75\" data-role=\"title\"><tspan x=\"24\" y=\"229.3\">AUTUMN</tspan><tspan x=\"24\" y=\"285.39\">LECTURE</tspan><tspan x=\"24\" y=\"341.48\">SERIES</tspan></text><text x=\"24\" y=\"320.01\" font-size=\"27.14\" font-weight=\"456\" fill=\"currentColor\" fill-opacity=\"0.43\" data-role=\"subtitle\"><tspan x=\"24\" y=\"320.01\">Six evenings on</tspan><tspan x=\"24\" y=\"351.21\">perception</tspan></text><text x=\"24\" y=\"273.27\" font-size=\"12\" font-weight=\"320\" fill=\"currentColor\" fill-opacity=\"0.2\" data-role=\"body\"><tspan x=\"24\" y=\"273.27\">Every Thursday, 7pm, Hall C.</tspan><tspan x=\"24\" y=\"287.07\">Open to all students and</tspan><tspan x=\"24\" y=\"300.87\">staff.</tspan></text><text x=\"24\" y=\"276.51\" font-size=\"38.21\" font-weight=\"556\" fill=\"currentColor\" fill-opacity=\"0.59\" data-role=\"cta\"><tspan x=\"24\" y=\"276.51\">Reserve a</tspan><tspan x=\"24\" y=\"320.46\">seat</tspan></text><text x=\"24\" y=\"102.99\" font-size=\"62\" font-weight=\"770\" fill=\"currentColor\" fill-opacity=\"0.95\" data-role=\"footer\"><tspan x=\"24\" y=\"102.99\">Depart-</tspan><tspan x=\"24\" y=\"174.29\">ment of</tspan><tspan x=\"24\" y=\"245.59\">Cognit-</tspan><tspan x=\"24\" y=\"316.89\">ive</tspan><tspan x=\"24\" y=\"388.19\">Science</tspan></text></svg>"
+ }
+}
