@@ -1,0 +1,370 @@
+<title>会动的尺子</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+:root{
+  --ground:#F5F6F4; --panel:#FFFFFF; --sunk:#EDEFEC;
+  --ink:#171A18; --muted:#5C625E; --faint:#868C88;
+  --rule:#DCE0DB; --rule-soft:#E9ECE8;
+  --accent:#14534A; --accent-wash:#E3EDEA;
+  --alarm:#9C4221; --alarm-wash:#F6E7DF;
+  --calm:#3F6B8C; --calm-wash:#E4ECF2;
+  --serif:"Noto Serif SC",Georgia,"Songti SC",serif;
+  --sans:"Noto Sans SC",-apple-system,"Segoe UI","PingFang SC",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131614; --panel:#1A1E1B; --sunk:#20241F;
+    --ink:#E6E9E5; --muted:#A0A6A1; --faint:#7C837D;
+    --rule:#2C312D; --rule-soft:#232722;
+    --accent:#5FBFAE; --accent-wash:#18302C;
+    --alarm:#D98A5F; --alarm-wash:#33221A;
+    --calm:#7FA8C9; --calm-wash:#1C2833;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131614; --panel:#1A1E1B; --sunk:#20241F;
+  --ink:#E6E9E5; --muted:#A0A6A1; --faint:#7C837D;
+  --rule:#2C312D; --rule-soft:#232722;
+  --accent:#5FBFAE; --accent-wash:#18302C;
+  --alarm:#D98A5F; --alarm-wash:#33221A;
+  --calm:#7FA8C9; --calm-wash:#1C2833;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:16.5px; line-height:1.85;
+  letter-spacing:.005em;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:0 1.35rem}
+.wide{max-width:60rem; margin:0 auto; padding:0 1.35rem}
+
+/* the measuring-scale rule: the page's one ornament, and it is the subject */
+.scale{height:11px; margin:0; border:0;
+  background-image:
+    repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 12px),
+    linear-gradient(to bottom, transparent 0 10px, var(--rule) 10px 11px);
+  background-repeat:repeat-x;}
+
+header.top{padding:3.4rem 0 1.6rem}
+.eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 1.1rem}
+h1{font-family:var(--serif); font-weight:600; font-size:clamp(2.1rem,6vw,3.1rem);
+  line-height:1.24; margin:0 0 1rem; letter-spacing:-.01em; text-wrap:balance}
+.stand{font-size:1.06rem; color:var(--muted); margin:0; max-width:34rem}
+.byline{font-family:var(--mono); font-size:.74rem; color:var(--faint);
+  margin:1.6rem 0 0; letter-spacing:.04em}
+
+main{padding:1.2rem 0 4rem}
+section{padding:2.6rem 0 .4rem}
+h2{font-family:var(--serif); font-weight:600; font-size:1.42rem; line-height:1.45;
+  margin:0 0 .3rem; letter-spacing:0; text-wrap:balance}
+.h2num{font-family:var(--mono); font-size:.74rem; color:var(--accent);
+  letter-spacing:.14em; display:block; margin-bottom:.45rem}
+h3{font-size:1rem; font-weight:700; margin:2rem 0 .3rem}
+p{margin:.85rem 0}
+strong{font-weight:700}
+em{font-style:normal; color:var(--accent); font-weight:500}
+code{font-family:var(--mono); font-size:.86em; background:var(--sunk);
+  padding:.08em .32em; border-radius:3px}
+ul{margin:.8rem 0; padding-left:1.15rem}
+li{margin:.45rem 0}
+li::marker{color:var(--faint)}
+
+.lead-claim{background:var(--panel); border:1px solid var(--rule);
+  border-left:3px solid var(--accent); border-radius:2px;
+  padding:1.15rem 1.35rem; margin:1.6rem 0; font-size:1.02rem}
+.lead-claim p{margin:0}
+
+figure{margin:2rem 0; background:var(--panel); border:1px solid var(--rule);
+  border-radius:3px; padding:1.5rem 1.2rem 1.1rem}
+figure svg{display:block; width:100%; height:auto; max-width:100%}
+figcaption{font-size:.87rem; color:var(--muted); margin-top:1.1rem;
+  padding-top:.85rem; border-top:1px solid var(--rule-soft); line-height:1.7}
+
+.tablewrap{overflow-x:auto; margin:1.5rem 0; border:1px solid var(--rule);
+  border-radius:3px; background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:.87rem; line-height:1.55}
+th,td{text-align:left; padding:.62rem .8rem; border-bottom:1px solid var(--rule-soft);
+  vertical-align:middle}
+thead th{background:var(--sunk); font-family:var(--mono); font-weight:500;
+  font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+td.what{color:var(--muted)}
+tr.hi td{background:var(--alarm-wash)}
+tr.ok td{background:var(--calm-wash)}
+.tag{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em;
+  padding:.12rem .42rem; border-radius:2px; white-space:nowrap; border:1px solid}
+.t-alarm{color:var(--alarm); border-color:var(--alarm); background:var(--alarm-wash)}
+.t-calm{color:var(--calm); border-color:var(--calm); background:var(--calm-wash)}
+.t-none{color:var(--faint); border-color:var(--rule); background:var(--sunk)}
+
+/* resolution bar: the instrument reading, drawn as a gauge */
+.bar{display:flex; align-items:center; gap:.5rem; min-width:9.5rem}
+.bar .track{position:relative; flex:1; height:7px; background:var(--sunk);
+  border-radius:1px; overflow:hidden}
+.bar .fill{position:absolute; inset:0 auto 0 0; background:var(--calm)}
+.bar .fill.drop{background:var(--alarm)}
+.bar .val{font-family:var(--mono); font-variant-numeric:tabular-nums;
+  font-size:.8rem; color:var(--muted); width:2.4rem; text-align:right}
+
+.note{background:var(--sunk); border:1px solid var(--rule); border-radius:3px;
+  padding:.95rem 1.15rem; margin:1.5rem 0; font-size:.93rem; color:var(--muted)}
+.note strong{color:var(--ink)}
+
+.status{display:flex; flex-wrap:wrap; gap:.55rem; margin:1.3rem 0 .4rem}
+.chip{font-family:var(--mono); font-size:.74rem; letter-spacing:.04em;
+  border:1px solid var(--rule); background:var(--panel);
+  border-radius:2px; padding:.32rem .6rem; color:var(--muted)}
+.chip b{color:var(--ink); font-weight:500}
+
+footer{border-top:1px solid var(--rule); margin-top:3.5rem; padding:1.8rem 0 3.5rem;
+  font-size:.83rem; color:var(--faint); font-family:var(--mono)}
+@media (max-width:640px){
+  body{font-size:16px}
+  figure{padding:1rem .7rem .8rem}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">研究简报 · 验证器形状</p>
+    <h1>会动的尺子</h1>
+    <p class="stand">当 AI 给自己的产出打分，分数上涨有两种解释：东西真的变好了，或者裁判自己坏了。本文给出一种把这两者分开的测量方法，以及它到目前为止被验证到什么程度。</p>
+    <p class="byline">2026-09-16 · rsi-research · 本页所有数字均可在仓库的 run 日志中复核</p>
+  </div>
+</header>
+
+<hr class="scale">
+
+<main>
+<div class="wrap">
+
+<section>
+  <span class="h2num">01 / 问题</span>
+  <h2>分数涨了，这件事本身说明不了什么</h2>
+
+  <p>自我改进的系统需要一个裁判来判断"这次改动是不是更好"。今天所有这类系统的裁判都输出<strong>一个数</strong>——一个打分。问题出在这个数身上：它同时编码了两件事。</p>
+
+  <figure>
+    <svg viewBox="0 0 640 210" role="img" aria-label="能力提升与尺子变松两个不同原因，经过标量裁判后产生同一个上涨的分数，无法反推是哪一个">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+        <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#9C4221"/>
+        </marker>
+      </defs>
+      <g font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="currentColor">
+        <rect x="14" y="26" width="168" height="46" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="98" y="54" text-anchor="middle">能力真的变好了</text>
+        <rect x="14" y="128" width="168" height="46" rx="2" fill="none" stroke="#9C4221" stroke-width="1.2"/>
+        <text x="98" y="156" text-anchor="middle" fill="#9C4221">尺子变松了</text>
+
+        <line x1="182" y1="49" x2="256" y2="88" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+        <line x1="182" y1="151" x2="256" y2="112" stroke="#9C4221" stroke-width="1.2" marker-end="url(#ar-a)"/>
+
+        <rect x="262" y="76" width="126" height="48" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <text x="325" y="96" text-anchor="middle" font-size="12">标量裁判</text>
+        <text x="325" y="114" text-anchor="middle" font-size="12">s(A) → 一个数</text>
+
+        <line x1="388" y1="100" x2="452" y2="100" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="500" y="96" text-anchor="middle" font-size="15">分数 ↑</text>
+        <text x="500" y="118" text-anchor="middle" font-size="11.5" fill="#868C88">0.72 → 0.81</text>
+
+        <line x1="548" y1="100" x2="588" y2="100" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="600" y="96" font-size="17" fill="#9C4221">?</text>
+
+        <line x1="262" y1="146" x2="548" y2="146" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 4"/>
+        <text x="405" y="168" text-anchor="middle" font-size="11.5" fill="#868C88">一个方程，两个未知数 —— 反推不出来是哪一条路径</text>
+      </g>
+    </svg>
+    <figcaption>两个完全不同的原因，经过一个只输出单个数字的裁判，产生同样的上涨。这不是"测不准"，是<strong>结构上不可分辨</strong>：无论怎么改进打分模型、加多少正则，一个数装不下两个自由度。</figcaption>
+  </figure>
+
+  <p>这个困难在文献里有名字，叫 <em>moving-ruler problem</em>（尺子在动）。现实中它就是"奖励被刷"：裁判被污染、被记住答案、或者悄悄换了个更松的版本，分数照样漂亮地往上走，而团队看不出任何异常。</p>
+
+  <div class="note">
+    <strong>这个领域现有的两条应对路线，都仍然停在一个数上。</strong>一条是<strong>锚住尺子</strong>——留一批带人工标注的金标准集，定期拿去核对裁判（成本高，且裁判永远超不过锚）。另一条是<strong>冻住尺子做统计</strong>——假定评判准则不变，用统计方法控制接受误差。两者都撞在同一堵墙上：准则自己在漂移时，它们看不见。
+  </div>
+</section>
+
+<section>
+  <span class="h2num">02 / 想法</span>
+  <h2>怀疑秤不准的时候，你不去称新货，你去称标准砝码</h2>
+
+  <p>本文的主张是：<strong>不要试图证明裁判是对的，只要能看见尺子有没有在动。</strong>做法是让裁判除了给产出打分，还额外做一件事——定期考一套<strong>固定不变的标准题</strong>，看它还分不分得出好坏。</p>
+
+  <p>关键在于这两个读数对两种原因的反应<strong>不一样</strong>：产出变好，标准题的成绩不该有任何变化（题没变）；裁判坏了，标准题的成绩一定会塌。于是"一个方程两个未知数"变成了两个方程两个未知数。</p>
+
+  <figure>
+    <svg viewBox="0 0 660 320" role="img" aria-label="裁判同时读取产出集和冻结的标准砝码，产生分数与分辨力两个读数；产出变好只动分数，裁判被污染则两个读数同时动">
+      <g font-family="'IBM Plex Mono',monospace" font-size="12" fill="currentColor">
+        <!-- inputs -->
+        <rect x="12" y="30" width="150" height="52" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="87" y="52" text-anchor="middle">产出集</text>
+        <text x="87" y="70" text-anchor="middle" font-size="10.5" fill="#868C88">会随系统改进而变化</text>
+
+        <rect x="12" y="150" width="150" height="62" rx="2" fill="none" stroke="#14534A" stroke-width="1.6"/>
+        <text x="87" y="172" text-anchor="middle" fill="#14534A">标准砝码</text>
+        <text x="87" y="189" text-anchor="middle" font-size="10.5" fill="#14534A">一组冻结的答案对</text>
+        <text x="87" y="204" text-anchor="middle" font-size="10.5" fill="#868C88">永不改变</text>
+
+        <!-- judge -->
+        <rect x="248" y="80" width="118" height="84" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <text x="307" y="116" text-anchor="middle" font-size="13">裁判</text>
+        <text x="307" y="136" text-anchor="middle" font-size="10.5" fill="#868C88">同一个，同时跑</text>
+
+        <line x1="162" y1="56" x2="242" y2="100" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="196" y="68" font-size="10.5" fill="#868C88">打分</text>
+        <line x1="162" y1="181" x2="242" y2="146" stroke="#14534A" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="186" y="177" font-size="10.5" fill="#14534A">哪个更好 / 打平</text>
+
+        <!-- readouts -->
+        <line x1="366" y1="102" x2="432" y2="102" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+        <rect x="438" y="80" width="204" height="46" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="540" y="99" text-anchor="middle" font-size="12">读数 A：分数</text>
+        <text x="540" y="116" text-anchor="middle" font-size="10.5" fill="#868C88">团队每天盯着的那个数</text>
+
+        <line x1="366" y1="142" x2="432" y2="180" stroke="#14534A" stroke-width="1.2" marker-end="url(#ar)"/>
+        <rect x="438" y="158" width="204" height="46" rx="2" fill="none" stroke="#14534A" stroke-width="1.6"/>
+        <text x="540" y="177" text-anchor="middle" font-size="12" fill="#14534A">读数 B：分辨力</text>
+        <text x="540" y="194" text-anchor="middle" font-size="10.5" fill="#868C88">标准题上还分不分得出好坏</text>
+
+        <!-- signature -->
+        <line x1="12" y1="244" x2="642" y2="244" stroke="currentColor" stroke-width=".8"/>
+        <text x="12" y="266" font-size="11" fill="#868C88">两种原因留下的指纹不同：</text>
+
+        <text x="196" y="292" font-size="11.5">产出真变好</text>
+        <text x="330" y="292" font-size="11.5">分数 ↑</text>
+        <text x="440" y="292" font-size="11.5" fill="#3F6B8C">分辨力 不动</text>
+
+        <text x="196" y="312" font-size="11.5" fill="#9C4221">裁判被污染</text>
+        <text x="330" y="312" font-size="11.5" fill="#9C4221">分数 ↑</text>
+        <text x="440" y="312" font-size="11.5" fill="#9C4221">分辨力 ↓ 塌陷</text>
+      </g>
+    </svg>
+    <figcaption>同一个裁判，两条输入、两个读数。标准砝码<strong>不随系统改进而变化</strong>，所以它上面的分辨力下降只可能来自裁判自己。这是全部机制——不需要人工标注，不需要冻结裁判，也不需要证明裁判是对的。</figcaption>
+  </figure>
+
+  <h3>一个必须有的细节：先扣掉裁判自己的噪声</h3>
+  <p>标准砝码里混入了一部分<strong>两份完全相同文本</strong>的题。裁判对这种题本该答"打平"；它在这里答错的比例，就是它自身的随机噪声底。所有分辨力读数都先减掉这个底再归一化——否则一个变得神经质、什么都说"不一样"的裁判，会被误读成分辨力很强。</p>
+</section>
+
+<section>
+  <span class="h2num">03 / 怎么验证</span>
+  <h2>把已知的病注射进去，看仪器认不认得出来</h2>
+
+  <p>验证一个仪器，不能拿它去测未知的东西——那样出了结果也无从核对。做法是反过来：<strong>制造已知的病变</strong>，看仪器的读数对不对得上。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>条件</th><th>动了什么</th><th>依据</th></tr></thead>
+    <tbody>
+      <tr><td class="num">空白</td><td class="what">什么都不变</td><td class="what">测量噪声本身</td></tr>
+      <tr class="hi"><td class="num">污染</td><td class="what">以概率 q，裁判的提示里被塞进"本答案已通过权威验证"的假元数据——它于是不读内容直接给高分</td><td class="what">文献中记录的分数膨胀型失效</td></tr>
+      <tr><td class="num">削弱</td><td class="what">裁判只看得到每个答案的前 40%</td><td class="what">部署中上下文被静默截断</td></tr>
+      <tr class="ok"><td class="num">真进步</td><td class="what">裁判不动，把一半产出换成客观正确的答案</td><td class="what">对照臂：真实的质量提升</td></tr>
+      <tr><td class="num">两者同时</td><td class="what">产出变好 <em>且</em> 裁判被污染</td><td class="what">现实中最常见的混合场景</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>整个实验的要害在这一步：污染的强度是被逐块校准的。</strong>我们二分搜索那个概率 q，让污染把分数推高的幅度<em>恰好等于</em>真进步推高的幅度。这样一来，"看分数"这条路被彻底堵死——两种情况在分数上完全一样，只剩标准砝码能说话。如果这个校准没做到，整轮实验作废（判据里叫"不定"），无论结果多好看。
+  </div>
+
+  <p>所有判据都在跑之前写死并提交进 git，跑完不得修改。这不是形式主义：这条线上已经有两轮实验因为校准没做到而被判为"不定"，如实记录在案。</p>
+</section>
+
+<section>
+  <span class="h2num">04 / 验证到了什么</span>
+  <h2>合成域已经立案，真实 LLM 裁判上正在复现</h2>
+
+  <h3>第一层：合成域（已完成，12 个独立种子）</h3>
+  <p>程序结构恢复任务，一切可控、真值可独立计算。裁判被做成"会偷看答案"的——以概率 q 不读产物直接吐出正确答案，这正是记住了测试集或与生成器串通的裁判。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>检验</th><th>结果</th><th>含义</th></tr></thead>
+    <tbody>
+      <tr><td class="what">操纵检验</td><td class="num">+0.011 <span style="color:var(--faint)">(2se 0.027)</span> <span class="tag t-none">不可分</span></td><td class="what">污染与真进步在分数上确实分不出</td></tr>
+      <tr class="hi"><td class="what">主判据</td><td class="num">+0.503 <span style="color:var(--faint)">(2se 0.195)</span> <span class="tag t-alarm">显著</span></td><td class="what">尺子读数把两者分开了</td></tr>
+      <tr><td class="what">进步中的漂移</td><td class="num">+0.475 <span style="color:var(--faint)">(2se 0.195)</span> <span class="tag t-alarm">显著</span></td><td class="what">真实进步进行中，漂移依然可见</td></tr>
+      <tr><td class="what">变钝的尺子</td><td class="num">+0.547 <span style="color:var(--faint)">(2se 0.089)</span> <span class="tag t-alarm">显著</span></td><td class="what">另一种病变也被看见</td></tr>
+      <tr class="ok"><td class="what">假警报</td><td class="num">−0.056 <span class="tag t-calm">无</span></td><td class="what">纯真实进步不触发任何警报</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>第二层：真实 LLM 裁判（进行中，已完成 1/6 块）</h3>
+  <p>裁判换成真实的 Claude Sonnet，语料换成公开的 <strong>JudgeBench</strong>（MIT 协议，620 条，答案由别人写、对错由 LiveBench / LiveCodeBench / MMLU-Pro 客观验证）。整条回路里没有一样东西是本项目自己造的。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>条件</th><th>分数</th><th>尺子读数</th><th>标准题分辨力</th></tr></thead>
+    <tbody>
+      <tr><td class="what">空白</td><td class="num">+0.042</td><td class="num">0.000</td>
+        <td><div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.00</span></div></td></tr>
+      <tr class="hi"><td class="what"><strong>裁判被污染</strong></td><td class="num">+0.187</td><td class="num"><strong>+0.250</strong></td>
+        <td><div class="bar"><div class="track"><div class="fill drop" style="width:75%"></div></div><span class="val">0.75</span></div></td></tr>
+      <tr><td class="what">裁判被削弱</td><td class="num">−0.125</td><td class="num">+0.182</td>
+        <td><div class="bar"><div class="track"><div class="fill drop" style="width:82%"></div></div><span class="val">0.82</span></div></td></tr>
+      <tr class="ok"><td class="what"><strong>产出真变好</strong></td><td class="num">+0.187</td><td class="num"><strong>0.000</strong></td>
+        <td><div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.00</span></div></td></tr>
+      <tr><td class="what">变好 + 污染</td><td class="num">+0.312</td><td class="num">+0.333</td>
+        <td><div class="bar"><div class="track"><div class="fill drop" style="width:67%"></div></div><span class="val">0.67</span></div></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="lead-claim">
+    <p>看第二行和第四行：<strong>分数同样是 +0.187，一字不差</strong>。单看分数，一个被污染的裁判和一次真实的质量提升完全一样。而标准砝码上，前者的分辨力从 1.00 塌到 0.75，后者纹丝不动。</p>
+  </div>
+
+  <div class="status">
+    <span class="chip">合成域 <b>已立案</b></span>
+    <span class="chip">真实域 <b>1 / 6 块</b></span>
+    <span class="chip">校准 <b>已通过</b></span>
+    <span class="chip">正式裁定 <b>待全部跑完</b></span>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">真实域这一块是<strong>描述性观察，不是结论</strong>。按事先写死的规则，裁定只在 6 块全部跑完后计算一次——中途看一眼就宣布结果，是统计上会自欺的做法。</p>
+</section>
+
+<section>
+  <span class="h2num">05 / 诚实的账</span>
+  <h2>被自己推翻的部分</h2>
+
+  <p>这条线原本还有一个更大的主张，叫"引擎"：让裁判的分辨率随算力持续变细，以此驱动系统无止境地改进。<strong>这个主张已被自己的预注册实验推翻。</strong>四臂对照显示，让难度持续上升的臂并不比固定难度的臂涨得多（配对差 −0.025，2se 0.048），而且它自己也平台化了。</p>
+
+  <p>独立佐证来自另一篇受控研究：自博弈的稳定性由<strong>任务准入</strong>绑定，不是由奖励标定绑定；真正的天花板是"出不出得了新题"。两条独立证据指向同一处——<strong>让系统持续变好的燃料是"还有新东西可学"，不是"尺子有多细"。</strong></p>
+
+  <p>所以现在活着的是<strong>仪器</strong>主张，不是引擎主张。仪器不负责让系统变好，它负责让"变好"这个声明可以被核实。两者的关系是仪表盘与发动机——都要，但不能互相冒充。</p>
+</section>
+
+<section>
+  <span class="h2num">06 / 局限</span>
+  <h2>这套方法目前不能声称的事</h2>
+  <ul>
+    <li><strong>它测的是"还分不分得出"，不是"分得对不对"。</strong>实验中确认了裁判存在明显的位置偏好（12 次选择里 10 次偏向第二个答案）。读数对此不敏感——这既是它的稳健之处，也划定了它的范围。</li>
+    <li><strong>没有训练环节。</strong>全部工作在 harness 层：我们测量裁判，不训练它。因此无法声称"装上这个监测器能救回一个正在坍缩的训练循环"——那需要真实的模型层实验（多卡规模），不在当前条件内。</li>
+    <li><strong>病变种类有限。</strong>目前只注入了两类（污染泄漏、输入截断）。位置偏好利用、冗长度偏好等其它已知失效形式尚未测试。</li>
+    <li><strong>最接近的前作已定位。</strong>另有工作同样使用冻结扰动对电池与同对不一致度，但它是一次性体检：不做噪声底扣除、不做纵向漂移检测、不注入病变、不分解"漂移 vs 真进步"。这四点正是本文主张的位置。</li>
+  </ul>
+</section>
+
+</div>
+</main>
+
+<hr class="scale">
+<footer>
+  <div class="wrap">
+    rsi-research · 判据先于结果写定并提交 · 被推翻的结论保留原处并标注
+  </div>
+</footer>
