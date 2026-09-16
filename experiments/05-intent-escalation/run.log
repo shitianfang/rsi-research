@@ -1,0 +1,20 @@
+============================================================================
+E-E: IS TASK-SPACE DEEPENING THE ENGINE?
+============================================================================
+
+   held-out depth-4 fidelity, 8 seeds, 900 evaluations per arm
+   arm                 held-out
+   A escalate       0.778 ±0.071
+   C direct-hard     0.803 ±0.049
+   B shallow        0.674 ±0.047
+   arm A final depth per seed: [4, 4, 4, 4, 4, 3, 4, 4]
+
+   paired contrasts:
+     PRIMARY    A - C = -0.025 (2se 0.034)  -> NOT significant
+     secondary  A - B = +0.104 (2se 0.065)  -> significant
+
+----------------------------------------------------------------------------
+VERDICT: FAILURE branch -- direct training on hard tasks matches or beats
+the curriculum at equal compute. The engine claim does not survive here
+either; what a curriculum buys is not continued improvement.
+EXIT=0

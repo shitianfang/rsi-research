@@ -1,0 +1,292 @@
+<title>供给，不是调度</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+:root{
+  --ground:#F5F6F4; --panel:#FFFFFF; --sunk:#EDEFEC;
+  --ink:#171A18; --muted:#5C625E; --faint:#868C88;
+  --rule:#DCE0DB; --rule-soft:#E9ECE8;
+  --accent:#14534A; --accent-wash:#E3EDEA;
+  --alarm:#9C4221; --alarm-wash:#F6E7DF;
+  --calm:#3F6B8C; --calm-wash:#E4ECF2;
+  --serif:"Noto Serif SC",Georgia,"Songti SC",serif;
+  --sans:"Noto Sans SC",-apple-system,"Segoe UI","PingFang SC",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131614; --panel:#1A1E1B; --sunk:#20241F;
+    --ink:#E6E9E5; --muted:#A0A6A1; --faint:#7C837D;
+    --rule:#2C312D; --rule-soft:#232722;
+    --accent:#5FBFAE; --accent-wash:#18302C;
+    --alarm:#D98A5F; --alarm-wash:#33221A;
+    --calm:#7FA8C9; --calm-wash:#1C2833;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131614; --panel:#1A1E1B; --sunk:#20241F;
+  --ink:#E6E9E5; --muted:#A0A6A1; --faint:#7C837D;
+  --rule:#2C312D; --rule-soft:#232722;
+  --accent:#5FBFAE; --accent-wash:#18302C;
+  --alarm:#D98A5F; --alarm-wash:#33221A;
+  --calm:#7FA8C9; --calm-wash:#1C2833;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:16.5px; line-height:1.85; letter-spacing:.005em}
+.wrap{max-width:44rem; margin:0 auto; padding:0 1.35rem}
+.scale{height:11px; margin:0; border:0;
+  background-image:
+    repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 12px),
+    linear-gradient(to bottom, transparent 0 10px, var(--rule) 10px 11px);
+  background-repeat:repeat-x}
+header.top{padding:3.4rem 0 1.6rem}
+.eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 1.1rem}
+h1{font-family:var(--serif); font-weight:600; font-size:clamp(2.1rem,6vw,3.1rem);
+  line-height:1.24; margin:0 0 1rem; letter-spacing:-.01em; text-wrap:balance}
+.stand{font-size:1.06rem; color:var(--muted); margin:0; max-width:34rem}
+.byline{font-family:var(--mono); font-size:.74rem; color:var(--faint); margin:1.6rem 0 0}
+main{padding:1.2rem 0 4rem}
+section{padding:2.6rem 0 .4rem}
+h2{font-family:var(--serif); font-weight:600; font-size:1.42rem; line-height:1.45;
+  margin:0 0 .3rem; text-wrap:balance}
+.h2num{font-family:var(--mono); font-size:.74rem; color:var(--accent);
+  letter-spacing:.14em; display:block; margin-bottom:.45rem}
+h3{font-size:1rem; font-weight:700; margin:2rem 0 .3rem}
+p{margin:.85rem 0}
+em{font-style:normal; color:var(--accent); font-weight:500}
+code{font-family:var(--mono); font-size:.86em; background:var(--sunk);
+  padding:.08em .32em; border-radius:3px}
+ul{margin:.8rem 0; padding-left:1.15rem} li{margin:.45rem 0}
+li::marker{color:var(--faint)}
+.lead-claim{background:var(--panel); border:1px solid var(--rule);
+  border-left:3px solid var(--accent); border-radius:2px;
+  padding:1.15rem 1.35rem; margin:1.6rem 0; font-size:1.02rem}
+.lead-claim p{margin:0}
+.warn{background:var(--alarm-wash); border:1px solid var(--rule);
+  border-left:3px solid var(--alarm); border-radius:2px;
+  padding:1.1rem 1.3rem; margin:1.6rem 0}
+.warn p{margin:0}
+figure{margin:2rem 0; background:var(--panel); border:1px solid var(--rule);
+  border-radius:3px; padding:1.5rem 1.2rem 1.1rem}
+figure svg{display:block; width:100%; height:auto}
+figcaption{font-size:.87rem; color:var(--muted); margin-top:1.1rem;
+  padding-top:.85rem; border-top:1px solid var(--rule-soft); line-height:1.7}
+.tablewrap{overflow-x:auto; margin:1.5rem 0; border:1px solid var(--rule);
+  border-radius:3px; background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:.87rem; line-height:1.55}
+th,td{text-align:left; padding:.62rem .8rem; border-bottom:1px solid var(--rule-soft);
+  vertical-align:middle}
+thead th{background:var(--sunk); font-family:var(--mono); font-weight:500;
+  font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+td.what{color:var(--muted)}
+tr.hi td{background:var(--calm-wash)}
+tr.dead td{background:var(--alarm-wash)}
+.alloc{display:flex; gap:3px; align-items:flex-end; height:34px; min-width:11rem}
+.alloc span{flex:1; background:var(--accent); border-radius:1px 1px 0 0; min-height:2px}
+.alloc.flat span{background:var(--alarm)}
+.note{background:var(--sunk); border:1px solid var(--rule); border-radius:3px;
+  padding:.95rem 1.15rem; margin:1.5rem 0; font-size:.93rem; color:var(--muted)}
+.note strong{color:var(--ink)}
+footer{border-top:1px solid var(--rule); margin-top:3.5rem; padding:1.8rem 0 3.5rem;
+  font-size:.83rem; color:var(--faint); font-family:var(--mono)}
+@media (max-width:640px){body{font-size:16px} figure{padding:1rem .7rem .8rem}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">研究简报 · 引擎主张</p>
+    <h1>供给，不是调度</h1>
+    <p class="stand">让自改进系统持续变好的，是"还有新题可做"，不是"题目按顺序由易到难"。这是一次预注册实验的结论，而它否定的正是我们自己原本的假设。</p>
+    <p class="byline">2026-09-16 · rsi-research · experiments/05-intent-escalation</p>
+  </div>
+</header>
+
+<hr class="scale">
+
+<main><div class="wrap">
+
+<section>
+  <span class="h2num">00 / 先说清楚测的是什么</span>
+  <h2>引擎主张有两半，这一轮测了其中一半半</h2>
+
+  <p>"引擎主张"是说：驱动系统不断变好的动力来自任务生成器持续产出更难的任务。它可以拆成两句独立的话：</p>
+  <ul>
+    <li><strong>供给</strong>——任务空间一旦枯竭，改进就停。</li>
+    <li><strong>调度</strong>——"由易到难逐步加深"这个机制本身，是改进得以持续的原因。</li>
+  </ul>
+  <p>这一轮对供给给出了确认，对调度给出了否定。</p>
+
+  <div class="warn">
+    <p><strong>没有测到的那一层，必须先讲。</strong>真正的自改进循环里，<em>出题者本身是一个会进化的策略</em>，与解题者共同演化、互相塑造。本实验的"任务生成器"只是一个深度旋钮，不是学出来的。所以严格地说，这一轮回答的是"难度调度对学习者有没有用"，而不是"共同演化的出题者能否维持开放式改进"。后者仍然没有被检验。</p>
+  </div>
+</section>
+
+<section>
+  <span class="h2num">01 / 任务</span>
+  <h2>一个可以无限加深、且深层必须踩着浅层才够得到的任务</h2>
+
+  <p>要让"课程"有可能有用，任务空间必须有<strong>踏脚石</strong>：深的做不到，除非浅的已经做到。所以用了一个层级结构——[0,1] 上的分段常数函数，由一棵二叉树定义：每个节点在自己区间内某处分开，左右两边取一高一低两个值。<em>意图</em>就是这棵树上每个节点的朝向（哪边高），由机器写定，因此天然是真值。</p>
+
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="一个深度2的层级分段程序：意图树的两层朝向决定四段的高低，观察者用24次探测把它完整恢复">
+      <g font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="currentColor">
+        <line x1="56" y1="196" x2="600" y2="196" stroke="currentColor" stroke-width="1"/>
+        <line x1="56" y1="196" x2="56" y2="36" stroke="currentColor" stroke-width="1"/>
+        <text x="46" y="42" text-anchor="end" font-size="10.5" fill="#868C88">0.8</text>
+        <text x="46" y="200" text-anchor="end" font-size="10.5" fill="#868C88">0.2</text>
+        <text x="56" y="216" text-anchor="middle" font-size="10.5" fill="#868C88">0</text>
+        <text x="600" y="216" text-anchor="middle" font-size="10.5" fill="#868C88">1</text>
+
+        <!-- values 0.760 0.540 0.240 0.460 mapped: y = 196 - (v-0.2)/0.6*160 -->
+        <line x1="56" y1="47" x2="235" y2="47" stroke="#14534A" stroke-width="2.4"/>
+        <line x1="235" y1="106" x2="368" y2="106" stroke="#14534A" stroke-width="2.4"/>
+        <line x1="368" y1="185" x2="485" y2="185" stroke="#14534A" stroke-width="2.4"/>
+        <line x1="485" y1="127" x2="600" y2="127" stroke="#14534A" stroke-width="2.4"/>
+        <line x1="235" y1="47" x2="235" y2="106" stroke="#14534A" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="368" y1="106" x2="368" y2="185" stroke="#14534A" stroke-width="1.6"/>
+        <line x1="485" y1="185" x2="485" y2="127" stroke="#14534A" stroke-width="1" stroke-dasharray="2 2"/>
+
+        <text x="145" y="38" text-anchor="middle" font-size="10.5" fill="#868C88">0.760</text>
+        <text x="301" y="98" text-anchor="middle" font-size="10.5" fill="#868C88">0.540</text>
+        <text x="426" y="177" text-anchor="middle" font-size="10.5" fill="#868C88">0.240</text>
+        <text x="542" y="119" text-anchor="middle" font-size="10.5" fill="#868C88">0.460</text>
+
+        <text x="368" y="234" text-anchor="middle" font-size="11" fill="#14534A">↑ 第 1 层的分界：左半整体高于右半</text>
+        <text x="235" y="28" text-anchor="middle" font-size="10.5" fill="#868C88">第 2 层</text>
+        <text x="485" y="110" text-anchor="middle" font-size="10.5" fill="#868C88">第 2 层</text>
+      </g>
+    </svg>
+    <figcaption>一个真实例子（深度 2）。意图树是 <code>[[1], [1, 0]]</code>——根节点左高，左子树左高，右子树右高。观察者不知道分界在哪，只能探测；24 次探测后它恢复出 <code>[[1], [1, 0]]</code>，完全正确。<strong>恢复是自顶向下的</strong>：上层分界定位错了，下层的区间就整体错位，底下全盘崩溃——这就是踏脚石。</figcaption>
+  </figure>
+
+  <h3>要学的技能：把有限的数值范围分配到各层</h3>
+  <p>数值范围是有限的。深层每个格子里的样本更少，要扛住噪声就得分到更大的落差；但每一分给深层的，都是从浅层扣下来的。策略 <code>θ = (第1层落差, …, 第4层落差)</code> 就是这个分配方案，存在一个真实的最优解，而且不显然。<strong>关键是：只有当上面几层已经恢复正确时，深层的落差才拿得到反馈</strong>——所以随机初始的策略从深层任务里几乎得不到梯度。</p>
+</section>
+
+<section>
+  <span class="h2num">02 / 三条臂</span>
+  <h2>主对比不是"渐进 vs 永远简单"，那几乎是同义反复</h2>
+
+  <p>真正值得问的是：<strong>同样的算力，直接拿最难的任务训练，是不是一样好？</strong>如果一样好，课程就什么都没买到。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>臂</th><th>做法</th><th>角色</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="num">A 渐进</td><td class="what">从深度 1 开始，成功率达标就加深一层</td><td class="what">课程文献的最小准则规则</td></tr>
+      <tr class="hi"><td class="num">C 直接</td><td class="what">一上来就在最深的深度 4 训练</td><td class="what"><strong>主对比</strong>：课程到底必不必要</td></tr>
+      <tr><td class="num">B 浅</td><td class="what">永远停在深度 1</td><td class="what">地板：验证任务空间真的会枯竭</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>三条臂消耗<strong>完全相同的评估次数</strong>（各 900 次）。最终成绩用一批全新的深度 4 意图测，任何一条臂都没有在这批题上训练过。判据和两个分支在跑之前写死并提交进 git。</p>
+</section>
+
+<section>
+  <span class="h2num">03 / 结果</span>
+  <h2>失败分支：课程不是必要的</h2>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>臂</th><th>留出深度-4 成绩</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="what">A 渐进加深</td><td class="num">0.778 ±0.071</td><td class="what">—</td></tr>
+      <tr class="hi"><td class="what"><strong>C 直接上难题</strong></td><td class="num"><strong>0.803 ±0.049</strong></td><td class="what">不低于 A，数值上还略高</td></tr>
+      <tr class="dead"><td class="what">B 永远浅</td><td class="num">0.674 ±0.047</td><td class="what">明显落后</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <ul>
+    <li><strong>主判据 A − C = −0.025（2se 0.034）→ 不显著。</strong>等算力下，课程买不到任何东西。</li>
+    <li>次判据 A − B = +0.104（2se 0.065）→ <strong>显著</strong>。任务空间确实会枯竭。</li>
+    <li>渐进臂 8 个种子里 7 个爬到了最深层，机制本身按设计运转。</li>
+  </ul>
+
+  <div class="lead-claim">
+    <p>A 优于 B，说明<strong>任务枯竭是真实的天花板</strong>；A 不优于 C，说明<strong>解药不是"循序渐进"，而是"手上有难题可做"</strong>。合起来：驱动持续改进的是<em>任务供给</em>，不是<em>难度调度</em>。</p>
+  </div>
+</section>
+
+<section>
+  <span class="h2num">04 / 变化</span>
+  <h2>把三条臂学到的东西摊开看，零结果立刻有了解释</h2>
+
+  <p>下面是每条臂最终学到的分配方案（8 个种子平均），以及它和初始值的关系。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>臂</th><th>第1层</th><th>第2层</th><th>第3层</th><th>第4层</th><th>形状</th></tr></thead>
+    <tbody>
+      <tr><td class="what">初始值</td><td class="num">0.088</td><td class="num">0.094</td><td class="num">0.109</td><td class="num">0.090</td>
+        <td><div class="alloc flat"><span style="height:29%"></span><span style="height:31%"></span><span style="height:36%"></span><span style="height:30%"></span></div></td></tr>
+      <tr class="hi"><td class="what">A 渐进</td><td class="num">0.243</td><td class="num">0.167</td><td class="num">0.109</td><td class="num">0.082</td>
+        <td><div class="alloc"><span style="height:80%"></span><span style="height:55%"></span><span style="height:36%"></span><span style="height:27%"></span></div></td></tr>
+      <tr class="hi"><td class="what">C 直接</td><td class="num">0.261</td><td class="num">0.152</td><td class="num">0.090</td><td class="num">0.071</td>
+        <td><div class="alloc"><span style="height:86%"></span><span style="height:50%"></span><span style="height:30%"></span><span style="height:23%"></span></div></td></tr>
+      <tr class="dead"><td class="what">B 浅</td><td class="num">0.088</td><td class="num">0.094</td><td class="num">0.109</td><td class="num">0.090</td>
+        <td><div class="alloc flat"><span style="height:29%"></span><span style="height:31%"></span><span style="height:36%"></span><span style="height:30%"></span></div></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p><strong>两件事一眼可见。</strong>第一，A 和 C 学到的<em>几乎是同一个方案</em>——都把数值范围前重后轻地压向浅层（把落差留给最靠上的分界，因为它错了下面全废）。既然学到的东西一样，成绩一样就不奇怪了：课程只是通往同一个终点的一条较慢的路。</p>
+
+  <p>第二，B 的那一行<strong>和初始值一个数都没差</strong>。它不是学得慢，是<em>一次都没有接受过改进</em>——深度 1 的成绩初始就是 1.000，爬山算法找不到任何可以变好的方向。饱和在这里不是比喻，是一个可以直接读出来的事实。</p>
+
+  <h3>代价花在哪里：渐进臂的爬升轨迹</h3>
+  <p>种子 0 的记录：第 8 次评估升到深度 2，第 16 次升到深度 3，<strong>第 168 次才升到深度 4</strong>，此后 732 次都在深度 4。而 C 从第 1 次评估起就在深度 4。多出来的这 168 次不是灾难，但也没换回任何东西——这就是 −0.025 的来源。</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>臂</th><th>第1层</th><th>第2层</th><th>第3层</th><th>第4层</th></tr></thead>
+    <tbody>
+      <tr><td class="what">A 渐进</td><td class="num">1.00</td><td class="num">0.89</td><td class="num">0.77</td><td class="num">0.62</td></tr>
+      <tr><td class="what">C 直接</td><td class="num">1.00</td><td class="num">0.96</td><td class="num">0.82</td><td class="num">0.63</td></tr>
+      <tr class="dead"><td class="what">B 浅</td><td class="num">0.97</td><td class="num">0.72</td><td class="num">0.65</td><td class="num">0.60</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">逐层看留出成绩：三条臂在最深的第 4 层几乎打平（0.62 / 0.63 / 0.60），差距全在第 2、3 层。也就是说这个任务的最深层对谁都太难，真正被学到的是中间层——这一点下面还要再说。</p>
+</section>
+
+<section>
+  <span class="h2num">05 / 仪器</span>
+  <h2>这一轮差点从坏代码上读数，第四次</h2>
+
+  <p>正式跑之前有四道仪器门，其中一道抓到了真问题：<strong>第 2 层的恢复成绩是 0.38——低于随机的 0.50</strong>，而且把探测预算从 64 加到 256 完全不涨（0.625 → 0.622）。系统性低于随机，加上算力轴不单调，是被测对象本身坏掉的典型指纹。</p>
+
+  <p>原因在断点检测的统计量：原本用的是"最大化左右均值差的绝对值"，这个量在区间两端取到极大——那里只有两三个样本，均值纯是噪声，样本越多虚假极值越容易出现，所以加预算反而无用。换成二分分割的标准统计量 <code>j(n−j)/n · (mL−mR)²</code> 后，逐层成绩恢复为单调且都在随机水平以上（1.00 / 0.80 / 0.68 / 0.51），算力轴也重新上升。</p>
+
+  <div class="note">
+    <strong>这是这个项目第四次靠同一条纪律拦下错误结论：读数之前，先证明被测对象真的在工作。</strong>前三次分别是——验证器根本没训练、匹配判断恒为假、恢复器在算力轴上反向。每一次，实验都照样输出了一整张看起来合理的结果表。
+  </div>
+</section>
+
+<section>
+  <span class="h2num">06 / 边界</span>
+  <h2>这个结论不能被拉伸到哪里去</h2>
+  <ul>
+    <li><strong>信号是稠密的，而课程最该发挥作用的场景是稀疏的。</strong>仪器门测到随机策略在深度 4 已有 0.705（随机水平 0.5），也就是难题一直在给梯度。课程文献真正针对的是难题<em>完全给不出信号</em>的情形。所以这一轮诚实的表述是：在信号稠密条件下课程买不到东西；对稀疏条件，这一轮不构成检验。</li>
+    <li><strong>出题者不会进化。</strong>本实验的任务生成器是一个深度旋钮，不是学出来的策略。共同演化的出题者能否维持开放式改进，仍然没有被检验——那是引擎主张里最核心、也最难做的一层。</li>
+    <li><strong>最深层对谁都太难。</strong>三条臂在第 4 层几乎打平（0.62/0.63/0.60），差异全在中间层。这说明任务难度的上限设得偏高，真正的对比发生在中段。</li>
+    <li><strong>短程。</strong>900 次评估，不是长周期。"循环会不会最终停下"这个问题，本实验的时间尺度回答不了。</li>
+  </ul>
+
+  <p>要继续追引擎，下一轮该做的是<strong>稀疏信号版本</strong>（只用最深一层的全对/全错作为唯一反馈），并且让出题者本身成为一个会进化的策略。那是一次新的独立预注册，不是对这一轮的翻案——这一轮的裁定按预注册成立，不因后续实验而改写。</p>
+</section>
+
+</div></main>
+
+<hr class="scale">
+<footer><div class="wrap">
+  rsi-research · 判据先于结果写定并提交 · 被推翻的结论保留原处并标注
+</div></footer>
