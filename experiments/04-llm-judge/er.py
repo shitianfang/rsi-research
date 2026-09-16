@@ -34,6 +34,7 @@ Run:  ../../.venv/bin/python -u er.py precheck   (blocks 0-1, tuning allowed)
 """
 
 import json
+import os
 import re
 import sys
 import numpy as np
@@ -43,7 +44,7 @@ from llm import pmap
 # Sized against measured throughput (1.54 s/call at 16 workers on a 2-core
 # box): 28 calls per epoch, 164 per block, so the registered run is bounded.
 CFG = dict(trunc=0.4, n_floor=4, reps_level=2, reps_rate=2, n_prod=6,
-           improve_frac=0.5)
+           improve_frac=0.5, calib_steps=3)
 PRECHECK_BLOCKS = (0, 1)
 REG_BLOCKS = tuple(range(2, 8))
 CONDITIONS = ("R0", "R1", "R2", "R3", "R4")
@@ -192,7 +193,22 @@ def run_block(bi, block, cfg):
                        battery=False)
     ceil = s_ceil - s0
     reach = target <= ceil + 1e-9
-    q = float(np.clip(target / max(1e-9, ceil), 0.05, 1.0))
+
+    # Binary search q against the target, as the toy domain did. The linear
+    # shortcut q = target/ceiling assumes the leak's effect is linear in q; the
+    # first registered batch showed it is not, and the leak overshot the true
+    # gain (+0.208 vs +0.115), which fails the manipulation check. Fixing a
+    # failed manipulation check is not outcome tuning: P1/S1/S2 are untouched.
+    lo, hi = 0.0, 1.0
+    for k in range(cfg["calib_steps"]):
+        mid = 0.5 * (lo + hi)
+        s_mid, *_ = epoch(block, dict(leak_q=mid), np.random.default_rng([bi, 20 + k]),
+                          "base", battery=False)
+        if s_mid - s0 < target:
+            lo = mid
+        else:
+            hi = mid
+    q = float(np.clip(0.5 * (lo + hi), 0.02, 1.0))
 
     out = {"_s0": s0, "_m0": m0, "_f0": f0, "_q": q, "_reach": reach,
            "_inv": inv0, "_target": target, "_ceil": ceil, "_x0": x0}
@@ -269,6 +285,27 @@ def precheck(results):
     return ok1 and ok2 and ok3 and ok4 and ok6 and ok7
 
 
+def cache_path(bi):
+    os.makedirs("results", exist_ok=True)
+    return f"results/block{bi}.json"
+
+
+def run_or_load(bi, block, cfg):
+    """Registered blocks are cached to disk so the run can be done in
+    batches. Interim batches are DESCRIPTIVE ONLY -- the verdict is computed
+    once, from the complete set, so partial looks cannot become optional
+    stopping."""
+    p = cache_path(bi)
+    if os.path.exists(p):
+        r = json.load(open(p))
+        return {k: (tuple(v) if isinstance(v, list) and k in CONDITIONS else v)
+                for k, v in r.items()}
+    r = run_block(bi, block, cfg)
+    json.dump({k: v for k, v in r.items() if not k.startswith("_pop")},
+              open(p, "w"), default=lambda o: o.tolist() if hasattr(o, "tolist") else o)
+    return r
+
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "registered"
     blocks = json.load(open("blocks.json"))["blocks"]
@@ -282,8 +319,19 @@ def main():
         ok = precheck(results)
         print(f"\n   E-R precheck {'PASSED' if ok else 'NOT passed - tune and rerun'}")
         return
-    results = [run_block(b, blocks[b], CFG) for b in REG_BLOCKS]
-    checks = report(results, "REGISTERED RUN, fresh blocks")
+    want = [int(x) for x in sys.argv[2].split(",")] if len(sys.argv) > 2 else list(REG_BLOCKS)
+    for b in want:
+        run_or_load(b, blocks[b], CFG)
+    have = [b for b in REG_BLOCKS if os.path.exists(cache_path(b))]
+    results = [run_or_load(b, blocks[b], CFG) for b in have]
+    done = len(have) == len(REG_BLOCKS)
+    checks = report(results, ("REGISTERED RUN, complete" if done else
+                              f"INTERIM {len(have)}/{len(REG_BLOCKS)} blocks - DESCRIPTIVE ONLY"))
+    if not done:
+        print("\n" + "-" * 78)
+        print(f"No verdict yet: {len(have)}/{len(REG_BLOCKS)} registered blocks done.")
+        print("Remaining: " + ",".join(str(b) for b in REG_BLOCKS if b not in have))
+        return
     (_, mc_d, mc_se), (_, p1_d, p1_se) = checks[0], checks[1]
     print("\n" + "-" * 78)
     if abs(mc_d) >= 2 * mc_se:

@@ -13,7 +13,7 @@ import concurrent.futures
 import tempfile
 
 MODEL = "claude-sonnet-5"   # probe: clean TIE floor on identical pairs; haiku had none
-WORKERS = 16   # measured: 1.54s/call; 24 would be faster but this box has 2 cores
+WORKERS = 8    # shared LXC host: be a good citizen; more workers does not help under contention
 
 # The judge must not inherit any project CLAUDE.md (the workspace one says
 # "reply in Chinese", which contaminated a smoke test). Run from a neutral

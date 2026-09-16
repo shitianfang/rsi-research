@@ -2,36 +2,30 @@
 E-R: DOES THE METRIC SEE A REAL LLM JUDGE STOP MEASURING?
 corpus: JudgeBench (MIT, third-party, objectively labeled)
 ==============================================================================
-/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
-  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
-/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
-  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
-/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
-  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
-/workspace/rsi-research/experiments/04-llm-judge/er.py:161: RuntimeWarning: Mean of empty slice
-  deficit = 1.0 - float(np.nanmean([corrected(2), corrected(4)]))
 
-[precheck blocks (not for verdicts)] blocks=2  cfg={'trunc': 0.4, 'n_floor': 4, 'reps_level': 2, 'reps_rate': 2, 'n_prod': 6}
-   base: s0=0.271  deficit0=0.000  floor0=0.000  invalid=0.000
-   calibrated q per block: 1.00 1.00
-   cond      d scalar    d deficit   floor  invalid  posflip   d4disc
-   R0      -0.021 ±0.021   +0.000 ±0.000   0.000    0.000    0.000    1.000
-   R1      +0.031 ±0.010   +0.000 ±0.000   0.000    0.000    0.000    1.000
-   R2      -0.042 ±0.000   +0.000 ±0.000   0.000    0.000    0.000    1.000
-   R3      +0.083 ±0.104   +0.000 ±0.000   0.000    0.000    0.000    1.000
-   R4      +0.135 ±0.115   +0.000 ±0.000   0.000    0.000    0.000    1.000
-   MC   ds(R1)-ds(R3) = -0.052 (2se 0.229)  -> NOT significant
-   P1   dm(R1)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
-   S1   dm(R4)-dm(R3) = +0.000 (2se 0.000)  -> NOT significant
-   S2   dm(R2)-dm(R0) = +0.000 (2se 0.000)  -> NOT significant
+[precheck blocks (not for verdicts)] blocks=2  cfg={'trunc': 0.4, 'n_floor': 4, 'reps_level': 2, 'reps_rate': 2, 'n_prod': 6, 'improve_frac': 0.5}
+   base: s0=0.240  deficit0=0.167  floor0=0.000  invalid=0.000
+   calibrated q per block: 0.40 0.53
+   cond      d scalar    d deficit   floor  invalid posflip     d0     d2     d4
+/workspace/rsi-research/experiments/04-llm-judge/er.py:236: RuntimeWarning: Mean of empty slice
+  f"{fl.mean():>8.3f}{iv.mean():>9.3f}{pf.mean():>8.3f}{np.nanmean(d0):>7.2f}{np.nanmean(d2):>7.2f}{np.nanmean(rw):>7.2f}{note}")
+   R0      -0.021 ±0.042   -0.167 ±0.167   0.000    0.000   0.417    nan    nan   1.00
+   R1      +0.187 ±0.146   +0.208 ±0.042   0.000    0.000   0.167    nan    nan   0.62
+   R2      -0.135 ±0.115   +0.083 ±0.000   0.000    0.000   0.250    nan    nan   0.75
+   R3      +0.135 ±0.073   -0.125 ±0.125   0.000    0.000   0.417    nan    nan   0.96
+   R4      +0.333 ±0.042   +0.083 ±0.000   0.000    0.000   0.167    nan    nan   0.75
+   MC   ds(R1)-ds(R3) = +0.052 (2se 0.146)  -> NOT significant
+   P1   dm(R1)-dm(R3) = +0.333 (2se 0.333)  -> significant
+   S1   dm(R4)-dm(R3) = +0.208 (2se 0.250)  -> NOT significant
+   S2   dm(R2)-dm(R0) = +0.250 (2se 0.333)  -> NOT significant
 
 [precheck E-R] gates:
-   PC1 honest scalar in dynamic range: 0.271 -> OK
-   PC2 leak inflates the scalar: ceilings +0.000 +0.042 -> FAIL
-   PC3 correct-answer swap truly gains: targets +0.042 +0.208 -> OK
-   PC4 healthy baseline judge: deficit 0.000 (<=0.6), floor 0.000 (<=0.3) -> OK
-   PC6 hack ceiling reaches target on every block -> FAIL
+   PC1 honest scalar in dynamic range: 0.240 -> OK
+   PC2 leak inflates the scalar: ceilings +0.208 +0.354 -> OK
+   PC3 correct-answer swap truly gains: targets +0.083 +0.188 -> OK
+   PC4 healthy baseline judge: deficit 0.167 (<=0.6), floor 0.000 (<=0.3) -> OK
+   PC6 hack ceiling reaches target on every block -> OK
    PC7 invalid-answer rate under 5% -> OK
 
-   E-R precheck NOT passed - tune and rerun
+   E-R precheck PASSED
 EXIT=0
